@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ابتسم | نصوص ملهمة</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -14,25 +15,45 @@
         
         body {
             font-family: 'Amiri', serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
             color: #333;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,224L48,213.3C96,203,192,181,288,160C384,139,480,117,576,122.7C672,128,768,160,864,170.7C960,181,1056,171,1152,165.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            padding: 50px 40px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+        
+        .container:hover {
+            transform: translateY(-5px);
         }
         
         .container::before {
@@ -43,177 +64,164 @@
             right: 0;
             height: 8px;
             background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c, #f39c12, #9b59b6);
+            border-radius: 25px 25px 0 0;
         }
         
         h1 {
-            font-size: 4.5rem;
+            font-size: 5rem;
             color: #2c3e50;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 2px;
         }
         
         .text-container {
-            min-height: 300px;
+            min-height: 350px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin: 30px 0;
-            padding: 20px;
-            border-radius: 15px;
-            background-color: rgba(255, 255, 255, 0.7);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin: 40px 0;
+            padding: 30px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(245, 245, 245, 0.9) 100%);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .text-container:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .text-container::before {
+            content: """;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 15rem;
+            color: rgba(46, 204, 113, 0.05);
+            font-family: 'Amiri', serif;
+            z-index: 0;
         }
         
         .text {
-            font-size: 2.2rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            line-height: 1.9;
+            margin-bottom: 25px;
             color: #2c3e50;
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
         }
         
         .source {
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             color: #7f8c8d;
             font-style: italic;
-            margin-top: 15px;
-        }
-        
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        button {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.3rem;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            padding: 8px 20px;
+            background: rgba(236, 240, 241, 0.7);
             border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Amiri', serif;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: inline-block;
         }
         
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        .auto-change {
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
-        .new-text {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        .auto-change i {
+            color: #3498db;
+            animation: pulse 2s infinite;
         }
         
-        .share {
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
         
         .footer {
-            margin-top: 30px;
+            margin-top: 40px;
             color: #7f8c8d;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            padding: 15px;
+            border-top: 1px solid #ecf0f1;
         }
         
         @media (max-width: 768px) {
             h1 {
-                font-size: 3.5rem;
+                font-size: 3.8rem;
             }
             
             .text {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             
-            .buttons {
-                flex-direction: column;
+            .text-container {
+                min-height: 300px;
+                padding: 20px;
             }
+            
+            .source {
+                font-size: 1.4rem;
+            }
+        }
+        
+        /* تأثيرات للكتابة */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1.5s ease forwards;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>ابتسم </h1>
+        <h1>ابتسم</h1>
         
         <div class="text-container">
-            <p class="text" id="text">يتم تحميل النص...</p>
-            <p class="source" id="source"></p>
+            <p class="text fade-in" id="text">يتم تحميل النص...</p>
+            <p class="source fade-in" id="source"></p>
         </div>
         
-        <div class="buttons">
-            <button id="newTextBtn" class="new-text">نص جديد</button>
-            <button id="shareBtn" class="share">مشاركة</button>
+        <div class="auto-change">
+            <i class="fas fa-sync-alt"></i>
+            <span>سيتم تغيير النص تلقائياً خلال <span id="countdown">15</span> ثانية</span>
         </div>
         
         <div class="footer">
-            <p>كل مرة تفتح الصفحة تحصل على نص جديد ملهم</p>
+            <p>تصميم عصري لأنواع مختلفة من النصوص العربية الملهمة</p>
         </div>
     </div>
 
     <script>
         // مجموعة النصوص (1000 نص) - تم تقليل العدد للعرض التوضيحي
         const texts = [
-            { type:'quran', text:'﴿وَبَشِّرِ الصَّابِرِينَ﴾', source:'البقرة: 155' },
-            { type:'quran', text:'﴿إِنَّ مَعَ الْعُسْرِ يُسْرًا﴾', source:'الشرح: 6' },
-            { type:'quran', text:'﴿اللَّهُ لَا يُكَلِّفُ نَفْسًا إِلَّا وُسْعَهَا﴾', source:'البقرة: 286' },
-            { type:'quran', text:'﴿فَاذْكُرُونِي أَذْكُرْكُمْ﴾', source:'البقرة: 152' },
-            { type:'quran', text:'﴿ادْعُونِي أَسْتَجِبْ لَكُمْ﴾', source:'غافر: 60' },
-            { type:'quran', text:'﴿وَعَسَىٰ أَنْ تَكْرَهُوا شَيْئًا وَهُوَ خَيْرٌ لَكُمْ﴾', source:'البقرة: 216' },
-            { type:'quran', text:'﴿إِنَّ اللَّهَ مَعَ الصَّابِرِينَ﴾', source:'البقرة: 153' },
-            { type:'quran', text:'﴿وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ﴾', source:'هود: 88' },
-            { type:'quran', text:'﴿وَعَلَى اللَّهِ فَتَوَكَّلُوا إِنْ كُنْتُمْ مُؤْمِنِينَ﴾', source:'المائدة: 23' },
-            { type:'quran', text:'﴿لَئِنْ شَكَرْتُمْ لَأَزِيدَنَّكُمْ﴾', source:'إبراهيم: 7' },
-            { type:'quran', text:'﴿فَإِنَّ مَعَ الْعُسْرِ يُسْرًا﴾', source:'الشرح: 5' },
-            { type:'quran', text:'﴿إِنَّ إِلَى رَبِّكَ الرُّجْعَىٰ﴾', source:'العلق: 8' },
-            { type:'quran', text:'﴿وَمَنْ يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ﴾', source:'الطلاق: 3' },
-            { type:'quran', text:'﴿وَقُلْ رَبِّ زِدْنِي عِلْمًا﴾', source:'طه: 114' },
-            { type:'quran', text:'﴿إِنَّ رَحْمَتَ اللَّهِ قَرِيبٌ مِنَ الْمُحْسِنِينَ﴾', source:'الأعراف: 56' },
-            { type:'quran', text:'﴿وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ﴾', source:'النحل: 127' },
-            { type:'quran', text:'﴿فَإِنَّكَ بِأَعْيُنِنَا﴾', source:'الطور: 48' },
-            { type:'quran', text:'﴿رَبِّ اشْرَحْ لِي صَدْرِي﴾', source:'طه: 25' },
-            { type:'quran', text:'﴿وَعِبَادُ الرَّحْمَٰنِ الَّذِينَ يَمْشُونَ عَلَى الْأَرْضِ هَوْنًا﴾', source:'الفرقان: 63' },
-            { type:'quran', text:'﴿وَمَنْ يَغْفِرُ الذُّنُوبَ إِلَّا اللَّهُ﴾', source:'آل عمران: 135' },
-
-      // ====== أحاديث صحيحة موجزة (مراجعة) ======
-            { type:'hadith', text:'"إنما الأعمال بالنيات" },
-            { type:'hadith', text:'"الدين النصيحة"', source:'مسلم 55' },
-            { type:'hadith', text:'"لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه" },
-            { type:'hadith', text:'"من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت" },
-            { type:'hadith', text:'"اتقِ الله حيثما كنت"' },
-            { type:'hadith', text:'"احرص على ما ينفعك واستعن بالله ولا تعجز" },
-            { type:'hadith', text:'"أحب الأعمال إلى الله أدومها وإن قل" },
-            { type:'hadith', text:'"تبسمك في وجه أخيك صدقة" },
-            { type:'hadith', text:'"المسلم من سلم المسلمون من لسانه ويده" },
-            { type:'hadith', text:'"لا ضرر ولا ضرار"', source:'ابن ماجه 2341 (حسن)' },
-            { type:'hadith', text:'"المرء مع من أحب" },
-            { type:'hadith', text:'"من لا يَرحم لا يُرحم" },
-            { type:'hadith', text:'"يسروا ولا تعسروا وبشروا ولا تنفروا" },
-            { type:'hadith', text:'"الصلاة نور"', source:'مسلم 223' },
-            { type:'hadith', text:'"الدعاء هو العبادة" },
-
-      // ====== أبيات شعر فصيح قصيرة ======
-            { type:'poetry', text:'وَمَا نَيْلُ الْمَطَالِبِ بِالتَّمَنِّي — وَلَكِنْ تُؤْخَذُ الدُّنْيَا غِلَابَا', source:'أبو القاسم الشابي' },
-            { type:'poetry', text:'وَإِذَا خَلَوْتَ بِرِيبَةٍ فِي ظُلْمَةٍ — وَالنَّفْسُ دَاعِيَةٌ إِلَى الطُّغْيَانِ\nفَاسْتَحْيِ مِنْ نَظَرِ الإِلَهِ وَقُلْ لَهَا — إِنَّ الَّذِي خَلَقَ الظَّلَامَ يَرَانِي', source:'الشافعي (منسوب مشهور)' },
-            { type:'poetry', text:'ضَاقَتْ فَلَمَّا اسْتَحْكَمَتْ حَلَقَاتُهَا — فُرِجَتْ وَكُنْتُ أَظُنُّهَا لَا تُفْرَجُ', source:'مَثَلٌ شائع' },
-            { type:'poetry', text:'سَفِينَةُ الصَّبْرِ تَجْرِي فِي مَدَاهَا — وَمَنْ صَبَرَ انْتَهَى لِلْفَوْزِ غَايَا', source:'بيت حكمي' },
-            { type:'poetry', text:'وَالعِلْمُ يَرْفَعُ بَيْتًا لَا عِمَادَ لَهُ — وَالْجَهْلُ يَهْدِمُ بَيْتَ العِزِّ وَالشَّرَفِ', source:'منسوب' },
-            { type:'poetry', text:'تَعَاظَمَنِي ذَنْبِي فَلَمَّا قَرَنْتُهُ — بِعَفْوِكَ رَبِّي كَانَ عَفْوُكَ أَعْظَمَا', source:'الإمام الشافعي' },
-            { type:'poetry', text:'وَمَنْ يَتَّقِ اللَّهَ يَجْعَلْ لَهُ مَخْرَجَا — وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ', source:'اقتباس معنى آية' },
-            { type:'poetry', text:'إِذَا لَمْ تَزِدْ عَلَى الدُّنْيَا فَأَنْتَ نَقْصَانُ — وَإِنْ قَنِعْتَ فَذَاكَ العِزُّ وَالرِّضْوَانُ', source:'حكمي' },
-
-      // ====== حِكم ومواعظ قصيرة ======
-            { type:'wisdom', text:'ما خاب من استخار، ولا ندم من استشار.', source:'حكمة' },
-            { type:'wisdom', text:'الصبر جميل، وعاقبته أجمل.', source:'حكمة' },
-            { type:'wisdom', text:'من أصلح سريرته أصلح الله علانيته.', source:'حكمة' },
-            { type:'wisdom', text:'من تواضع لله رفعه.', source:'أثر' },
-            { type:'wisdom', text:'القناعة كنز لا يفنى.', source:'مثل' },
-            { type:'wisdom', text:'السلامة في الصمت إلا عن حق.', source:'حكمة' },
-            { type:'wisdom', text:'عشرة في العيون ولا نخس في القلب.', source:'مثل' },
-            { type:'wisdom', text:'لا تؤخر عمل اليوم إلى الغد.', source:'حكمة' },
-            { type:'wisdom', text:'من راقب الله في السر أصلح الله له العلن.', source:'حكمة' },
-            { type:'wisdom', text:'من عرف الله هانت عليه الدنيا.', source:'حكمة' },
             { text: "يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ ارْجِعِي إِلَى رَبِّكِ رَاضِيَةً مَرْضِيَّةً", source: "سورة الفجر - الآية 27-28", type: "قرآن" },
             { text: "اللهم إني أعوذ بك من الهم والحزن، وأعوذ بك من العجز والكسل، وأعوذ بك من الجبن والبخل، وأعوذ بك من غلبة الدين وقهر الرجال", source: "حديث شريف", type: "حديث" },
             { text: "اصبر قليلاً فبعد العسر تيسير وكل أمر له وقت وتدبير", source: "مثل عربي", type: "حكمة" },
@@ -240,39 +248,64 @@
         // عناصر DOM
         const textElement = document.getElementById('text');
         const sourceElement = document.getElementById('source');
-        const newTextBtn = document.getElementById('newTextBtn');
-        const shareBtn = document.getElementById('shareBtn');
-
+        const countdownElement = document.getElementById('countdown');
+        
         // عرض نص عشوائي
         function showRandomText() {
             const randomIndex = Math.floor(Math.random() * texts.length);
             const randomText = texts[randomIndex];
             
-            textElement.textContent = randomText.text;
-            sourceElement.textContent = `${randomText.source} (${randomText.type})`;
+            // إضافة تأثير التلاشي قبل تغيير النص
+            textElement.classList.remove('fade-in');
+            sourceElement.classList.remove('fade-in');
+            
+            setTimeout(() => {
+                textElement.textContent = randomText.text;
+                sourceElement.textContent = `${randomText.source} (${randomText.type})`;
+                
+                // إعادة إضافة تأثير التلاشي
+                textElement.classList.add('fade-in');
+                sourceElement.classList.add('fade-in');
+                
+                // إعادة تعيين العد التنازلي
+                resetCountdown();
+            }, 500);
         }
-
-        // عند النقر على زر نص جديد
-        newTextBtn.addEventListener('click', showRandomText);
-
-        // عند النقر على زر المشاركة
-        shareBtn.addEventListener('click', () => {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'ابتسم - نصوص ملهمة',
-                    text: textElement.textContent,
-                    url: window.location.href
-                })
-                .catch(error => {
-                    console.log('Error sharing:', error);
-                });
-            } else {
-                alert('ميزة المشاركة غير مدعومة في متصفحك. يمكنك نسخ الرابط ومشاركته يدوياً.');
-            }
-        });
-
+        
+        // العد التنازلي للتغيير التلقائي
+        let countdown = 15;
+        let countdownInterval;
+        
+        function startCountdown() {
+            clearInterval(countdownInterval);
+            countdown = 15;
+            countdownElement.textContent = countdown;
+            
+            countdownInterval = setInterval(() => {
+                countdown--;
+                countdownElement.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    showRandomText();
+                }
+            }, 1000);
+        }
+        
+        function resetCountdown() {
+            clearInterval(countdownInterval);
+            startCountdown();
+        }
+        
         // عند تحميل الصفحة
-        window.addEventListener('load', showRandomText);
+        window.addEventListener('load', () => {
+            showRandomText();
+            startCountdown();
+        });
+        
+        // تغيير النص عند النقر على الصفحة
+        document.addEventListener('click', () => {
+            showRandomText();
+        });
     </script>
 </body>
 </html>
