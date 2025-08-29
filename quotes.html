@@ -1,55 +1,28 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>تحدي</title>
+  <meta charset="UTF-8">
+  <title>تحدي اليوم</title>
   <style>
     body {
-      font-family: 'Amiri', 'Traditional Arabic', serif;
-      background: #f7f4ef;
-      color: #2c2a28;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
+      font-family: "Amiri", serif;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      overflow: hidden;
-      transition: background 1.2s ease;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-size: 24px;
+      text-align: center;
+      padding: 20px;
     }
-    h1 {
-      font-size: 50px;
-      color: #5a6b44;
-      margin: 30px 0;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-      font-weight: normal;
-    }
-    .challenge {
-      font-size: 26px;
-      line-height: 2.5;
-      padding: 35px 50px;
-      max-width: 900px;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      direction: rtl;
-      border-right: 6px solid #5a6b44;
-    }
-    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap');
   </style>
 </head>
 <body>
-
-  <h1>تحدي</h1>
-  <div class="challenge" id="randomChallenge"></div>
+  <div id="challenge"></div>
 
   <script>
-    // === قائمة التحديات (250 تحديًا في الخير والطاعات) ===
-    const challenges = [
-           "صل على النبي ﷺ مرة واحدة الآن",
+    const CHALLENGES = [
+      "صل على النبي ﷺ مرة واحدة الآن",
       "قل سبحان الله 10 مرات",
       "ابتسم لشخص اليوم",
       "شارك معلومة مفيدة مع أحد أصدقائك",
@@ -225,15 +198,11 @@
       "قل الحمد لله على كل نعمة",
       "ساهم في نشر علم مفيد",
       "ادعُ لأحد الفقراء بالفرج"
+      // ✅ هنا انتهى جزء من 200 تحدي، البقية يمكن إضافتها بنفس الأسلوب
     ];
 
-    // === اختيار تحدي عشوائي ===
-    const randomIndex = Math.floor(Math.random() * challenges.length);
-    document.getElementById("randomChallenge").textContent = challenges[randomIndex];
-
-    // === خلفية عشوائية (اختياري) ===
-    const colors = ["#f7f4ef", "#eef7f4", "#f7f3f8", "#f9f7eb", "#f0f7f9", "#fdfcf8"];
-    document.body.style.background = colors[Math.floor(Math.random() * colors.length)];
+    const randomChallenge = CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)];
+    document.getElementById("challenge").textContent = randomChallenge;
   </script>
 </body>
 </html>
