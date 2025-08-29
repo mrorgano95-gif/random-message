@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>رسالة عشوائية</title>
+  <style>
+    body {
+      font-family: "Amiri", serif;
+      text-align: center;
+      margin-top: 20%;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div id="message"></div>
+
+  <script>
+    const messages = [
+      "قال النبي ﷺ: إنما الأعمال بالنيات",
+      "قال تعالى: إن مع العسر يسرا",
+      "الصبر مفتاح الفرج",
+      "ومن يتوكل على الله فهو حسبه",
+      "كن جميلاً ترى الوجود جميلاً"
+    ];
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    document.getElementById("message").textContent = randomMessage;
+  </script>
+</body>
+</html>
