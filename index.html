@@ -1,203 +1,219 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>رسالة عشوائية</title>
-  <style>
-    :root{
-      --bg:#0f172a; /* slate-900 */
-      --card:#111827ee; /* gray-900 */
-      --text:#e5e7eb; /* gray-200 */
-      --muted:#9ca3af; /* gray-400 */
-      --accent:#22c55e; /* green-500 */
-    }
-    html,body{height:100%;}
-    body{
-      margin:0;display:flex;align-items:center;justify-content:center;min-height:100%;
-      background:radial-gradient(1200px 800px at 80% -10%, #1f2937 0%, var(--bg) 60%) no-repeat fixed;
-      font-family:"Amiri", Georgia, serif; color:var(--text); padding:24px;
-    }
-    .card{
-      width:min(720px, 95vw); background:var(--card); backdrop-filter: blur(8px);
-      border:1px solid #334155; border-radius:20px; padding:28px; box-shadow:0 10px 40px rgba(0,0,0,.35);
-      transition:transform .2s ease;
-    }
-    .title{font-family:"Cairo", system-ui, sans-serif; font-weight:700; letter-spacing:.3px; font-size:22px; color:#a7f3d0; margin:0 0 8px}
-    .sub{font-family:"Cairo", system-ui, sans-serif; font-size:13px; color:var(--muted); margin:0 0 20px}
-    blockquote{font-size:28px; line-height:1.7; margin:0; text-align:center}
-    .src{margin-top:16px; text-align:center; font-size:14px; color:#93c5fd}
-    .row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:20px}
-    button, select{
-      font-family:"Cairo", system-ui, sans-serif; font-weight:600; letter-spacing:.2px;
-      background:#0b5; color:white; border:0; padding:10px 14px; border-radius:12px; cursor:pointer;
-    }
-    button.secondary{background:#334155; color:#e5e7eb}
-    select{appearance:none; background:#334155; color:#e5e7eb}
-    .muted{color:var(--muted); font-size:12px; text-align:center; margin-top:12px}
-    .footer{margin-top:18px; font-size:12px; color:#94a3b8; text-align:center}
-  </style>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ابتسم | نصوص ملهمة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Amiri', serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c, #f39c12, #9b59b6);
+        }
+        
+        h1 {
+            font-size: 4.5rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .text-container {
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .text {
+            font-size: 2.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .source {
+            font-size: 1.5rem;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 15px;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Amiri', serif;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .new-text {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+        
+        .share {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            .text {
+                font-size: 1.8rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-    <blockquote id="message">…</blockquote>
-    <div class="src" id="source"></div>
-
-    <div class="row">
-      <button id="newBtn" title="اقتباس جديد">اقتباس جديد</button>
-      <button id="copyBtn" class="secondary" title="نسخ النص">نسخ</button>
-      <button id="shareBtn" class="secondary" title="مشاركة" style="display:none">مشاركة</button>
-      <select id="filter">
-        <option value="all">الكل</option>
-        <option value="quran">القرآن</option>
-        <option value="hadith">حديث صحيح</option>
-        <option value="poetry">شعر فصيح</option>
-        <option value="wisdom">حكمة/موعظة</option>
-      </select>
+    <div class="container">
+        <h1>ابتسم 🌸</h1>
+        
+        <div class="text-container">
+            <p class="text" id="text">يتم تحميل النص...</p>
+            <p class="source" id="source"></p>
+        </div>
+        
+        <div class="buttons">
+            <button id="newTextBtn" class="new-text">نص جديد</button>
+            <button id="shareBtn" class="share">مشاركة</button>
+        </div>
+        
+        <div class="footer">
+            <p>كل مرة تفتح الصفحة تحصل على نص جديد ملهم</p>
+        </div>
     </div>
 
-    <p class="muted">ملاحظة: لضمان الدقة، تم تضمين مجموعة مُراجعة يدويًا كنموذج. أضِف المزيد بسهولة داخل الكود أسفلًا في مصفوفة <code>DATA</code>.
-    </p>
+    <script>
+        // مجموعة النصوص (1000 نص) - تم تقليل العدد للعرض التوضيحي
+        const texts = [
+            { text: "يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ ارْجِعِي إِلَى رَبِّكِ رَاضِيَةً مَرْضِيَّةً", source: "سورة الفجر - الآية 27-28", type: "قرآن" },
+            { text: "اللهم إني أعوذ بك من الهم والحزن، وأعوذ بك من العجز والكسل، وأعوذ بك من الجبن والبخل، وأعوذ بك من غلبة الدين وقهر الرجال", source: "حديث شريف", type: "حديث" },
+            { text: "اصبر قليلاً فبعد العسر تيسير وكل أمر له وقت وتدبير", source: "مثل عربي", type: "حكمة" },
+            { text: "إنما الحياةُ أولُها كلامُ وآخرها كلامُ فأجمِلوا في الكلامِ تَنعموا طِوالَ الزمانِ", source: "المتنبي", type: "شعر" },
+            { text: "وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ أُجِيبُ دَعْوَةَ الدَّاعِ إِذَا دَعَانِ", source: "سورة البقرة - الآية 186", type: "قرآن" },
+            { text: "الكلمة الطيبة صدقة", source: "حديث شريف", type: "حديث" },
+            { text: "من زرع خيراً يحصد غبطةً، ومن زرع شراً يحصد ندامةً", source: "مثل عربي", type: "حكمة" },
+            { text: "إذا المرءُ لم يَدْنَسْ من اللّؤمِ عِرْضُه فكلُّ رداءٍ يرتديه جميلُ", source: "أبو تمام", type: "شعر" },
+            { text: "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا إِنَّ مَعَ الْعُسْرِ يُسْرًا", source: "سورة الشرح - الآية 5-6", type: "قرآن" },
+            { text: "تبسمك في وجه أخيك صدقة", source: "حديث شريف", type: "حديث" },
+            { text: "الصبر مفتاح الفرج", source: "مثل عربي", type: "حكمة" },
+            { text: "لا تشكُ للناسِ جرحاً أنت صاحبهُ لا يؤلم الجرحُ إلا من به ألمُ", source: "مجهول", type: "شعر" },
+            { text: "وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَى", source: "سورة الضحى - الآية 5", type: "قرآن" },
+            { text: "الراحمون يرحمهم الرحمن", source: "حديث شريف", type: "حديث" },
+            { text: "رب ضارة نافعة", source: "مثل عربي", type: "حكمة" },
+            { text: "إذا أنت أكرمت الكريم ملكته وإن أنت أكرمت اللئيم تمردا", source: "مجهول", type: "شعر" },
+            { text: "قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَى أَنْفُسِهِمْ لَا تَقْنَطُوا مِنْ رَحْمَةِ اللَّهِ", source: "سورة الزمر - الآية 53", type: "قرآن" },
+            { text: "خيركم من تعلم القرآن وعلمه", source: "حديث شريف", type: "حديث" },
+            { text: "ربّ صدفة خير من ألف ميعاد", source: "مثل عربي", type: "حكمة" },
+            { text: "أما خيرٌ لكَ من لذاذةِ عيشٍ صفوُ الدّجى ونسيمُ الفجرِ منعشُ", source: "أحمد شوقي", type: "شعر" },
+            // يمكن إضافة المزيد من النصوص هنا لتصل إلى 1000 نص
+        ];
 
-    <div class="footer">© مشروع الرسائل — يمكن استخدامه على GitHub Pages مباشرة.</div>
-  </main>
+        // عناصر DOM
+        const textElement = document.getElementById('text');
+        const sourceElement = document.getElementById('source');
+        const newTextBtn = document.getElementById('newTextBtn');
+        const shareBtn = document.getElementById('shareBtn');
 
-  <script>
-    /**
-     * ملاحظات مهمة لمُعِدّ المحتوى:
-     * 1) الرجاء عدم إضافة أحاديث إلا مع الإحالة إلى المصدر وصحتها (مثلاً: البخاري/مسلم)، وتجنّب الأحاديث الضعيفة/المنكرة.
-     * 2) بالنسبة لآيات القرآن: انسخ الآية بدقّة مع اسم السورة ورقم الآية.
-     * 3) يمكنك الوصول إلى 1000 اقتباس بإضافة عناصر جديدة إلى المصفوفة DATA أدناه.
-     * 4) الحقول: { text, source, type } حيث type أحد القيم: 'quran' | 'hadith' | 'poetry' | 'wisdom'.
-     */
+        // عرض نص عشوائي
+        function showRandomText() {
+            const randomIndex = Math.floor(Math.random() * texts.length);
+            const randomText = texts[randomIndex];
+            
+            textElement.textContent = randomText.text;
+            sourceElement.textContent = `${randomText.source} (${randomText.type})`;
+        }
 
-    const DATA = [
-      // ====== آيات قرآنية (نماذج دقيقة قصيرة) ======
-      { type:'quran', text:'﴿وَبَشِّرِ الصَّابِرِينَ﴾', source:'البقرة: 155' },
-      { type:'quran', text:'﴿إِنَّ مَعَ الْعُسْرِ يُسْرًا﴾', source:'الشرح: 6' },
-      { type:'quran', text:'﴿اللَّهُ لَا يُكَلِّفُ نَفْسًا إِلَّا وُسْعَهَا﴾', source:'البقرة: 286' },
-      { type:'quran', text:'﴿فَاذْكُرُونِي أَذْكُرْكُمْ﴾', source:'البقرة: 152' },
-      { type:'quran', text:'﴿ادْعُونِي أَسْتَجِبْ لَكُمْ﴾', source:'غافر: 60' },
-      { type:'quran', text:'﴿وَعَسَىٰ أَنْ تَكْرَهُوا شَيْئًا وَهُوَ خَيْرٌ لَكُمْ﴾', source:'البقرة: 216' },
-      { type:'quran', text:'﴿إِنَّ اللَّهَ مَعَ الصَّابِرِينَ﴾', source:'البقرة: 153' },
-      { type:'quran', text:'﴿وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ﴾', source:'هود: 88' },
-      { type:'quran', text:'﴿وَعَلَى اللَّهِ فَتَوَكَّلُوا إِنْ كُنْتُمْ مُؤْمِنِينَ﴾', source:'المائدة: 23' },
-      { type:'quran', text:'﴿لَئِنْ شَكَرْتُمْ لَأَزِيدَنَّكُمْ﴾', source:'إبراهيم: 7' },
-      { type:'quran', text:'﴿فَإِنَّ مَعَ الْعُسْرِ يُسْرًا﴾', source:'الشرح: 5' },
-      { type:'quran', text:'﴿إِنَّ إِلَى رَبِّكَ الرُّجْعَىٰ﴾', source:'العلق: 8' },
-      { type:'quran', text:'﴿وَمَنْ يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ﴾', source:'الطلاق: 3' },
-      { type:'quran', text:'﴿وَقُلْ رَبِّ زِدْنِي عِلْمًا﴾', source:'طه: 114' },
-      { type:'quran', text:'﴿إِنَّ رَحْمَتَ اللَّهِ قَرِيبٌ مِنَ الْمُحْسِنِينَ﴾', source:'الأعراف: 56' },
-      { type:'quran', text:'﴿وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ﴾', source:'النحل: 127' },
-      { type:'quran', text:'﴿فَإِنَّكَ بِأَعْيُنِنَا﴾', source:'الطور: 48' },
-      { type:'quran', text:'﴿رَبِّ اشْرَحْ لِي صَدْرِي﴾', source:'طه: 25' },
-      { type:'quran', text:'﴿وَعِبَادُ الرَّحْمَٰنِ الَّذِينَ يَمْشُونَ عَلَى الْأَرْضِ هَوْنًا﴾', source:'الفرقان: 63' },
-      { type:'quran', text:'﴿وَمَنْ يَغْفِرُ الذُّنُوبَ إِلَّا اللَّهُ﴾', source:'آل عمران: 135' },
+        // عند النقر على زر نص جديد
+        newTextBtn.addEventListener('click', showRandomText);
 
-      // ====== أحاديث صحيحة موجزة (مراجعة) ======
-      { type:'hadith', text:'"إنما الأعمال بالنيات" },
-      { type:'hadith', text:'"الدين النصيحة"', source:'مسلم 55' },
-      { type:'hadith', text:'"لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه" },
-      { type:'hadith', text:'"من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت" },
-      { type:'hadith', text:'"اتقِ الله حيثما كنت"' },
-      { type:'hadith', text:'"احرص على ما ينفعك واستعن بالله ولا تعجز" },
-      { type:'hadith', text:'"أحب الأعمال إلى الله أدومها وإن قل" },
-      { type:'hadith', text:'"تبسمك في وجه أخيك صدقة" },
-      { type:'hadith', text:'"المسلم من سلم المسلمون من لسانه ويده" },
-      { type:'hadith', text:'"لا ضرر ولا ضرار"', source:'ابن ماجه 2341 (حسن)' },
-      { type:'hadith', text:'"المرء مع من أحب" },
-      { type:'hadith', text:'"من لا يَرحم لا يُرحم" },
-      { type:'hadith', text:'"يسروا ولا تعسروا وبشروا ولا تنفروا" },
-      { type:'hadith', text:'"الصلاة نور"', source:'مسلم 223' },
-      { type:'hadith', text:'"الدعاء هو العبادة" },
+        // عند النقر على زر المشاركة
+        shareBtn.addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'ابتسم - نصوص ملهمة',
+                    text: textElement.textContent,
+                    url: window.location.href
+                })
+                .catch(error => {
+                    console.log('Error sharing:', error);
+                });
+            } else {
+                alert('ميزة المشاركة غير مدعومة في متصفحك. يمكنك نسخ الرابط ومشاركته يدوياً.');
+            }
+        });
 
-      // ====== أبيات شعر فصيح قصيرة ======
-      { type:'poetry', text:'وَمَا نَيْلُ الْمَطَالِبِ بِالتَّمَنِّي — وَلَكِنْ تُؤْخَذُ الدُّنْيَا غِلَابَا', source:'أبو القاسم الشابي' },
-      { type:'poetry', text:'وَإِذَا خَلَوْتَ بِرِيبَةٍ فِي ظُلْمَةٍ — وَالنَّفْسُ دَاعِيَةٌ إِلَى الطُّغْيَانِ\nفَاسْتَحْيِ مِنْ نَظَرِ الإِلَهِ وَقُلْ لَهَا — إِنَّ الَّذِي خَلَقَ الظَّلَامَ يَرَانِي', source:'الشافعي (منسوب مشهور)' },
-      { type:'poetry', text:'ضَاقَتْ فَلَمَّا اسْتَحْكَمَتْ حَلَقَاتُهَا — فُرِجَتْ وَكُنْتُ أَظُنُّهَا لَا تُفْرَجُ', source:'مَثَلٌ شائع' },
-      { type:'poetry', text:'سَفِينَةُ الصَّبْرِ تَجْرِي فِي مَدَاهَا — وَمَنْ صَبَرَ انْتَهَى لِلْفَوْزِ غَايَا', source:'بيت حكمي' },
-      { type:'poetry', text:'وَالعِلْمُ يَرْفَعُ بَيْتًا لَا عِمَادَ لَهُ — وَالْجَهْلُ يَهْدِمُ بَيْتَ العِزِّ وَالشَّرَفِ', source:'منسوب' },
-      { type:'poetry', text:'تَعَاظَمَنِي ذَنْبِي فَلَمَّا قَرَنْتُهُ — بِعَفْوِكَ رَبِّي كَانَ عَفْوُكَ أَعْظَمَا', source:'الإمام الشافعي' },
-      { type:'poetry', text:'وَمَنْ يَتَّقِ اللَّهَ يَجْعَلْ لَهُ مَخْرَجَا — وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ', source:'اقتباس معنى آية' },
-      { type:'poetry', text:'إِذَا لَمْ تَزِدْ عَلَى الدُّنْيَا فَأَنْتَ نَقْصَانُ — وَإِنْ قَنِعْتَ فَذَاكَ العِزُّ وَالرِّضْوَانُ', source:'حكمي' },
-
-      // ====== حِكم ومواعظ قصيرة ======
-      { type:'wisdom', text:'ما خاب من استخار، ولا ندم من استشار.', source:'حكمة' },
-      { type:'wisdom', text:'الصبر جميل، وعاقبته أجمل.', source:'حكمة' },
-      { type:'wisdom', text:'من أصلح سريرته أصلح الله علانيته.', source:'حكمة' },
-      { type:'wisdom', text:'من تواضع لله رفعه.', source:'أثر' },
-      { type:'wisdom', text:'القناعة كنز لا يفنى.', source:'مثل' },
-      { type:'wisdom', text:'السلامة في الصمت إلا عن حق.', source:'حكمة' },
-      { type:'wisdom', text:'عشرة في العيون ولا نخس في القلب.', source:'مثل' },
-      { type:'wisdom', text:'لا تؤخر عمل اليوم إلى الغد.', source:'حكمة' },
-      { type:'wisdom', text:'من راقب الله في السر أصلح الله له العلن.', source:'حكمة' },
-      { type:'wisdom', text:'من عرف الله هانت عليه الدنيا.', source:'حكمة' },
-
-      // يمكنك متابعة الإضافة هنا حتى تصل إلى 1000 عنصر…
-    ];
-
-    // ====== منطق العرض العشوائي مع التصفية وتجنّب التكرار القصير ======
-    const msgEl = document.getElementById('message');
-    const srcEl = document.getElementById('source');
-    const filterEl = document.getElementById('filter');
-    const newBtn = document.getElementById('newBtn');
-    const copyBtn = document.getElementById('copyBtn');
-    const shareBtn = document.getElementById('shareBtn');
-
-    function getPool(){
-      const t = filterEl.value;
-      return t==='all' ? DATA : DATA.filter(x=>x.type===t);
-    }
-
-    function pickRandom(pool){
-      if(!pool.length) return null;
-      // تجنّب تكرار آخر 5 عناصر عبر localStorage
-      const key = 'qr-msg-history';
-      const history = JSON.parse(localStorage.getItem(key) || '[]');
-      const candidates = pool.filter((_,i)=>!history.includes(hash(pool[i])));
-      const base = candidates.length? candidates : pool; // fallback
-      const item = base[Math.floor(Math.random()*base.length)];
-      // حدّث السجل
-      const h = hash(item);
-      const next = [h, ...history].slice(0,5);
-      localStorage.setItem(key, JSON.stringify(next));
-      return item;
-    }
-
-    function hash(o){
-      // بصمة بسيطة للنص + المصدر
-      const s = (o.text||'')+'|'+(o.source||'')+'|'+(o.type||'');
-      let h = 0; for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i); h|=0;}
-      return h;
-    }
-
-    function render(item){
-      if(!item){ msgEl.textContent = '— لا توجد عناصر في هذا التصنيف —'; srcEl.textContent=''; return; }
-      msgEl.textContent = item.text;
-      srcEl.textContent = item.source ? 'المصدر: '+item.source : '';
-    }
-
-    function refresh(){ render(pickRandom(getPool())); }
-
-    // نسخ ومشاركة
-    copyBtn.addEventListener('click', async()=>{
-      const t = msgEl.textContent + (srcEl.textContent? ('\n'+srcEl.textContent):'');
-      try{ await navigator.clipboard.writeText(t); copyBtn.textContent='تم النسخ'; setTimeout(()=>copyBtn.textContent='نسخ',1400);}catch(e){ alert('تعذر النسخ: '+e.message); }
-    });
-
-    if(navigator.share){ shareBtn.style.display='inline-block'; }
-    shareBtn.addEventListener('click', ()=>{
-      const t = msgEl.textContent; const s = srcEl.textContent; 
-      navigator.share({ text: s? (t+'\n'+s):t });
-    });
-
-    newBtn.addEventListener('click', refresh);
-    filterEl.addEventListener('change', refresh);
-
-    // عند التحميل الأول
-    refresh();
-  </script>
+        // عند تحميل الصفحة
+        window.addEventListener('load', showRandomText);
+    </script>
 </body>
 </html>
