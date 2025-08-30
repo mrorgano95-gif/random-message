@@ -1,555 +1,189 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>محاكاة لعبة: سلسلة نقل الإلكترون وتكوين ATP</title>
-
-<!-- خطوط -->
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Amiri&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8">
+<title>سلسلة نقل الإلكترونات - ATP متقدمة</title>
 <style>
-  :root{
-    --bg1: #071028;
-    --bg2: #0b3550;
-    --card: #f6f7f9;
-    --accent: #ffd166;
-    --accent2: #06d6a0;
-    --muted: #b7c9d9;
-    --glass: rgba(255,255,255,0.06);
+  body {
+    margin: 0;
+    background-color: #1a1a1a;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
   }
-  html,body{height:100%;margin:0;font-family:"Cairo",system-ui,Arial; background: radial-gradient(1200px 600px at 10% 10%, #061022 0%, var(--bg1) 20%, var(--bg2) 100%); color:var(--card);}
-
-  /* الصفحة العامة */
-  .app{
-    max-width:1200px;margin:20px auto;padding:22px; display:grid; grid-template-columns: 420px 1fr; gap:20px;
+  #info {
+    text-align: center;
+    font-size: 20px;
+    padding: 20px;
+    min-height: 40px;
   }
-  header{
-    grid-column: 1 / -1; display:flex; gap:12px; align-items:center;
+  #container {
+    position: relative;
+    width: 100%;
+    height: 600px;
   }
-  .logo{
-    width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#ff9f1c);display:flex;align-items:center;justify-content:center;color:#022; font-weight:700; font-size:18px; box-shadow:0 8px 30px rgba(0,0,0,0.5);
+  svg {
+    width: 100%;
+    height: 100%;
   }
-  h1{margin:0;font-size:20px;color:var(--card); font-weight:700}
-  p.lead{margin:0;color:var(--muted);font-size:13px}
-
-  /* اللوحة اليسارية: تحكم وشرح */
-  .panel{
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-    border-radius:12px;padding:18px; box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-    border:1px solid rgba(255,255,255,0.03);
+  .complex {
+    stroke: #666;
+    stroke-width: 2;
+    fill: #444;
+    rx: 15;
+    ry: 15;
   }
-  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-  button{
-    background:linear-gradient(180deg,var(--accent2),#03b887);
-    border:none;color:#022;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700;
-    box-shadow: 0 6px 14px rgba(2, 90, 70, 0.15);
+  .complex-text {
+    fill: #fff;
+    font-size: 14px;
+    text-anchor: middle;
   }
-  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06); color:var(--card); box-shadow:none;}
-  .small{padding:8px 10px;font-size:13px}
-
-  .step-indicator{margin-top:14px;font-size:13px;color:var(--muted)}
-  .explanation{
-    margin-top:14px;background:rgba(255,255,255,0.02); padding:12px;border-radius:8px; font-size:14px; color: #eaf6f1; line-height:1.6;
-    max-height:300px; overflow:auto; border:1px solid rgba(255,255,255,0.02);
+  .electron {
+    fill: #00f;
+    r: 6;
   }
-
-  /* المنطقة الرسومية (اليمين) */
-  .stage{
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:12px;padding:18px; min-height:560px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    border:1px solid rgba(255,255,255,0.03);
-    position:relative; overflow:hidden;
+  .proton {
+    fill: #f00;
+    r: 5;
   }
-
-  /* mitochondrion inner membrane visual */
-  .mito{
-    display:flex; gap:20px; height:100%; align-items:center; justify-content:center;
+  .ATP {
+    fill: #ff0;
+    font-size: 16px;
+    font-weight: bold;
   }
-  /* membrane area left - right */
-  .membrane{
-    width:88%; height:380px; background: linear-gradient(90deg,#0b2a3b, #072235); border-radius:18px; position:relative; overflow:hidden;
-    box-shadow: inset 0 0 80px rgba(0,0,0,0.6);
-    border:1px solid rgba(255,255,255,0.02);
+  #controls {
+    text-align: center;
+    margin-top: 10px;
   }
-
-  /* complexes style */
-  .complex{
-    position:absolute; width:120px; height:140px; border-radius:8px; background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-    display:flex; align-items:center; justify-content:center; text-align:center; color:var(--card); font-weight:700; font-size:13px; box-shadow:0 6px 18px rgba(0,0,0,0.5);
+  button {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
   }
-
-  .cI{left:6%; top:18%; transform:translateY(-10%);}
-  .cII{left:22%; top:60%; transform:translateY(-50%);} /* lower than I */
-  .cCoQ{left:38%; top:35%;}
-  .cIII{left:58%; top:18%;}
-  .cCyt{left:75%; top:45%;}
-  .cIV{left:86%; top:28%;}
-
-  .complex .label{display:block; font-size:12px; color:var(--accent); margin-bottom:6px}
-  .complex .sub{font-size:11px;color:var(--muted);font-weight:400}
-
-  /* electron particle */
-  .electron{
-    position:absolute; width:12px; height:12px; border-radius:50%; background: radial-gradient(circle at 30% 30%, #fff, #ffd166 20%, #ff6b6b 80%);
-    box-shadow: 0 0 12px rgba(255,150,60,0.8), 0 0 30px rgba(255,120,80,0.15);
-    transform:translate(-50%,-50%); pointer-events:none;
-    z-index:20;
-  }
-
-  /* proton pool (above and below membrane) */
-  .proton{
-    position:absolute; width:14px; height:14px; border-radius:50%; background:linear-gradient(180deg,#ffd166,#ffb703);
-    box-shadow:0 2px 6px rgba(0,0,0,0.4);
-    transform:translate(-50%,-50%);
-    opacity:0.95;
-  }
-
-  /* proton gradient bar (left) */
-  .gradient-bar{
-    position:absolute; right: -38px; top:12px; width:28px; height:380px; border-radius:20px; background:linear-gradient(180deg,#d4f6e2,#69db9c);
-    display:flex; flex-direction:column; justify-content:flex-end; padding:6px; box-shadow: 0 8px 20px rgba(0,0,0,0.45);
-  }
-  .gradient-bar .level{ width:100%; height:40%; background:linear-gradient(180deg,#ffefc4,#ffd166); border-radius:12px; box-shadow: inset 0 -6px 14px rgba(0,0,0,0.06); }
-
-  /* ATP icon & counter */
-  .atp-counter{position:absolute; left:14px; bottom:14px; background:rgba(0,0,0,0.25); padding:10px 14px;border-radius:10px;font-weight:700;color:var(--card);font-size:16px;}
-
-  /* small helper */
-  .legend{position:absolute; left:14px; top:14px; font-size:13px; color:var(--muted); background:rgba(255,255,255,0.02); padding:8px;border-radius:8px;}
-
-  /* responsive */
-  @media (max-width:980px){
-    .app{grid-template-columns: 1fr; padding:12px;}
-    .panel{order:2}
-    .stage{order:1; min-height:520px}
-  }
-
-  /* animations */
-  @keyframes electron-move {
-    0% { transform: translate(-50%,-50%) scale(1); opacity:1; }
-    100% { transform: translate(-50%,-50%) scale(0.85); opacity:1; }
-  }
-
-  /* subtle pulsing for complexes to feel "alive" */
-  .complex::after{
-    content:""; position:absolute; inset:0; border-radius:8px; box-shadow: 0 0 40px rgba(80,200,160,0.02); opacity:0.9; pointer-events:none;
-    animation: pulse 3s ease-in-out infinite;
-  }
-  @keyframes pulse{
-    0% { box-shadow:0 0 6px rgba(0,0,0,0.2); }
-    50%{ box-shadow:0 0 28px rgba(0,150,120,0.04); }
-    100%{ box-shadow:0 0 6px rgba(0,0,0,0.2); }
-  }
-
-  /* tooltips small */
-  .muted-note{font-size:12px;color:var(--muted);margin-top:10px}
+  #prev { background-color: #d9534f; color: #fff; }
+  #next { background-color: #5cb85c; color: #fff; }
 </style>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <div class="logo">MitSim</div>
-      <div>
-        <h1>لعبة تفاعلية — سلسلة نقل الإلكترون وتكوين ATP</h1>
-        <p class="lead">محاكاة تفاعلية توضيحية بالعربية (مستوى جامعي مبتدئ). اتبع الخطوات وشاهد الإلكترونات والبروتونات وتأثيرها في توليد ATP.</p>
-      </div>
-    </header>
 
-    <!-- لوحة التحكم والشرح -->
-    <aside class="panel">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <div style="font-weight:700">التحكم</div>
-          <div class="muted-note">انتقل خطوة بخطوة أو شغل التشغيل التلقائي</div>
-        </div>
-        <div class="step-indicator" id="stepBadge">الخطوة 1 / 7</div>
-      </div>
+<div id="info">اضغط التالي للبدء</div>
+<div id="container">
+<svg id="mitoSvg">
+  <!-- Complexes -->
+  <rect x="100" y="200" width="80" height="150" class="complex" id="complexI"/>
+  <text x="140" y="380" class="complex-text">Complex I</text>
+  
+  <rect x="220" y="250" width="60" height="100" class="complex" id="complexII"/>
+  <text x="250" y="380" class="complex-text">Complex II</text>
+  
+  <rect x="320" y="200" width="80" height="150" class="complex" id="complexIII"/>
+  <text x="360" y="380" class="complex-text">Complex III</text>
+  
+  <rect x="450" y="220" width="80" height="130" class="complex" id="complexIV"/>
+  <text x="490" y="380" class="complex-text">Complex IV</text>
+  
+  <rect x="600" y="180" width="100" height="200" class="complex" id="ATPase"/>
+  <text x="650" y="400" class="complex-text">ATP Synthase</text>
+  
+  <!-- Multiple electrons -->
+  <circle class="electron" id="e1" cx="60" cy="275"></circle>
+  <circle class="electron" id="e2" cx="60" cy="295"></circle>
+  <circle class="electron" id="e3" cx="60" cy="315"></circle>
+  
+  <!-- Multiple protons -->
+  <circle class="proton" id="p1" cx="140" cy="200"></circle>
+  <circle class="proton" id="p2" cx="150" cy="210"></circle>
+  <circle class="proton" id="p3" cx="160" cy="220"></circle>
+</svg>
+</div>
 
-      <div class="controls">
-        <button id="prevBtn" class="small ghost">السابق</button>
-        <button id="nextBtn" class="small">التالي</button>
-        <button id="autoBtn" class="small ghost">تشغيل تلقائي</button>
-        <button id="resetBtn" class="small ghost">إعادة تعيين</button>
-        <select id="speed" class="small" style="margin-left:auto">
-          <option value="1400">سريع</option>
-          <option value="2000" selected>متوسط</option>
-          <option value="3200">بطيء</option>
-        </select>
-      </div>
+<div id="controls">
+  <button id="prev">السابق</button>
+  <button id="next">التالي</button>
+</div>
 
-      <div class="explanation" id="explain">
-        <!-- سيتم تحديث الشرح هنا -->
-        <strong>ملاحظة:</strong> اضغط "التالي" لبدء المحاكاة. في كل خطوة سيظهر شرح مختصر للآلية العلمية.
-      </div>
-
-      <div style="margin-top:12px">
-        <div style="font-weight:700">مفاتيح توضيحية</div>
-        <div class="muted-note">● نقاط صفراء: إلكترونات (نقل طاقة). ● دوائر برتقالية: بروتونات (H⁺). ● شريط أخضر: قوة البروتون (Gradient).</div>
-      </div>
-    </aside>
-
-    <!-- المنطقة الرسومية -->
-    <section class="stage">
-      <div class="mito">
-        <div class="membrane" id="membrane">
-
-          <!-- gradient / proton pool right (IMS) -->
-          <div class="gradient-bar" id="gradientBar" title="درجة فرق التركيز (Proton Gradient)">
-            <div class="level" id="gradientLevel"></div>
-          </div>
-
-          <!-- complexes -->
-          <div class="complex cI" id="C1"><span class="label">Complex I</span><span class="sub">NADH → CoQ<br>يضخ بروتونات</span></div>
-          <div class="complex cII" id="C2"><span class="label">Complex II</span><span class="sub">FADH₂ → CoQ<br>لا يضخ بروتونات</span></div>
-          <div class="complex cCoQ" id="CoQ"><span class="label">CoQ (Ubiquinone)</span><span class="sub">حوض إلكترونات</span></div>
-          <div class="complex cIII" id="C3"><span class="label">Complex III</span><span class="sub">Q-cycle → يضخ بروتونات</span></div>
-          <div class="complex cCyt" id="CytC"><span class="label">Cytochrome c</span><span class="sub">ناقِل إلكترون وحيد</span></div>
-          <div class="complex cIV" id="C4"><span class="label">Complex IV</span><span class="sub">نهاية السلسلة: O₂ → H₂O</span></div>
-
-          <!-- ATP counter -->
-          <div class="atp-counter" id="atpCounter">ATP: 0</div>
-
-          <!-- legend -->
-          <div class="legend">محاكاة الغشاء الداخلي → الجانب الأيمن = الفراغ بين الغشاء (IMS)، يسار = مصفوفة (Matrix)</div>
-
-        </div>
-      </div>
-    </section>
-  </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script>
-/*
-  MitSim — محاكاة سلسلة نقل الإلكترون وتكوين ATP
-  - خطوات تمثل الأحداث الأساسية (7 خطوات)
-  - كل خطوة تعرض حركة إلكترون و/أو ضخ بروتون وتزيد مستوى التدرج (Gradient)
-  - عند كل خطوة يظهر شرح علمي مبسط في اللوحة اليسارية
-  - عند مستوى Gradient كافِ، يتم تنشيط ATP synthase (محاكاة بإضافة ATP)
-*/
-
-const STEPS = [
-  {
-    title: "Complex I — أكسدة NADH ونقل الإلكترونات إلى CoQ",
-    explain: `في هذه الخطوة، يتبرع <strong>NADH</strong> بإلكترونين إلى <strong>Complex I</strong> (النقطة الأولى). تُنقل الإلكترونات عبر وحدات داخل المركب (مثل FMN وIron-Sulfur)، ثم تُسلم لـ <strong>CoQ</strong> (ubiquinone). 
-    <br><br><strong>نتيجة علمية:</strong> Complex I يساهم في ضخ بروتونات (H⁺) من المصفوفة إلى الحيز بين الغشاءين، مما يزيد فرق التركيز ويُسهم في بناء تدرّج البروتونات.`,
-    action: function(ctx){ // animate electrons from left (matrix) to CoQ, pump 4 protons
-      return ctx.moveElectrons({count:2, path:[{x:80,y:160},{x:210,y:140}], color:"#ffd166"}, 4);
-    }
-  },
-  {
-    title: "Complex II — إسهام FADH₂ إلى حوض CoQ (بدون ضخ بروتونات)",
-    explain: `في هذه الخطوة، يزود <strong>Complex II</strong> إلكترونات قادمة من <strong>FADH₂</strong> إلى <strong>CoQ</strong>. <br><br><strong>مهم:</strong> Complex II لا يضخ بروتونات عبر الغشاء، لذا إسهامه في بناء التدرج أقل من Complex I.`,
-    action: function(ctx){
-      return ctx.moveElectrons({count:2, path:[{x:220,y:320},{x:360,y:220}], color:"#ff9f1c"}, 0);
-    }
-  },
-  {
-    title: "CoQ (Ubiquinone) — تجميع الإلكترونات ونقلها إلى Complex III",
-    explain: `CoQ يعمل كحوض (pool) يجمع إلكترونات من Complex I وII. يتحول بين شكلاته (ubiquinone ↔ ubiquinol) ويختزل/يعطي إلكترونات لـ <strong>Complex III</strong>. <br><br>هنا نرى انتقال إلكترونات مجمعة إلى Complex III.`,
-    action: function(ctx){
-      return ctx.moveElectrons({count:2, path:[{x:400,y:180},{x:520,y:130}], color:"#06d6a0"}, 0);
-    }
-  },
-  {
-    title: "Complex III — آلية Q-cycle وضخ بروتونات",
-    explain: `Complex III يُجري ما يُعرف بـ <strong>Q-cycle</strong>، الذي يؤدي إلى نقل إلكترونات واحدة تلو الأخرى عبر مركبات داخلية ويُضخ بروتونان إضافيان إلى الحيز بين الغشاءين لكل زوج من الإلكترونات. هذا يعزز التدرج البروتوني.`,
-    action: function(ctx){
-      return ctx.moveElectrons({count:2, path:[{x:540,y:120},{x:700,y:200}], color:"#ffd166"}, 4);
-    }
-  },
-  {
-    title: "Cytochrome c — ناقل إلكترون سطحي",
-    explain: `Cytochrome c هو ناقل وحيد الإلكترونات بين Complex III وComplex IV. ينقل الإلكترونات واحدًا تلو الآخر بطريقة سريعة وفعالة.`,
-    action: function(ctx){
-      return ctx.moveElectrons({count:1, path:[{x:740,y:210},{x:820,y:170}], color:"#ff6b6b"}, 0);
-    }
-  },
-  {
-    title: "Complex IV — اختزال الأكسجين وتكوين الماء (النهاية)",
-    explain: `Complex IV يستقبل الإلكترونات ويستخدمها لاختزال O₂ إلى ماء (H₂O). أثناء هذه العملية يضخ Complex IV بروتونات إضافية إلى الحيز بين الغشاءين. هذا هو المكان الذي تُستهلك فيه الإلكترونات نهائيًا بواسطة الأكسجين.`,
-    action: function(ctx){
-      return ctx.moveElectrons({count:2, path:[{x:860,y:150},{x:940,y:180}], color:"#a0e7e5"}, 2);
-    }
-  },
-  {
-    title: "ATP Synthase — استغلال تدرج البروتون لتصنيع ATP",
-    explain: `عندما يصبح تدرّج البروتون (ΔpH وΔψ) كافياً، تعود البروتونات إلى المصفوفة عبر <strong>ATP synthase</strong>. هذه الحركة الدورانية (F₀) تؤدي إلى تغيير تكويني في وحدة F₁ حيث تُركب جزيئات <strong>ATP</strong> من ADP وPi. هذه هي الآلية الأساسية لتوليد طاقة الخلية.`,
-    action: function(ctx){
-      return ctx.synthesizeATP({count:Math.floor(ctx.gradient/4)}); // produce ATP proportional to gradient
-    }
-  }
+// خطوات العملية
+const steps = [
+  {info:"اتحداك أن ترى NADH يسلم إلكتروناته للـ Complex I.", electrons:[{id:'e1', cx:140, cy:275},{id:'e2', cx:140, cy:295},{id:'e3', cx:140, cy:315}], protons:[{id:'p1', cx:140, cy:200},{id:'p2', cx:150, cy:210},{id:'p3', cx:160, cy:220}]},
+  {info:"اتحداك أن تنتقل الإلكترونات إلى Complex II.", electrons:[{id:'e1', cx:250, cy:300},{id:'e2', cx:250, cy:320},{id:'e3', cx:250, cy:340}], protons:[{id:'p1', cx:250, cy:250},{id:'p2', cx:260, cy:260},{id:'p3', cx:270, cy:270}]},
+  {info:"اتحداك أن تصل الإلكترونات إلى Complex III.", electrons:[{id:'e1', cx:360, cy:275},{id:'e2', cx:360, cy:295},{id:'e3', cx:360, cy:315}], protons:[{id:'p1', cx:360, cy:220},{id:'p2', cx:370, cy:230},{id:'p3', cx:380, cy:240}]},
+  {info:"اتحداك أن تصل الإلكترونات إلى Complex IV.", electrons:[{id:'e1', cx:490, cy:275},{id:'e2', cx:490, cy:295},{id:'e3', cx:490, cy:315}], protons:[{id:'p1', cx:490, cy:240},{id:'p2', cx:500, cy:250},{id:'p3', cx:510, cy:260}]},
+  {info:"اتحداك أن ترى البروتونات تدور عبر ATP Synthase لإنتاج ATP.", electrons:[{id:'e1', cx:650, cy:275},{id:'e2', cx:650, cy:295},{id:'e3', cx:650, cy:315}], protons:[{id:'p1', cx:650, cy:180},{id:'p2', cx:660, cy:190},{id:'p3', cx:670, cy:200}], rotate:true, ATP:true}
 ];
 
-// ==== محاكاة الرسوم والتحكم ====
+let currentStep = -1;
 
-const membrane = document.getElementById('membrane');
-const explain = document.getElementById('explain');
-const stepBadge = document.getElementById('stepBadge');
-const atpCounter = document.getElementById('atpCounter');
-const gradientLevel = document.getElementById('gradientLevel');
-
-let currentStep = 0;
-let autoTimer = null;
-let speed = 2000;
-let gradient = 0; // مقياس 0..100
-let atpTotal = 0;
-
-// أدوات رسومية: خلق إلكترونات وبروتونات وتحريكها
-function createParticle(className, x,y, color){
-  const el = document.createElement('div');
-  el.className = className;
-  el.style.left = x + 'px';
-  el.style.top = y + 'px';
-  if(color) el.style.background = color;
-  membrane.appendChild(el);
-  return el;
-}
-
-// تحديث شريط التدرج البصري
-function updateGradientUI(){
-  const h = Math.max(4, Math.min(96, gradient));
-  gradientLevel.style.height = h + '%';
-  gradientLevel.style.transition = 'height 600ms ease';
-}
-
-// توليد إلكترونات متحركة ومسارات
-function animateElectronPath(path, color, onComplete){
-  // path: array of {x,y} absolute relative to membrane coordinates
-  if(path.length<2){ if(onComplete) onComplete(); return; }
-  const start = path[0];
-  const el = createParticle('electron', start.x, start.y, null);
-  el.style.background = null;
-  el.style.backgroundImage = `radial-gradient(circle at 30% 30%, #fff, ${color} 20%, ${shade(color, -20)} 80%)`;
-  let i = 0;
-  function step(){
-    if(i>=path.length-1){
-      // fade out
-      el.style.transition = 'transform 350ms linear, opacity 350ms';
-      el.style.opacity = '0';
-      setTimeout(()=>{el.remove(); if(onComplete) onComplete();}, 380);
-      return;
-    }
-    const p0 = path[i];
-    const p1 = path[i+1];
-    const dx = p1.x - p0.x;
-    const dy = p1.y - p0.y;
-    const dist = Math.hypot(dx,dy);
-    const duration = Math.max(350, Math.min(1200, dist*4));
-    el.style.transition = `transform ${duration}ms linear`;
-    const tx = p1.x; const ty = p1.y;
-    el.style.transform = `translate(${tx - p0.x}px, ${ty - p0.y}px)`;
-    i++;
-    setTimeout(step, duration + 30);
-  }
-  // kick
-  el.style.transform = 'translate(0px,0px)';
-  setTimeout(step, 30);
-}
-
-// helper: shade hex color (basic)
-function shade(hex, percent) {
-  try{
-    const h = hex.replace('#','');
-    const num = parseInt(h,16);
-    let r = (num >> 16) + percent;
-    let g = ((num >> 8) & 0x00FF) + percent;
-    let b = (num & 0x0000FF) + percent;
-    r=Math.max(0,Math.min(255,r)); g=Math.max(0,Math.min(255,g)); b=Math.max(0,Math.min(255,b));
-    return '#' + ( (1<<24) + (r<<16) + (g<<8) + b ).toString(16).slice(1);
-  }catch(e){ return hex; }
-}
-
-// المحرك: تنفيذ الحركة وزيادة Gradient وضخ البروتونات
-function performAction(stepObj){
-  // عند كل استدعاء نعرض الشرح
-  explain.innerHTML = `<strong>${stepObj.title}</strong><hr style="opacity:.08">` + stepObj.explain;
-  stepBadge.textContent = `الخطوة ${currentStep+1} / ${STEPS.length}`;
-  // استدعاء الدالة المسؤولة عن الحركة (تُعيد وعد)
-  const ctx = {
-    gradient,
-    atpTotal,
-    moveElectrons: function(opts, pumpProtons){
-      // opts: {count, path, color}
-      return new Promise(resolve=>{
-        // animate electrons sequentially
-        let done = 0;
-        for(let i=0;i<opts.count;i++){
-          const pth = opts.path.map(p=>({x:p.x + (Math.random()*10-5), y:p.y + (Math.random()*10-5)}));
-          setTimeout(()=> {
-            animateElectronPath(pth, opts.color, ()=>{
-              done++;
-              if(done===opts.count){
-                // pump protons
-                if(pumpProtons>0){
-                  pump(pumpProtons).then(()=>{ resolve(); });
-                }else resolve();
-              }
-            });
-          }, i*220);
-        }
-      });
-    },
-    synthesizeATP: function(opts){
-      return new Promise(resolve=>{
-        // create spinning ATP synthesis visual: simulate protons returning -> produce ATP count
-        const produced = Math.max(1, opts.count);
-        // visual: spawn proton particles moving to left bottom (ATP synthase)
-        let spawned = 0;
-        const baseX = 70, baseY = 300;
-        function spawnOne(){
-          const px = createParticle('proton', Math.random()*900 + 50, Math.random()*120 + 60);
-          px.style.background = 'linear-gradient(180deg,#ffd166,#ffb703)';
-          const tx = baseX + Math.random()*40, ty = baseY + Math.random()*20;
-          px.style.transition = 'transform 900ms cubic-bezier(.2,.9,.3,1), opacity 700ms';
-          px.style.transform = `translate(${tx - parseFloat(px.style.left)}px, ${ty - parseFloat(px.style.top)}px)`;
-          setTimeout(()=>{ px.style.opacity='0'; setTimeout(()=>px.remove(),800); }, 1000);
-          spawned++;
-          if(spawned<produced) setTimeout(spawnOne, 180);
-        }
-        spawnOne();
-        // after animation, increment ATP
-        setTimeout(()=>{
-          atpTotal += produced;
-          document.getElementById('atpCounter').textContent = 'ATP: ' + atpTotal;
-          resolve();
-        }, Math.max(1000, produced*220));
+function updateStep(step){
+  const s = steps[step];
+  document.getElementById('info').innerText = s.info;
+  
+  // الإلكترونات
+  s.electrons.forEach(e=>{
+    anime({
+      targets: document.getElementById(e.id),
+      cx: e.cx,
+      cy: e.cy,
+      duration:1500,
+      easing:'linear'
+    });
+  });
+  
+  // البروتونات
+  s.protons.forEach(p=>{
+    anime({
+      targets: document.getElementById(p.id),
+      cx: p.cx,
+      cy: p.cy,
+      duration:1500,
+      easing:'linear'
+    });
+  });
+  
+  // دوران ATP و إنتاج ATP
+  if(s.rotate){
+    anime({
+      targets: '#ATPase',
+      rotate:'1turn',
+      duration:1500,
+      easing:'easeInOutSine'
+    });
+    // إنتاج ATP نصوص متحركة
+    for(let i=0;i<3;i++){
+      let atp = document.createElementNS("http://www.w3.org/2000/svg","text");
+      atp.setAttribute('x',650+i*15);
+      atp.setAttribute('y',160);
+      atp.setAttribute('class','ATP');
+      atp.innerHTML="ATP";
+      document.getElementById('mitoSvg').appendChild(atp);
+      anime({
+        targets: atp,
+        translateY:[0,-50],
+        opacity:[1,0],
+        duration:2000+i*200,
+        easing:'easeOutQuad',
+        complete:()=>atp.remove()
       });
     }
-  };
-
-  return stepObj.action(ctx).then(res=>{
-    gradient = Math.min(100, ctx.gradient + (stepObj._pump || 0) );
-    // but pumping handled inside pump() called earlier
-    updateGradientUI();
-  });
-}
-
-// ضخ بروتونات: نشاهد بروتونات تتحرك "من المصفوفة إلى الفراغ" (نحاكي الزيادة في gradient)
-function pump(count){
-  return new Promise(resolve=>{
-    let n=0;
-    function pOne(){
-      // spawn proton at left-lower (matrix)
-      const startX = 120 + Math.random()*120; // inside membrane near left
-      const startY = 320 + Math.random()*20;
-      const el = createParticle('proton', startX, startY);
-      // target: right area (IMS)
-      const tx = 820 + Math.random()*60;
-      const ty = 80 + Math.random()*60;
-      el.style.transition = 'transform 700ms cubic-bezier(.2,.9,.3,1), opacity 900ms';
-      el.style.transform = `translate(${tx - startX}px, ${ty - startY}px)`;
-      setTimeout(()=>{ el.style.opacity='0'; setTimeout(()=>el.remove(),800); }, 760);
-      gradient = Math.min(100, gradient + 3); updateGradientUI();
-      n++;
-      if(n<count) setTimeout(pOne, 140);
-      else setTimeout(()=>resolve(), 900);
-    }
-    pOne();
-  });
-}
-
-// روابط مبدئية (نقاط) داخل الـmembrane للنقل — نضبط مسارات تقريبية بناءً على مواضع العناصر في DOM
-function getPositions(){
-  const rect = membrane.getBoundingClientRect();
-  // Hardcoded relative positions matching CSS layout (approx)
-  // We set coordinates relative to membrane container (left-top)
-  return {
-    C1: {x: 80, y: 160},
-    C2: {x: 220, y: 320},
-    CoQ:{x: 360, y: 220},
-    C3:{x: 540, y: 120},
-    Cyt:{x: 740, y: 210},
-    C4:{x: 900, y: 170},
-    ATPsite: {x:70, y:320}
-  };
-}
-
-// تنفيذ خطوة محددة
-function gotoStep(index){
-  if(index<0) index=0;
-  if(index>=STEPS.length) index = STEPS.length-1;
-  currentStep = index;
-  // update UI
-  stepBadge.textContent = `الخطوة ${currentStep+1} / ${STEPS.length}`;
-  // prepare action with computed paths
-  const pos = getPositions();
-  // create deep copy to avoid mutation
-  const stepObj = JSON.parse(JSON.stringify(STEPS[currentStep]));
-  // translate abstract path placeholders to coordinates
-  // each step defined earlier expects certain path arrays; we will pass them here
-  if(currentStep===0){
-    stepObj.action = function(ctx){ return ctx.moveElectrons({count:2, path:[pos.C1, pos.CoQ], color:"#ffd166"}, 4); };
-  } else if(currentStep===1){
-    stepObj.action = function(ctx){ return ctx.moveElectrons({count:2, path:[pos.C2, pos.CoQ], color:"#ff9f1c"}, 0); };
-  } else if(currentStep===2){
-    stepObj.action = function(ctx){ return ctx.moveElectrons({count:2, path:[pos.CoQ, pos.C3], color:"#06d6a0"}, 0); };
-  } else if(currentStep===3){
-    stepObj.action = function(ctx){ return ctx.moveElectrons({count:2, path:[pos.C3, pos.Cyt], color:"#ffd166"}, 4); };
-  } else if(currentStep===4){
-    stepObj.action = function(ctx){ return ctx.moveElectrons({count:1, path:[pos.Cyt, pos.C4], color:"#ff6b6b"}, 0); };
-  } else if(currentStep===5){
-    stepObj.action = function(ctx){ return ctx.moveElectrons({count:2, path:[pos.C4, {x:pos.C4.x+60,y:pos.C4.y+40}], color:"#a0e7e5"}, 2); };
-  } else if(currentStep===6){
-    stepObj.action = function(ctx){ return ctx.synthesizeATP({count: Math.max(1, Math.floor(gradient/8))}); };
   }
-
-  performAction(stepObj).then(()=>{
-    // after done, maybe auto move to next when auto running
-  });
-  // show explanation immediately
-  explain.innerHTML = `<strong>${STEPS[currentStep].title}</strong><hr style="opacity:.08">` + STEPS[currentStep].explain;
 }
 
-// تحكم الأزرار
-document.getElementById('nextBtn').addEventListener('click', ()=>{
-  gotoStep(Math.min(currentStep+1, STEPS.length-1));
+document.getElementById('next').addEventListener('click',()=>{
+  if(currentStep < steps.length-1){
+    currentStep++;
+    updateStep(currentStep);
+  }
 });
-document.getElementById('prevBtn').addEventListener('click', ()=>{
-  gotoStep(Math.max(currentStep-1, 0));
+document.getElementById('prev').addEventListener('click',()=>{
+  if(currentStep > 0){
+    currentStep--;
+    updateStep(currentStep);
+  }
 });
-document.getElementById('resetBtn').addEventListener('click', ()=>{
-  // clear particles
-  Array.from(document.querySelectorAll('.electron, .proton')).forEach(el=>el.remove());
-  gradient = 0; atpTotal = 0;
-  updateGradientUI(); document.getElementById('atpCounter').textContent = 'ATP: 0';
-  currentStep = 0;
-  explain.innerHTML = '<strong>ملاحظة:</strong> تمت إعادة التعيين. اضغط التالي لبدء المحاكاة.';
-  stepBadge.textContent = `الخطوة 1 / ${STEPS.length}`;
-  stopAuto();
-});
-document.getElementById('autoBtn').addEventListener('click', ()=>{
-  if(autoTimer){ stopAuto(); } else { startAuto(); }
-});
-document.getElementById('speed').addEventListener('change', (e)=>{ speed = parseInt(e.target.value); if(autoTimer){ stopAuto(); startAuto(); } });
-
-// auto play
-function startAuto(){
-  document.getElementById('autoBtn').textContent = 'إيقاف تلقائي';
-  autoTimer = setInterval(()=>{
-    if(currentStep < STEPS.length-1) gotoStep(currentStep+1);
-    else { stopAuto(); }
-  }, speed + 400);
-}
-function stopAuto(){
-  document.getElementById('autoBtn').textContent = 'تشغيل تلقائي';
-  clearInterval(autoTimer); autoTimer = null;
-}
-
-// init
-updateGradientUI();
-gotoStep(0);
-
-// small accessibility: keyboard arrows
-window.addEventListener('keydown', (e)=>{
-  if(e.key === 'ArrowRight') gotoStep(Math.min(currentStep+1, STEPS.length-1));
-  if(e.key === 'ArrowLeft') gotoStep(Math.max(currentStep-1, 0));
-});
-
-// responsive readjust (recompute pos if window size changes)
-window.addEventListener('resize', ()=>{
-  // no heavy recalculation now; visual positions are approximated
-});
-
 </script>
 </body>
 </html>
