@@ -5,43 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>تحديات</title>
   <style>
+    /* إعادة تعيين الستايل الأساسي */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Amiri', 'Traditional Arabic', serif;
       background: #fffaf3;
       color: #333;
       text-align: center;
-      margin: 0;
-      padding: 0;
       height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 20px;
+      line-height: 1.8;
+      overflow: hidden;
     }
+
     h1 {
-      font-size: 3.5rem;
+      font-size: 4rem;
       color: #a1887f;
-      margin: 20px 0;
+      margin-bottom: 30px;
+      font-weight: normal;
     }
+
     #quote {
-      font-size: 1.4rem;
-      line-height: 2.4;
-      padding: 2rem;
+      font-size: 1.5rem;
+      padding: 40px 60px;
       max-width: 900px;
       background: white;
+      /* إزالة الحواف - زوايا دائرية ناعمة جدًا */
+      border-radius: 0; /* لا حواف */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      /* حد جانبي فقط (بدون زوايا حادة) */
       border-right: 6px solid #a1887f;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      border-radius: 12px;
     }
+
+    /* تصميم متجاوب للجوال */
     @media (max-width: 768px) {
       h1 {
-        font-size: 2.8rem;
+        font-size: 3rem;
       }
       #quote {
         font-size: 1.3rem;
-        padding: 1.5rem;
+        padding: 30px 20px;
       }
     }
+
+    /* تحميل خط جميل */
     @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
   </style>
 </head>
