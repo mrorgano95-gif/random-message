@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>سلسلة نقل الإلكترون وإنتاج ATP</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f1a2e;
+      color: #e0f7fa;
+      text-align: center;
+      direction: rtl;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: #4fc3f7;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #80deea;
+      margin-bottom: 30px;
+    }
+
+    #container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    #mitochondria {
+      width: 90%;
+      height: 400px;
+      background: #1a263a;
+      border-radius: 20px;
+      margin: 30px auto;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+      border: 2px solid #4fc3f7;
+    }
+
+    .inner-membrane {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      background: #111c2c;
+      border-radius: 15px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .complex {
+      width: 80px;
+      height: 120px;
+      background: #388e3c;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      transition: all 0.5s;
+    }
+
+    .complex.active {
+      background: #4caf50;
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #66bb6a;
+    }
+
+    .complex-I { background: #d32f2f; }
+    .complex-I.active { background: #e57373; }
+
+    .complex-II { background: #f57c00; }
+    .complex-II.active { background: #ffb74d; }
+
+    .complex-III { background: #1976d2; }
+    .complex-III.active { background: #42a5f5; }
+
+    .complex-IV { background: #7b1fa2; }
+    .complex-IV.active { background: #ba68c8; }
+
+    .atp-synthase {
+      width: 90px;
+      height: 140px;
+      background: #0288d1;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      position: absolute;
+      bottom: -70px;
+      right: 200px;
+      transition: all 0.5s;
+    }
+
+    .atp-synthase.active {
+      background: #03a9f4;
+      transform: rotate(360deg);
+      box-shadow: 0 0 25px #29b6f6;
+    }
+
+    .proton {
+      width: 12px;
+      height: 12px;
+      background: yellow;
+      border-radius: 50%;
+      position: absolute;
+      border: 1px solid #fff;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.3); background: #ffeb3b; }
+    }
+
+    .intermembrane {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #333;
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .explanation {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(33, 150, 243, 0.2);
+      border-radius: 15px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 1.3rem;
+      line-height: 2;
+      border: 1px solid #4fc3f7;
+    }
+
+    .btn {
+      margin: 20px;
+      padding: 12px 25px;
+      background: #4fc3f7;
+      color: #000;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #03a9f4;
+      transform: scale(1.05);
+    }
+
+    .nadh, .fadh2 {
+      position: absolute;
+      color: #8bc34a;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .nadh { top: 80px; left: 50px; }
+    .fadh2 { top: 120px; left: 50px; }
+
+    .atp {
+      width: 20px;
+      height: 20px;
+      background: #ffeb3b;
+      color: #000;
+      border-radius: 50%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.9rem;
+      margin: 2px;
+      font-weight: bold;
+      box-shadow: 0 0 8px #ffeb3b;
+    }
+
+    .atp-container {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .title-step {
+      font-size: 1.4rem;
+      color: #4fc3f7;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>سلسلة نقل الإلكترون وإنتاج ATP</h1>
+  <p class="subtitle">انقر على "الخطوة التالية" لفهم كل مرحلة علميًا</p>
+
+  <div id="container">
+    <div id="mitochondria">
+      <div class="intermembrane"></div>
+      <div class="inner-membrane">
+        <div class="complex complex-I" id="complex1">المُعقَّد I</div>
+        <div class="complex complex-II" id="complex2">المُعقَّد II</div>
+        <div class="complex complex-III" id="complex3">المُعقَّد III</div>
+        <div class="complex complex-IV" id="complex4">المُعقَّد IV</div>
+      </div>
+      <div class="atp-synthase" id="atp-synthase">ATP Synthase</div>
+      <div class="nadh">NADH →</div>
+      <div class="fadh2">FADH₂ →</div>
+    </div>
+
+    <div class="explanation" id="explanation">
+      <div class="title-step">ابدأ بالضغط على "الخطوة التالية"</div>
+      <div id="step-text">سيتم عرض التفاصيل العلمية هنا.</div>
+    </div>
+
+    <button class="btn" id="nextBtn">الخطوة التالية</button>
+  </div>
+
+  <script>
+    const nextBtn = document.getElementById("nextBtn");
+    const explanation = document.getElementById("explanation");
+    const stepText = document.getElementById("step-text");
+    const titleStep = document.querySelector(".title-step");
+
+    const complexes = [
+      document.getElementById("complex1"),
+      document.getElementById("complex2"),
+      document.getElementById("complex3"),
+      document.getElementById("complex4"),
+      document.getElementById("atp-synthase")
+    ];
+
+    let step = 0;
+
+    const steps = [
+      {
+        title: "إدخال NADH",
+        text: "يدخل NADH إلى السلسلة وينقل إلكترونين إلى المُعقَّد I، ويُحرر بروتونات (H⁺) إلى الفراغ بين الغشائي.",
+        action: () => {
+          activate(complexes[0]);
+          addProtons(3);
+        }
+      },
+      {
+        title: "إدخال FADH₂",
+        text: "يدخل FADH₂ وينقل إلكترونيه إلى المُعقَّد II، لكنه لا يضخ بروتونات، لذا يُنتج طاقة أقل.",
+        action: () => {
+          activate(complexes[1]);
+        }
+      },
+      {
+        title: "نقل الإلكترونات إلى CoQ",
+        text: "ينتقل الإلكترون من المُعقَّد I وII إلى جزيء الناقل Coenzyme Q (CoQ)، ثم إلى المُعقَّد III.",
+        action: () => {
+          activate(complexes[2]);
+          addProtons(4);
+        }
+      },
+      {
+        title: "الانتقال إلى السيتوكروم C",
+        text: "ينتقل الإلكترون من المُعقَّد III إلى السيتوكروم C، وهو ناقل بروتيني ينقل الإلكترون إلى المُعقَّد IV.",
+        action: () => {
+          activate(complexes[3]);
+          addProtons(2);
+        }
+      },
+      {
+        title: "اختزال الأكسجين",
+        text: "في المُعقَّد IV، يُستخدم الأكسجين (O₂) كمستقبل نهائي للإلكترونات، ويُدمج مع البروتونات ليُكوّن ماء (H₂O).",
+        action: () => {
+          activate(complexes[3]);
+          showWater();
+        }
+      },
+      {
+        title: "تكوّن تدرج البروتونات",
+        text: "بسبب ضخ البروتونات (H⁺) من الداخل إلى الفراغ بين الغشائي، يتكون تدرج كهروكيميائي (فرق جهد وتركيز).",
+        action: () => {
+          deactivateAll();
+        }
+      },
+      {
+        title: "تدفق البروتونات عبر ATP Synthase",
+        text: "يعود البروتون (H⁺) عبر إنزيم ATP Synthase، مما يُدوّر جزءًا من الإنزيم ويوفر الطاقة اللازمة لتكوين ATP.",
+        action: () => {
+          complexes[4].classList.add("active");
+          setTimeout(() => complexes[4].classList.remove("active"), 1000);
+        }
+      },
+      {
+        title: "إنتاج ATP",
+        text: "يستخدم إنزيم ATP Synthase الطاقة الناتجة عن عودة البروتونات لتحويل ADP + Pi إلى ATP. كل دورة تُنتج 3 ATP من NADH و2 من FADH₂.",
+        action: () => {
+          produceATP();
+        }
+      }
+    ];
+
+    function activate(element) {
+      deactivateAll();
+      element.classList.add("active");
+    }
+
+    function deactivateAll() {
+      complexes.forEach(c => c.classList.remove("active"));
+    }
+
+    function addProtons(count) {
+      const mito = document.getElementById("mitochondria");
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const p = document.createElement("div");
+          p.classList.add("proton");
+          p.style.top = Math.random() * 150 + "px";
+          p.style.left = Math.random() * 300 + 300 + "px";
+          mito.appendChild(p);
+          setTimeout(() => mito.removeChild(p), 2000);
+        }, i * 300);
+      }
+    }
+
+    function showWater() {
+      const p = document.createElement("div");
+      p.textContent = "H₂O";
+      p.style.color = "lightblue";
+      p.style.position = "absolute";
+      p.style.bottom = "80px";
+      p.style.right = "150px";
+      p.style.fontSize = "1.5rem";
+      p.style.animation = "pulse 1s infinite";
+      document.getElementById("mitochondria").appendChild(p);
+      setTimeout(() => p.remove(), 3000);
+    }
+
+    let atpCount = 0;
+    const atpContainer = document.createElement("div");
+    atpContainer.className = "atp-container";
+    document.querySelector(".explanation").appendChild(atpContainer);
+
+    function produceATP() {
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+          const atp = document.createElement("div");
+          atp.className = "atp";
+          atp.textContent = "ATP";
+          atpContainer.appendChild(atp);
+          atpCount++;
+        }, i * 600);
+      }
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (step < steps.length) {
+        const s = steps[step];
+        titleStep.textContent = s.title;
+        stepText.textContent = s.text;
+        if (s.action) s.action();
+        step++;
+        if (step === steps.length) {
+          nextBtn.disabled = true;
+          nextBtn.textContent = "اكتمل!";
+          nextBtn.style.opacity = "0.6";
+        }
+      }
+    });
+
+    // البدء
+    stepText.textContent = "اختر 'الخطوة التالية' لبدء الرحلة العلمية عبر سلسلة نقل الإلكترون.";
+  </script>
+
+</body>
+</html>
