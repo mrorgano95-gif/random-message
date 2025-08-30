@@ -1,189 +1,341 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>سلسلة نقل الإلكترونات - ATP متقدمة</title>
-<style>
-  body {
-    margin: 0;
-    background-color: #1a1a1a;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-  }
-  #info {
-    text-align: center;
-    font-size: 20px;
-    padding: 20px;
-    min-height: 40px;
-  }
-  #container {
-    position: relative;
-    width: 100%;
-    height: 600px;
-  }
-  svg {
-    width: 100%;
-    height: 100%;
-  }
-  .complex {
-    stroke: #666;
-    stroke-width: 2;
-    fill: #444;
-    rx: 15;
-    ry: 15;
-  }
-  .complex-text {
-    fill: #fff;
-    font-size: 14px;
-    text-anchor: middle;
-  }
-  .electron {
-    fill: #00f;
-    r: 6;
-  }
-  .proton {
-    fill: #f00;
-    r: 5;
-  }
-  .ATP {
-    fill: #ff0;
-    font-size: 16px;
-    font-weight: bold;
-  }
-  #controls {
-    text-align: center;
-    margin-top: 10px;
-  }
-  button {
-    font-size: 18px;
-    padding: 10px 20px;
-    margin: 0 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  #prev { background-color: #d9534f; color: #fff; }
-  #next { background-color: #5cb85c; color: #fff; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>سلسلة نقل الإلكترون وإنتاج ATP</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Tajawal', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      text-align: center;
+      direction: rtl;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      color: #4fc3f7;
+      margin-bottom: 10px;
+      text-shadow: 0 0 15px rgba(79, 195, 247, 0.4);
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #90caf9;
+      margin-bottom: 30px;
+    }
+
+    #container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    #diagram {
+      width: 100%;
+      height: 500px;
+      background: #fff;
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e0e0e0;
+    }
+
+    /* الغشاء الخارجي */
+    .outer-membrane {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: linear-gradient(180deg, #e0e0e0 0%, #d0d0d0 100%);
+      z-index: 1;
+    }
+
+    /* الفراغ بين الغشائي */
+    .intermembrane-space {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: #f8f9fa;
+      z-index: 2;
+    }
+
+    /* الغشاء الداخلي */
+    .inner-membrane {
+      position: absolute;
+      top: 160px;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: linear-gradient(180deg, #e0e0e0 0%, #d0d0d0 100%);
+      z-index: 3;
+    }
+
+    /* المصفوفة */
+    .matrix {
+      position: absolute;
+      top: 220px;
+      left: 0;
+      width: 100%;
+      height: 280px;
+      background: #f0f2f5;
+      z-index: 4;
+    }
+
+    /* النواة (متوسطة) */
+    .mitochondrion {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 120px;
+      height: 80px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: #333;
+      font-size: 0.8rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* المعقدات */
+    .complex {
+      position: absolute;
+      width: 60px;
+      height: 80px;
+      background: #f1c40f;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      font-weight: bold;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .complex:hover {
+      transform: scale(1.05);
+      background: #e6b800;
+      box-shadow: 0 0 20px rgba(241, 196, 15, 0.5);
+    }
+
+    .complex-I { left: 80px; }
+    .complex-II { left: 220px; }
+    .complex-III { left: 360px; }
+    .complex-IV { left: 500px; }
+    .atp-synthase { left: 640px; }
+
+    /* الإلكترونات */
+    .electron {
+      width: 8px;
+      height: 8px;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); opacity: 0.8; }
+      to { transform: scale(1.3); background: #ff0000; opacity: 1; }
+    }
+
+    /* البروتونات */
+    .proton {
+      width: 5px;
+      height: 5px;
+      background: #3498db;
+      border-radius: 50%;
+      position: absolute;
+      animation: float 3s infinite alternate;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-20px); }
+    }
+
+    /* الخطوط الحمراء للإلكترونات */
+    .electron-path {
+      position: absolute;
+      width: 4px;
+      height: 200px;
+      background: red;
+      border-radius: 2px;
+      transform-origin: bottom;
+      opacity: 0.8;
+    }
+
+    /* التفسير العلمي */
+    .explanation {
+      margin-top: 30px;
+      padding: 25px;
+      background: rgba(79, 195, 247, 0.1);
+      border-radius: 16px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 1.3rem;
+      line-height: 2;
+      border: 1px solid #4fc3f7;
+    }
+
+    .title-step {
+      font-size: 1.5rem;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+
+    .btn {
+      margin: 15px;
+      padding: 14px 30px;
+      background: #4fc3f7;
+      color: #000;
+      border: none;
+      border-radius: 35px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 12px rgba(79, 195, 247, 0.3);
+    }
+
+    .btn:hover {
+      background: #03a9f4;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(3, 169, 244, 0.4);
+    }
+
+    .label {
+      position: absolute;
+      font-size: 0.9rem;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .nadh-label { top: 250px; left: 60px; }
+    .fadh2-label { top: 250px; left: 180px; }
+    .ubiquinone-label { top: 180px; left: 260px; }
+    .cytochrome-c-label { top: 180px; left: 400px; }
+    .o2-label { top: 280px; left: 540px; }
+    .adp-label { top: 300px; left: 680px; }
+  </style>
 </head>
 <body>
 
-<div id="info">اضغط التالي للبدء</div>
-<div id="container">
-<svg id="mitoSvg">
-  <!-- Complexes -->
-  <rect x="100" y="200" width="80" height="150" class="complex" id="complexI"/>
-  <text x="140" y="380" class="complex-text">Complex I</text>
-  
-  <rect x="220" y="250" width="60" height="100" class="complex" id="complexII"/>
-  <text x="250" y="380" class="complex-text">Complex II</text>
-  
-  <rect x="320" y="200" width="80" height="150" class="complex" id="complexIII"/>
-  <text x="360" y="380" class="complex-text">Complex III</text>
-  
-  <rect x="450" y="220" width="80" height="130" class="complex" id="complexIV"/>
-  <text x="490" y="380" class="complex-text">Complex IV</text>
-  
-  <rect x="600" y="180" width="100" height="200" class="complex" id="ATPase"/>
-  <text x="650" y="400" class="complex-text">ATP Synthase</text>
-  
-  <!-- Multiple electrons -->
-  <circle class="electron" id="e1" cx="60" cy="275"></circle>
-  <circle class="electron" id="e2" cx="60" cy="295"></circle>
-  <circle class="electron" id="e3" cx="60" cy="315"></circle>
-  
-  <!-- Multiple protons -->
-  <circle class="proton" id="p1" cx="140" cy="200"></circle>
-  <circle class="proton" id="p2" cx="150" cy="210"></circle>
-  <circle class="proton" id="p3" cx="160" cy="220"></circle>
-</svg>
-</div>
+  <h1>سلسلة نقل الإلكترون وإنتاج ATP</h1>
+  <p class="subtitle">تجربة تعليمية تفاعلية في الكيمياء الحيوية</p>
 
-<div id="controls">
-  <button id="prev">السابق</button>
-  <button id="next">التالي</button>
-</div>
+  <div id="container">
+    <div id="diagram">
+      <!-- الغشاء الخارجي -->
+      <div class="outer-membrane"></div>
+      <!-- الفراغ بين الغشائي -->
+      <div class="intermembrane-space"></div>
+      <!-- الغشاء الداخلي -->
+      <div class="inner-membrane"></div>
+      <!-- المصفوفة -->
+      <div class="matrix"></div>
+      <!-- النواة (متوسطة) -->
+      <div class="mitochondrion">متوسطة</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-<script>
-// خطوات العملية
-const steps = [
-  {info:"اتحداك أن ترى NADH يسلم إلكتروناته للـ Complex I.", electrons:[{id:'e1', cx:140, cy:275},{id:'e2', cx:140, cy:295},{id:'e3', cx:140, cy:315}], protons:[{id:'p1', cx:140, cy:200},{id:'p2', cx:150, cy:210},{id:'p3', cx:160, cy:220}]},
-  {info:"اتحداك أن تنتقل الإلكترونات إلى Complex II.", electrons:[{id:'e1', cx:250, cy:300},{id:'e2', cx:250, cy:320},{id:'e3', cx:250, cy:340}], protons:[{id:'p1', cx:250, cy:250},{id:'p2', cx:260, cy:260},{id:'p3', cx:270, cy:270}]},
-  {info:"اتحداك أن تصل الإلكترونات إلى Complex III.", electrons:[{id:'e1', cx:360, cy:275},{id:'e2', cx:360, cy:295},{id:'e3', cx:360, cy:315}], protons:[{id:'p1', cx:360, cy:220},{id:'p2', cx:370, cy:230},{id:'p3', cx:380, cy:240}]},
-  {info:"اتحداك أن تصل الإلكترونات إلى Complex IV.", electrons:[{id:'e1', cx:490, cy:275},{id:'e2', cx:490, cy:295},{id:'e3', cx:490, cy:315}], protons:[{id:'p1', cx:490, cy:240},{id:'p2', cx:500, cy:250},{id:'p3', cx:510, cy:260}]},
-  {info:"اتحداك أن ترى البروتونات تدور عبر ATP Synthase لإنتاج ATP.", electrons:[{id:'e1', cx:650, cy:275},{id:'e2', cx:650, cy:295},{id:'e3', cx:650, cy:315}], protons:[{id:'p1', cx:650, cy:180},{id:'p2', cx:660, cy:190},{id:'p3', cx:670, cy:200}], rotate:true, ATP:true}
-];
+      <!-- المعقدات -->
+      <div class="complex complex-I" id="complex1">I</div>
+      <div class="complex complex-II" id="complex2">II</div>
+      <div class="complex complex-III" id="complex3">III</div>
+      <div class="complex complex-IV" id="complex4">IV</div>
+      <div class="complex atp-synthase" id="atp-synthase">ATP Synthase</div>
 
-let currentStep = -1;
+      <!-- الأجزاء الأخرى -->
+      <div class="label nadh-label">NADH</div>
+      <div class="label fadh2-label">FADH₂</div>
+      <div class="label ubiquinone-label">Ubiquinon</div>
+      <div class="label cytochrome-c-label">Cytochrom C</div>
+      <div class="label o2-label">O₂</div>
+      <div class="label adp-label">ADP + Pi</div>
 
-function updateStep(step){
-  const s = steps[step];
-  document.getElementById('info').innerText = s.info;
-  
-  // الإلكترونات
-  s.electrons.forEach(e=>{
-    anime({
-      targets: document.getElementById(e.id),
-      cx: e.cx,
-      cy: e.cy,
-      duration:1500,
-      easing:'linear'
-    });
-  });
-  
-  // البروتونات
-  s.protons.forEach(p=>{
-    anime({
-      targets: document.getElementById(p.id),
-      cx: p.cx,
-      cy: p.cy,
-      duration:1500,
-      easing:'linear'
-    });
-  });
-  
-  // دوران ATP و إنتاج ATP
-  if(s.rotate){
-    anime({
-      targets: '#ATPase',
-      rotate:'1turn',
-      duration:1500,
-      easing:'easeInOutSine'
-    });
-    // إنتاج ATP نصوص متحركة
-    for(let i=0;i<3;i++){
-      let atp = document.createElementNS("http://www.w3.org/2000/svg","text");
-      atp.setAttribute('x',650+i*15);
-      atp.setAttribute('y',160);
-      atp.setAttribute('class','ATP');
-      atp.innerHTML="ATP";
-      document.getElementById('mitoSvg').appendChild(atp);
-      anime({
-        targets: atp,
-        translateY:[0,-50],
-        opacity:[1,0],
-        duration:2000+i*200,
-        easing:'easeOutQuad',
-        complete:()=>atp.remove()
+      <!-- إلكترونات حمراء -->
+      <div class="electron" id="electron1" style="top: 250px; left: 60px;"></div>
+      <div class="electron" id="electron2" style="top: 250px; left: 180px;"></div>
+
+      <!-- خطوط الإلكترونات -->
+      <div class="electron-path" style="left: 80px; top: 230px; transform: rotate(90deg);"></div>
+      <div class="electron-path" style="left: 220px; top: 230px; transform: rotate(90deg);"></div>
+      <div class="electron-path" style="left: 360px; top: 230px; transform: rotate(90deg);"></div>
+      <div class="electron-path" style="left: 500px; top: 230px; transform: rotate(90deg);"></div>
+
+      <!-- البروتونات (H⁺) -->
+      <div class="proton" style="top: 120px; left: 100px;"></div>
+      <div class="proton" style="top: 120px; left: 150px;"></div>
+      <div class="proton" style="top: 120px; left: 200px;"></div>
+      <div class="proton" style="top: 120px; left: 250px;"></div>
+      <div class="proton" style="top: 120px; left: 300px;"></div>
+      <div class="proton" style="top: 120px; left: 350px;"></div>
+      <div class="proton" style="top: 120px; left: 400px;"></div>
+      <div class="proton" style="top: 120px; left: 450px;"></div>
+      <div class="proton" style="top: 120px; left: 500px;"></div>
+      <div class="proton" style="top: 120px; left: 550px;"></div>
+      <div class="proton" style="top: 120px; left: 600px;"></div>
+    </div>
+
+    <div class="explanation" id="explanation">
+      <div class="title-step">مرحبًا بك في تجربة التعلم</div>
+      <div id="step-text">اضغط على أي مركب في الرسم لتعرف كيف يعمل.</div>
+    </div>
+
+    <button class="btn" id="nextBtn">ابدأ التفاعل</button>
+  </div>
+
+  <script>
+    const nextBtn = document.getElementById("nextBtn");
+    const explanation = document.getElementById("explanation");
+    const stepText = document.getElementById("step-text");
+
+    // تعريف الشروح
+    const explanations = {
+      complex1: "المُعقَّد I: يستقبل الإلكترونات من NADH ويضخ 4 بروتونات إلى الفراغ بين الغشائي.",
+      complex2: "المُعقَّد II: يستقبل الإلكترونات من FADH₂ لكنه لا يضخ بروتونات.",
+      complex3: "المُعقَّد III: ينقل الإلكترونات إلى السيتوكروم C ويضخ 4 بروتونات.",
+      complex4: "المُعقَّد IV: يختزل O₂ إلى H₂O ويضخ 2 بروتونات.",
+      atpSynthase: "ATP Synthase: تتدفق البروتونات عبره، مما يُدوّر جزءًا منه ويُنتج ATP من ADP وPi."
+    };
+
+    // فحص النقر
+    document.querySelectorAll('.complex').forEach(complex => {
+      complex.addEventListener('click', () => {
+        const key = complex.id;
+        if (explanations[key]) {
+          stepText.textContent = explanations[key];
+        }
       });
-    }
-  }
-}
+    });
 
-document.getElementById('next').addEventListener('click',()=>{
-  if(currentStep < steps.length-1){
-    currentStep++;
-    updateStep(currentStep);
-  }
-});
-document.getElementById('prev').addEventListener('click',()=>{
-  if(currentStep > 0){
-    currentStep--;
-    updateStep(currentStep);
-  }
-});
-</script>
+    nextBtn.addEventListener("click", () => {
+      stepText.textContent = "انتبه! يمكنك النقر على أي مركب للحصول على شرح علمي.";
+      nextBtn.disabled = true;
+      nextBtn.textContent = "تم التفعيل!";
+    });
+  </script>
 </body>
 </html>
