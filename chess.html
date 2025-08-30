@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الشطرنج الكلاسيكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Amiri', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #2c3e50, #4a69bd);
+            padding: 20px;
+            direction: rtl;
+            color: #f5f5f5;
+        }
+        
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(44, 62, 80, 0.9);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            max-width: 100%;
+            border: 2px solid #f5f5f5;
+        }
+        
+        .status {
+            margin-bottom: 25px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #f5f5f5;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            padding: 15px 25px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .board-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .vertical-coordinates {
+            display: flex;
+            flex-direction: column;
+            gap: 100px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #f5f5f5;
+        }
+        
+        .horizontal-coordinates {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #f5f5f5;
+        }
+        
+        .chessboard {
+            display: grid;
+            grid-template-columns: repeat(8, 100px);
+            grid-template-rows: repeat(8, 100px);
+            border: 4px solid #2c3e50;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .square {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 80px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .white {
+            background-color: #e6d0b3;
+        }
+        
+        .black {
+            background-color: #7b3f00;
+        }
+        
+        .selected {
+            background-color: #6bb86b;
+            transform: scale(0.95);
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .valid-move::after {
+            content: "";
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background-color: rgba(0, 200, 0, 0.5);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .check {
+            background-color: #ff6b6b !important;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { background-color: #ff6b6b; }
+            50% { background-color: #ff8f8f; }
+            100% { background-color: #ff6b6b; }
+        }
+        
+        .piece {
+            transition: transform 0.3s ease;
+            z-index: 3;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            color: #1a1a1a;
+            filter: drop-shadow(0 0 2px #f5f5f5);
+        }
+        
+        .piece:hover {
+            transform: scale(1.15);
+        }
+        
+        .captured-pieces {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 25px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 15px;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .captured-white, .captured-black {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .captured-piece {
+            font-size: 32px;
+            opacity: 0.9;
+            margin: 0 3px;
+            color: #1a1a1a;
+            text-shadow: 0 0 3px #f5f5f5;
+        }
+        
+        .player-title {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #ccc;
+            text-align: center;
+        }
+        
+        /* نافذة الترقية */
+        .promotion-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .promotion-options {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 2px solid #f5f5f5;
+            width: 500px;
+            max-width: 90%;
+        }
+        
+        .promotion-title {
+            color: #f5f5f5;
+            font-size: 36px;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .promotion-pieces {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .promotion-piece {
+            font-size: 70px;
+            cursor: pointer;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(245, 245, 245, 0.1);
+            transition: all 0.3s ease;
+            color: #1a1a1a;
+            text-shadow: 0 0 3px #f5f5f5;
+        }
+        
+        .promotion-piece:hover {
+            transform: scale(1.2);
+            background: rgba(245, 245, 245, 0.2);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+        }
+        
+        .instructions {
+            color: #f5f5f5;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            max-width: 600px;
+            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 900px) {
+            .chessboard {
+                grid-template-columns: repeat(8, 80px);
+                grid-template-rows: repeat(8, 80px);
+            }
+            
+            .square {
+                font-size: 65px;
+            }
+            
+            .status {
+                font-size: 28px;
+            }
+            
+            .promotion-piece {
+                font-size: 50px;
+                padding: 10px;
+            }
+            
+            .vertical-coordinates {
+                gap: 80px;
+            }
+        }
+        
+        @media (max-width: 750px) {
+            .chessboard {
+                grid-template-columns: repeat(8, 70px);
+                grid-template-rows: repeat(8, 70px);
+            }
+            
+            .square {
+                font-size: 55px;
+            }
+            
+            .status {
+                font-size: 24px;
+            }
+            
+            .captured-piece {
+                font-size: 28px;
+            }
+            
+            .promotion-piece {
+                font-size: 40px;
+            }
+            
+            .promotion-title {
+                font-size: 26px;
+            }
+            
+            .vertical-coordinates {
+                gap: 70px;
+                font-size: 20px;
+            }
+            
+            .horizontal-coordinates {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 650px) {
+            .chessboard {
+                grid-template-columns: repeat(8, 60px);
+                grid-template-rows: repeat(8, 60px);
+            }
+            
+            .square {
+                font-size: 50px;
+            }
+            
+            .status {
+                font-size: 22px;
+            }
+            
+            .captured-pieces {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .promotion-pieces {
+                gap: 15px;
+            }
+            
+            .promotion-piece {
+                font-size: 35px;
+                padding: 8px;
+            }
+            
+            .promotion-title {
+                font-size: 22px;
+                margin-bottom: 15px;
+            }
+            
+            .vertical-coordinates {
+                gap: 60px;
+                font-size: 18px;
+            }
+            
+            .horizontal-coordinates {
+                font-size: 18px;
+            }
+            
+            .board-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .vertical-coordinates {
+                flex-direction: row;
+                gap: 60px;
+                order: 2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="status" id="status">دور الأبيض للعب</div>
+        
+        <div class="board-container">
+            <div class="vertical-coordinates">
+                <span>8</span>
+                <span>7</span>
+                <span>6</span>
+                <span>5</span>
+                <span>4</span>
+                <span>3</span>
+                <span>2</span>
+                <span>1</span>
+            </div>
+            
+            <div>
+                <div class="chessboard" id="chessboard"></div>
+                <div class="horizontal-coordinates">
+                    <span>a</span>
+                    <span>b</span>
+                    <span>c</span>
+                    <span>d</span>
+                    <span>e</span>
+                    <span>f</span>
+                    <span>g</span>
+                    <span>h</span>
+                </div>
+            </div>
+            
+            <div class="vertical-coordinates" style="visibility: hidden;">
+                <span>8</span>
+                <span>7</span>
+                <span>6</span>
+                <span>5</span>
+                <span>4</span>
+                <span>3</span>
+                <span>2</span>
+                <span>1</span>
+            </div>
+        </div>
+        
+        <div class="captured-pieces">
+            <div>
+                <div class="player-title">القطع المأسورة من قبل الأسود</div>
+                <div class="captured-white" id="captured-white"></div>
+            </div>
+            <div>
+                <div class="player-title">القطع المأسورة من قبل الأبيض</div>
+                <div class="captured-black" id="captured-black"></div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <p>عند وصول الجندي إلى النهاية، سيتم عرض خيارات الترقية: ملكة، قلعة، فيل، أو حصان</p>
+        </div>
+    </div>
+    
+    <!-- نافذة اختيار الترقية -->
+    <div class="promotion-modal" id="promotion-modal">
+        <div class="promotion-options">
+            <h2 class="promotion-title">اختر قطعة للترقية</h2>
+            <div class="promotion-pieces">
+                <div class="promotion-piece" data-piece="queen">♕</div>
+                <div class="promotion-piece" data-piece="rook">♖</div>
+                <div class="promotion-piece" data-piece="bishop">♗</div>
+                <div class="promotion-piece" data-piece="knight">♘</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chessboard = document.getElementById('chessboard');
+            const statusDisplay = document.getElementById('status');
+            const capturedWhite = document.getElementById('captured-white');
+            const capturedBlack = document.getElementById('captured-black');
+            const promotionModal = document.getElementById('promotion-modal');
+            const promotionPieces = document.querySelectorAll('.promotion-piece');
+            
+            let selectedPiece = null;
+            let currentPlayer = 'white';
+            let boardState = createInitialBoard();
+            let gameOver = false;
+            let capturedPieces = { white: [], black: [] };
+            let promotionPending = null;
+            
+            // إنشاء رقعة الشطرنج
+            function createChessboard() {
+                chessboard.innerHTML = '';
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const square = document.createElement('div');
+                        square.classList.add('square');
+                        square.classList.add((row + col) % 2 === 0 ? 'white' : 'black');
+                        square.dataset.row = row;
+                        square.dataset.col = col;
+                        
+                        square.addEventListener('click', () => handleSquareClick(row, col));
+                        
+                        chessboard.appendChild(square);
+                    }
+                }
+                updateBoard();
+            }
+            
+            // إنشاء حالة اللوحة الأولية
+            function createInitialBoard() {
+                const board = Array(8).fill().map(() => Array(8).fill(null));
+                
+                // توزيع القطع السوداء
+                board[0][0] = { type: 'rook', color: 'black' };
+                board[0][1] = { type: 'knight', color: 'black' };
+                board[0][2] = { type: 'bishop', color: 'black' };
+                board[0][3] = { type: 'queen', color: 'black' };
+                board[0][4] = { type: 'king', color: 'black' };
+                board[0][5] = { type: 'bishop', color: 'black' };
+                board[0][6] = { type: 'knight', color: 'black' };
+                board[0][7] = { type: 'rook', color: 'black' };
+                for (let i = 0; i < 8; i++) {
+                    board[1][i] = { type: 'pawn', color: 'black' };
+                }
+                
+                // توزيع القطع البيضاء
+                board[7][0] = { type: 'rook', color: 'white' };
+                board[7][1] = { type: 'knight', color: 'white' };
+                board[7][2] = { type: 'bishop', color: 'white' };
+                board[7][3] = { type: 'queen', color: 'white' };
+                board[7][4] = { type: 'king', color: 'white' };
+                board[7][5] = { type: 'bishop', color: 'white' };
+                board[7][6] = { type: 'knight', color: 'white' };
+                board[7][7] = { type: 'rook', color: 'white' };
+                for (let i = 0; i < 8; i++) {
+                    board[6][i] = { type: 'pawn', color: 'white' };
+                }
+                
+                return board;
+            }
+            
+            // تحديث الرقعة بناءً على حالة اللوحة
+            function updateBoard() {
+                const squares = chessboard.querySelectorAll('.square');
+                squares.forEach(square => {
+                    const row = parseInt(square.dataset.row);
+                    const col = parseInt(square.dataset.col);
+                    const piece = boardState[row][col];
+                    
+                    // إزالة أي تمثيل سابق للقطعة
+                    square.innerHTML = '';
+                    square.classList.remove('selected', 'valid-move', 'check');
+                    
+                    // إذا كانت هناك قطعة في المربع، عرضها
+                    if (piece) {
+                        const pieceElement = document.createElement('div');
+                        pieceElement.classList.add('piece');
+                        pieceElement.textContent = getUnicodeChessPiece(piece);
+                        square.appendChild(pieceElement);
+                    }
+                });
+                
+                // تحديث القطع المأسورة
+                updateCapturedPieces();
+                
+                // التحقق من حالة الكش
+                if (isKingInCheck(currentPlayer)) {
+                    const kingPos = findKing(currentPlayer);
+                    const kingSquare = chessboard.querySelector(`.square[data-row="${kingPos.row}"][data-col="${kingPos.col}"]`);
+                    kingSquare.classList.add('check');
+                    statusDisplay.textContent = `كش على ${currentPlayer === 'white' ? 'الأبيض' : 'الأسود'}`;
+                    
+                    // التحقق من كش مات
+                    if (isCheckmate(currentPlayer)) {
+                        statusDisplay.textContent = `كش مات! ${currentPlayer === 'white' ? 'الأسود' : 'الأبيض'} يفوز`;
+                        gameOver = true;
+                    }
+                } else {
+                    statusDisplay.textContent = `دور ${currentPlayer === 'white' ? 'الأبيض' : 'الأسود'} للعب`;
+                }
+            }
+            
+            // الحصول على الرمز Unicode المناسب للقطعة
+            function getUnicodeChessPiece(piece) {
+                const pieces = {
+                    white: {
+                        king: '♔',
+                        queen: '♕',
+                        rook: '♖',
+                        bishop: '♗',
+                        knight: '♘',
+                        pawn: '♙'
+                    },
+                    black: {
+                        king: '♚',
+                        queen: '♛',
+                        rook: '♜',
+                        bishop: '♝',
+                        knight: '♞',
+                        pawn: '♟'
+                    }
+                };
+                return pieces[piece.color][piece.type];
+            }
+            
+            // التعامل مع النقر على مربع
+            function handleSquareClick(row, col) {
+                if (gameOver || promotionPending) return;
+                
+                const clickedPiece = boardState[row][col];
+                
+                // إذا لم يكن هناك قطعة مختارة وكان النقر على قطعة اللاعب الحالي
+                if (!selectedPiece && clickedPiece && clickedPiece.color === currentPlayer) {
+                    selectedPiece = { row, col, piece: clickedPiece };
+                    highlightSquare(row, col);
+                    showValidMoves(row, col);
+                } 
+                // إذا كان هناك قطعة مختارة والنقر على مربع صالح للحركة
+                else if (selectedPiece) {
+                    const validMoves = getValidMoves(selectedPiece.row, selectedPiece.col);
+                    const isValidMove = validMoves.some(move => move.row === row && move.col === col);
+                    
+                    if (isValidMove) {
+                        movePiece(selectedPiece.row, selectedPiece.col, row, col);
+                        clearHighlights();
+                        selectedPiece = null;
+                        
+                        // التحقق من الترقية
+                        const piece = boardState[row][col];
+                        if (piece && piece.type === 'pawn' && (row === 0 || row === 7)) {
+                            promotionPending = { row, col };
+                            showPromotionOptions(piece.color);
+                        } else {
+                            currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+                            updateBoard();
+                        }
+                    } 
+                    // إذا نقر على قطعة أخرى من لونه، يختارها بدلاً من ذلك
+                    else if (clickedPiece && clickedPiece.color === currentPlayer) {
+                        clearHighlights();
+                        selectedPiece = { row, col, piece: clickedPiece };
+                        highlightSquare(row, col);
+                        showValidMoves(row, col);
+                    } 
+                    // إذا نقر على مكان غير صالح، يلغي التحديد
+                    else {
+                        clearHighlights();
+                        selectedPiece = null;
+                    }
+                }
+            }
+            
+            // إبراز المربع المحدد
+            function highlightSquare(row, col) {
+                const square = chessboard.querySelector(`.square[data-row="${row}"][data-col="${col}"]`);
+                square.classList.add('selected');
+            }
+            
+            // إظهار الحركات الصحيحة للقطعة المحددة
+            function showValidMoves(row, col) {
+                const validMoves = getValidMoves(row, col);
+                validMoves.forEach(move => {
+                    const square = chessboard.querySelector(`.square[data-row="${move.row}"][data-col="${move.col}"]`);
+                    square.classList.add('valid-move');
+                });
+            }
+            
+            // مسح كل الإبرازات
+            function clearHighlights() {
+                const squares = chessboard.querySelectorAll('.square');
+                squares.forEach(square => {
+                    square.classList.remove('selected', 'valid-move');
+                });
+            }
+            
+            // الحصول على الحركات الصحيحة للقطعة
+            function getValidMoves(row, col) {
+                const piece = boardState[row][col];
+                if (!piece) return [];
+                
+                let moves = [];
+                
+                switch (piece.type) {
+                    case 'pawn':
+                        moves = getPawnMoves(row, col, piece.color);
+                        break;
+                    case 'rook':
+                        moves = getRookMoves(row, col, piece.color);
+                        break;
+                    case 'knight':
+                        moves = getKnightMoves(row, col, piece.color);
+                        break;
+                    case 'bishop':
+                        moves = getBishopMoves(row, col, piece.color);
+                        break;
+                    case 'queen':
+                        moves = getQueenMoves(row, col, piece.color);
+                        break;
+                    case 'king':
+                        moves = getKingMoves(row, col, piece.color);
+                        break;
+                }
+                
+                // تصفية الحركات التي تضع الملك في حالة كش
+                return moves.filter(move => {
+                    const tempBoard = JSON.parse(JSON.stringify(boardState));
+                    tempBoard[move.row][move.col] = tempBoard[row][col];
+                    tempBoard[row][col] = null;
+                    
+                    return !isKingInCheckAfterMove(piece.color, tempBoard);
+                });
+            }
+            
+            // حركات البيدق
+            function getPawnMoves(row, col, color) {
+                const moves = [];
+                const direction = color === 'white' ? -1 : 1;
+                const startRow = color === 'white' ? 6 : 1;
+                
+                // التحرك للأمام
+                if (row + direction >= 0 && row + direction < 8 && !boardState[row + direction][col]) {
+                    moves.push({ row: row + direction, col });
+                    
+                    // الحركة المزدوجة من الموضع الأولي
+                    if (row === startRow && !boardState[row + 2 * direction][col]) {
+                        moves.push({ row: row + 2 * direction, col });
+                    }
+                }
+                
+                // الأكل بشكل قطري
+                for (let offset of [-1, 1]) {
+                    if (col + offset >= 0 && col + offset < 8 && 
+                        boardState[row + direction][col + offset] && 
+                        boardState[row + direction][col + offset].color !== color) {
+                        moves.push({ row: row + direction, col: col + offset });
+                    }
+                }
+                
+                return moves;
+            }
+            
+            // حركات القلعة
+            function getRookMoves(row, col, color) {
+                const moves = [];
+                const directions = [
+                    {dr: -1, dc: 0}, // أعلى
+                    {dr: 1, dc: 0},  // أسفل
+                    {dr: 0, dc: -1}, // يسار
+                    {dr: 0, dc: 1}   // يمين
+                ];
+                
+                for (let dir of directions) {
+                    let r = row + dir.dr;
+                    let c = col + dir.dc;
+                    
+                    while (r >= 0 && r < 8 && c >= 0 && c < 8) {
+                        if (!boardState[r][c]) {
+                            moves.push({ row: r, col: c });
+                        } else {
+                            if (boardState[r][c].color !== color) {
+                                moves.push({ row: r, col: c });
+                            }
+                            break;
+                        }
+                        r += dir.dr;
+                        c += dir.dc;
+                    }
+                }
+                
+                return moves;
+            }
+            
+            // حركات الحصان
+            function getKnightMoves(row, col, color) {
+                const moves = [];
+                const offsets = [
+                    {dr: -2, dc: -1}, {dr: -2, dc: 1},
+                    {dr: -1, dc: -2}, {dr: -1, dc: 2},
+                    {dr: 1, dc: -2}, {dr: 1, dc: 2},
+                    {dr: 2, dc: -1}, {dr: 2, dc: 1}
+                ];
+                
+                for (let offset of offsets) {
+                    const r = row + offset.dr;
+                    const c = col + offset.dc;
+                    
+                    if (r >= 0 && r < 8 && c >= 0 && c < 8) {
+                        if (!boardState[r][c] || boardState[r][c].color !== color) {
+                            moves.push({ row: r, col: c });
+                        }
+                    }
+                }
+                
+                return moves;
+            }
+            
+            // حركات الفيل
+            function getBishopMoves(row, col, color) {
+                const moves = [];
+                const directions = [
+                    {dr: -1, dc: -1}, // أعلى يسار
+                    {dr: -1, dc: 1},  // أعلى يمين
+                    {dr: 1, dc: -1},  // أسفل يسار
+                    {dr: 1, dc: 1}    // أسفل يمين
+                ];
+                
+                for (let dir of directions) {
+                    let r = row + dir.dr;
+                    let c = col + dir.dc;
+                    
+                    while (r >= 0 && r < 8 && c >= 0 && c < 8) {
+                        if (!boardState[r][c]) {
+                            moves.push({ row: r, col: c });
+                        } else {
+                            if (boardState[r][c].color !== color) {
+                                moves.push({ row: r, col: c });
+                            }
+                            break;
+                        }
+                        r += dir.dr;
+                        c += dir.dc;
+                    }
+                }
+                
+                return moves;
+            }
+            
+            // حركات الملكة
+            function getQueenMoves(row, col, color) {
+                // الملكة تجمع بين حركات القلعة والفيل
+                return [...getRookMoves(row, col, color), ...getBishopMoves(row, col, color)];
+            }
+            
+            // حركات الملك
+            function getKingMoves(row, col, color) {
+                const moves = [];
+                const offsets = [
+                    {dr: -1, dc: -1}, {dr: -1, dc: 0}, {dr: -1, dc: 1},
+                    {dr: 0, dc: -1}, {dr: 0, dc: 1},
+                    {dr: 1, dc: -1}, {dr: 1, dc: 0}, {dr: 1, dc: 1}
+                ];
+                
+                for (let offset of offsets) {
+                    const r = row + offset.dr;
+                    const c = col + offset.dc;
+                    
+                    if (r >= 0 && r < 8 && c >= 0 && c < 8) {
+                        if (!boardState[r][c] || boardState[r][c].color !== color) {
+                            moves.push({ row: r, col: c });
+                        }
+                    }
+                }
+                
+                return moves;
+            }
+            
+            // تحريك قطعة
+            function movePiece(fromRow, fromCol, toRow, toCol) {
+                // إذا كانت هناك قطعة في الهدف، إضافتها إلى القطع المأسورة
+                if (boardState[toRow][toCol]) {
+                    const capturedPiece = boardState[toRow][toCol];
+                    capturedPieces[capturedPiece.color].push(capturedPiece);
+                }
+                
+                boardState[toRow][toCol] = boardState[fromRow][fromCol];
+                boardState[fromRow][fromCol] = null;
+            }
+            
+            // البحث عن موقع الملك
+            function findKing(color) {
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        if (boardState[row][col] && 
+                            boardState[row][col].type === 'king' && 
+                            boardState[row][col].color === color) {
+                            return { row, col };
+                        }
+                    }
+                }
+                return null;
+            }
+            
+            // التحقق إذا كان الملك في حالة كش
+            function isKingInCheck(color) {
+                return isKingInCheckAfterMove(color, boardState);
+            }
+            
+            // التحقق من الكش بعد حركة افتراضية
+            function isKingInCheckAfterMove(color, board) {
+                const kingPos = findKingFromBoard(color, board);
+                if (!kingPos) return false;
+                
+                const opponentColor = color === 'white' ? 'black' : 'white';
+                
+                // التحقق من هجوم القطع الأخرى
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const piece = board[row][col];
+                        if (piece && piece.color === opponentColor) {
+                            if (canPieceAttackKing(row, col, kingPos.row, kingPos.col, board)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                
+                return false;
+            }
+            
+            // البحث عن الملك في حالة اللوحة معطاة
+            function findKingFromBoard(color, board) {
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        if (board[row][col] && 
+                            board[row][col].type === 'king' && 
+                            board[row][col].color === color) {
+                            return { row, col };
+                        }
+                    }
+                }
+                return null;
+            }
+            
+            // التحقق إذا كان بإمكان قطعة مهاجمة موقع الملك
+            function canPieceAttackKing(pieceRow, pieceCol, kingRow, kingCol, board) {
+                const piece = board[pieceRow][pieceCol];
+                
+                switch (piece.type) {
+                    case 'pawn':
+                        const direction = piece.color === 'white' ? -1 : 1;
+                        return (Math.abs(pieceCol - kingCol) === 1 && 
+                                pieceRow + direction === kingRow);
+                    
+                    case 'rook':
+                        if (pieceRow !== kingRow && pieceCol !== kingCol) return false;
+                        return isPathClear(pieceRow, pieceCol, kingRow, kingCol, board);
+                    
+                    case 'knight':
+                        const rowDiff = Math.abs(pieceRow - kingRow);
+                        const colDiff = Math.abs(pieceCol - kingCol);
+                        return (rowDiff === 2 && colDiff === 1) || (rowDiff === 1 && colDiff === 2);
+                    
+                    case 'bishop':
+                        if (Math.abs(pieceRow - kingRow) !== Math.abs(pieceCol - kingCol)) return false;
+                        return isPathClear(pieceRow, pieceCol, kingRow, kingCol, board);
+                    
+                    case 'queen':
+                        const sameRow = pieceRow === kingRow;
+                        const sameCol = pieceCol === kingCol;
+                        const sameDiagonal = Math.abs(pieceRow - kingRow) === Math.abs(pieceCol - kingCol);
+                        
+                        if (!sameRow && !sameCol && !sameDiagonal) return false;
+                        return isPathClear(pieceRow, pieceCol, kingRow, kingCol, board);
+                    
+                    case 'king':
+                        return Math.max(Math.abs(pieceRow - kingRow), Math.abs(pieceCol - kingCol)) === 1;
+                }
+                
+                return false;
+            }
+            
+            // التحقق إذا كان المسار بين قطعة والملك خاليًا من العوائق
+            function isPathClear(fromRow, fromCol, toRow, toCol, board) {
+                const rowStep = fromRow === toRow ? 0 : (fromRow < toRow ? 1 : -1);
+                const colStep = fromCol === toCol ? 0 : (fromCol < toCol ? 1 : -1);
+                
+                let r = fromRow + rowStep;
+                let c = fromCol + colStep;
+                
+                while (r !== toRow || c !== toCol) {
+                    if (board[r][c]) return false;
+                    r += rowStep;
+                    c += colStep;
+                }
+                
+                return true;
+            }
+            
+            // التحقق من كش مات
+            function isCheckmate(color) {
+                // إذا لم يكن الملك في كش، فلا يوجد كش مات
+                if (!isKingInCheck(color)) return false;
+                
+                // التحقق إذا كان هناك أي حركة قانونية يمكن أن تنقذ الملك
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const piece = boardState[row][col];
+                        if (piece && piece.color === color) {
+                            const validMoves = getValidMoves(row, col);
+                            if (validMoves.length > 0) return false;
+                        }
+                    }
+                }
+                
+                // إذا لم توجد أي حركة قانونية، فهذا كش مات
+                return true;
+            }
+            
+            // تحديث عرض القطع المأسورة
+            function updateCapturedPieces() {
+                capturedWhite.innerHTML = '';
+                capturedBlack.innerHTML = '';
+                
+                capturedPieces.white.forEach(piece => {
+                    const span = document.createElement('span');
+                    span.classList.add('captured-piece');
+                    span.textContent = getUnicodeChessPiece(piece);
+                    capturedWhite.appendChild(span);
+                });
+                
+                capturedPieces.black.forEach(piece => {
+                    const span = document.createElement('span');
+                    span.classList.add('captured-piece');
+                    span.textContent = getUnicodeChessPiece(piece);
+                    capturedBlack.appendChild(span);
+                });
+            }
+            
+            // عرض خيارات الترقية
+            function showPromotionOptions(color) {
+                promotionModal.style.display = 'flex';
+                
+                // إضافة معالجات الأحداث لخيارات الترقية
+                promotionPieces.forEach(piece => {
+                    piece.onclick = () => {
+                        const pieceType = piece.getAttribute('data-piece');
+                        promotePawn(promotionPending.row, promotionPending.col, pieceType);
+                        promotionModal.style.display = 'none';
+                        promotionPending = null;
+                        currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+                        updateBoard();
+                    };
+                });
+            }
+            
+            // ترقية البيدق
+            function promotePawn(row, col, pieceType) {
+                if (boardState[row][col] && boardState[row][col].type === 'pawn') {
+                    boardState[row][col].type = pieceType;
+                }
+            }
+            
+            // بدء اللعبة
+            createChessboard();
+        });
+    </script>
+</body>
+</html>
