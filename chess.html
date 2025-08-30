@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة الشطرنج الكلاسيكية</title>
+    <title>لعبة الشطرنج مع ترقية أنيقة</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -49,31 +49,6 @@
             text-align: center;
         }
         
-        .board-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .vertical-coordinates {
-            display: flex;
-            flex-direction: column;
-            gap: 100px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #f5f5f5;
-        }
-        
-        .horizontal-coordinates {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            margin-top: 15px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #f5f5f5;
-        }
-        
         .chessboard {
             display: grid;
             grid-template-columns: repeat(8, 100px);
@@ -83,6 +58,7 @@
             background: #000;
             border-radius: 8px;
             overflow: hidden;
+            position: relative;
         }
         
         .square {
@@ -142,105 +118,71 @@
             transform: scale(1.15);
         }
         
-        .captured-pieces {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 25px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 15px;
-            color: white;
-            font-size: 24px;
-        }
-        
-        .captured-white, .captured-black {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .captured-piece {
-            font-size: 32px;
-            opacity: 0.9;
-            margin: 0 3px;
-            color: #1a1a1a;
-            text-shadow: 0 0 3px #f5f5f5;
-        }
-        
-        .player-title {
-            font-size: 20px;
-            margin-bottom: 8px;
-            color: #ccc;
-            text-align: center;
-        }
-        
-        /* نافذة الترقية */
-        .promotion-modal {
-            display: none;
-            position: fixed;
+        /* دوائر الترقية المنبثقة */
+        .promotion-overlay {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .promotion-options {
-            background: linear-gradient(135deg, #34495e, #2c3e50);
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            border: 2px solid #f5f5f5;
-            width: 500px;
-            max-width: 90%;
-        }
-        
-        .promotion-title {
-            color: #f5f5f5;
-            font-size: 36px;
-            margin-bottom: 30px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .promotion-pieces {
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
+            align-items: center;
+            z-index: 20;
+            opacity: 0;
+            animation: fadeIn 0.3s forwards;
         }
         
-        .promotion-piece {
-            font-size: 70px;
-            cursor: pointer;
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .promotion-circles {
+            display: flex;
+            gap: 20px;
             padding: 20px;
-            border-radius: 15px;
-            background: rgba(245, 245, 245, 0.1);
+            background: rgba(52, 73, 94, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 2px solid #f5f5f5;
+        }
+        
+        .promotion-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e6d0b3, #c19a6b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 60px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(50px);
             color: #1a1a1a;
             text-shadow: 0 0 3px #f5f5f5;
         }
         
-        .promotion-piece:hover {
-            transform: scale(1.2);
-            background: rgba(245, 245, 245, 0.2);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+        .promotion-circle:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: linear-gradient(135deg, #f0e6d6, #d4b78c);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
         }
         
-        .instructions {
-            color: #f5f5f5;
-            margin-top: 20px;
-            text-align: center;
-            font-size: 18px;
-            max-width: 600px;
-            line-height: 1.6;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 10px;
+        /* تأثيرات الظهور بالتتابع */
+        .circle-queen { animation: circleRise 0.5s forwards 0.1s; }
+        .circle-rook { animation: circleRise 0.5s forwards 0.2s; }
+        .circle-bishop { animation: circleRise 0.5s forwards 0.3s; }
+        .circle-knight { animation: circleRise 0.5s forwards 0.4s; }
+        
+        @keyframes circleRise {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         @media (max-width: 900px) {
@@ -257,13 +199,10 @@
                 font-size: 28px;
             }
             
-            .promotion-piece {
+            .promotion-circle {
+                width: 80px;
+                height: 80px;
                 font-size: 50px;
-                padding: 10px;
-            }
-            
-            .vertical-coordinates {
-                gap: 80px;
             }
         }
         
@@ -281,25 +220,15 @@
                 font-size: 24px;
             }
             
-            .captured-piece {
-                font-size: 28px;
-            }
-            
-            .promotion-piece {
+            .promotion-circle {
+                width: 70px;
+                height: 70px;
                 font-size: 40px;
             }
             
-            .promotion-title {
-                font-size: 26px;
-            }
-            
-            .vertical-coordinates {
-                gap: 70px;
-                font-size: 20px;
-            }
-            
-            .horizontal-coordinates {
-                font-size: 20px;
+            .promotion-circles {
+                gap: 15px;
+                padding: 15px;
             }
         }
         
@@ -317,43 +246,15 @@
                 font-size: 22px;
             }
             
-            .captured-pieces {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .promotion-pieces {
-                gap: 15px;
-            }
-            
-            .promotion-piece {
+            .promotion-circle {
+                width: 60px;
+                height: 60px;
                 font-size: 35px;
-                padding: 8px;
             }
             
-            .promotion-title {
-                font-size: 22px;
-                margin-bottom: 15px;
-            }
-            
-            .vertical-coordinates {
-                gap: 60px;
-                font-size: 18px;
-            }
-            
-            .horizontal-coordinates {
-                font-size: 18px;
-            }
-            
-            .board-container {
-                flex-direction: column;
+            .promotion-circles {
                 gap: 10px;
-            }
-            
-            .vertical-coordinates {
-                flex-direction: row;
-                gap: 60px;
-                order: 2;
+                padding: 10px;
             }
         }
     </style>
@@ -362,70 +263,8 @@
     <div class="game-container">
         <div class="status" id="status">دور الأبيض للعب</div>
         
-        <div class="board-container">
-            <div class="vertical-coordinates">
-                <span>8</span>
-                <span>7</span>
-                <span>6</span>
-                <span>5</span>
-                <span>4</span>
-                <span>3</span>
-                <span>2</span>
-                <span>1</span>
-            </div>
-            
-            <div>
-                <div class="chessboard" id="chessboard"></div>
-                <div class="horizontal-coordinates">
-                    <span>a</span>
-                    <span>b</span>
-                    <span>c</span>
-                    <span>d</span>
-                    <span>e</span>
-                    <span>f</span>
-                    <span>g</span>
-                    <span>h</span>
-                </div>
-            </div>
-            
-            <div class="vertical-coordinates" style="visibility: hidden;">
-                <span>8</span>
-                <span>7</span>
-                <span>6</span>
-                <span>5</span>
-                <span>4</span>
-                <span>3</span>
-                <span>2</span>
-                <span>1</span>
-            </div>
-        </div>
-        
-        <div class="captured-pieces">
-            <div>
-                <div class="player-title">القطع المأسورة من قبل الأسود</div>
-                <div class="captured-white" id="captured-white"></div>
-            </div>
-            <div>
-                <div class="player-title">القطع المأسورة من قبل الأبيض</div>
-                <div class="captured-black" id="captured-black"></div>
-            </div>
-        </div>
-        
-        <div class="instructions">
-            <p>عند وصول الجندي إلى النهاية، سيتم عرض خيارات الترقية: ملكة، قلعة، فيل، أو حصان</p>
-        </div>
-    </div>
-    
-    <!-- نافذة اختيار الترقية -->
-    <div class="promotion-modal" id="promotion-modal">
-        <div class="promotion-options">
-            <h2 class="promotion-title">اختر قطعة للترقية</h2>
-            <div class="promotion-pieces">
-                <div class="promotion-piece" data-piece="queen">♕</div>
-                <div class="promotion-piece" data-piece="rook">♖</div>
-                <div class="promotion-piece" data-piece="bishop">♗</div>
-                <div class="promotion-piece" data-piece="knight">♘</div>
-            </div>
+        <div class="chessboard" id="chessboard">
+            <!-- سيتم إضافة دوائر الترقية ديناميكيًا -->
         </div>
     </div>
 
@@ -433,10 +272,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const chessboard = document.getElementById('chessboard');
             const statusDisplay = document.getElementById('status');
-            const capturedWhite = document.getElementById('captured-white');
-            const capturedBlack = document.getElementById('captured-black');
-            const promotionModal = document.getElementById('promotion-modal');
-            const promotionPieces = document.querySelectorAll('.promotion-piece');
             
             let selectedPiece = null;
             let currentPlayer = 'white';
@@ -517,9 +352,6 @@
                         square.appendChild(pieceElement);
                     }
                 });
-                
-                // تحديث القطع المأسورة
-                updateCapturedPieces();
                 
                 // التحقق من حالة الكش
                 if (isKingInCheck(currentPlayer)) {
@@ -954,41 +786,44 @@
                 return true;
             }
             
-            // تحديث عرض القطع المأسورة
-            function updateCapturedPieces() {
-                capturedWhite.innerHTML = '';
-                capturedBlack.innerHTML = '';
-                
-                capturedPieces.white.forEach(piece => {
-                    const span = document.createElement('span');
-                    span.classList.add('captured-piece');
-                    span.textContent = getUnicodeChessPiece(piece);
-                    capturedWhite.appendChild(span);
-                });
-                
-                capturedPieces.black.forEach(piece => {
-                    const span = document.createElement('span');
-                    span.classList.add('captured-piece');
-                    span.textContent = getUnicodeChessPiece(piece);
-                    capturedBlack.appendChild(span);
-                });
-            }
-            
-            // عرض خيارات الترقية
+            // عرض خيارات الترقية المنبثقة
             function showPromotionOptions(color) {
-                promotionModal.style.display = 'flex';
+                // إنشاء عنصر الترقية
+                const overlay = document.createElement('div');
+                overlay.classList.add('promotion-overlay');
                 
-                // إضافة معالجات الأحداث لخيارات الترقية
-                promotionPieces.forEach(piece => {
-                    piece.onclick = () => {
-                        const pieceType = piece.getAttribute('data-piece');
+                const circlesContainer = document.createElement('div');
+                circlesContainer.classList.add('promotion-circles');
+                
+                // أنواع القطع المتاحة للترقية
+                const pieceTypes = [
+                    { type: 'queen', symbol: color === 'white' ? '♕' : '♛', class: 'circle-queen' },
+                    { type: 'rook', symbol: color === 'white' ? '♖' : '♜', class: 'circle-rook' },
+                    { type: 'bishop', symbol: color === 'white' ? '♗' : '♝', class: 'circle-bishop' },
+                    { type: 'knight', symbol: color === 'white' ? '♘' : '♞', class: 'circle-knight' }
+                ];
+                
+                // إنشاء دوائر الترقية
+                pieceTypes.forEach(piece => {
+                    const circle = document.createElement('div');
+                    circle.classList.add('promotion-circle', piece.class);
+                    circle.textContent = piece.symbol;
+                    circle.dataset.piece = piece.type;
+                    
+                    circle.addEventListener('click', () => {
+                        const pieceType = circle.getAttribute('data-piece');
                         promotePawn(promotionPending.row, promotionPending.col, pieceType);
-                        promotionModal.style.display = 'none';
+                        document.body.removeChild(overlay);
                         promotionPending = null;
                         currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
                         updateBoard();
-                    };
+                    });
+                    
+                    circlesContainer.appendChild(circle);
                 });
+                
+                overlay.appendChild(circlesContainer);
+                document.body.appendChild(overlay);
             }
             
             // ترقية البيدق
