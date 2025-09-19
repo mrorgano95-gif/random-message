@@ -1,637 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Vocabulary Learning</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
-            color: #333;
-            line-height: 1.6;
-            padding-bottom: 40px;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #2c3e50, #4a6580);
-            color: white;
-            padding: 25px;
-            text-align: center;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-        
-        .section-title {
-            font-size: 32px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        .section-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-            margin-bottom: 25px;
-        }
-        
-        .content-text {
-            font-size: 18px;
-            line-height: 1.8;
-            margin-bottom: 25px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            border-left: 5px solid #3498db;
-        }
-        
-        .vocabulary-section {
-            margin-top: 30px;
-        }
-        
-        .vocabulary-title {
-            font-size: 24px;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #3498db;
-            text-align: center;
-        }
-        
-        .vocabulary-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
-        }
-        
-        .vocab-item {
-            background: linear-gradient(135deg, #f9f9f9, #ffffff);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #3498db;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .vocab-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        }
-        
-        .vocab-word {
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .vocab-word::before {
-            content: "•";
-            color: #3498db;
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-right: 5px;
-            font-size: 24px;
-        }
-        
-        .vocab-meaning {
-            color: #555;
-            font-size: 16px;
-            padding: 12px;
-            background-color: #f0f7ff;
-            border-radius: 6px;
-            margin-top: 10px;
-            border-left: 3px solid #a8d4ff;
-            line-height: 1.6;
-        }
-        
-        .vocab-arabic {
-            color: #2c3e50;
-            font-size: 18px;
-            padding: 12px;
-            background-color: #fff4e6;
-            border-radius: 6px;
-            margin-top: 10px;
-            border-right: 3px solid #ffa94d;
-            line-height: 1.6;
-            text-align: right;
-            font-weight: bold;
-            direction: rtl;
-        }
-        
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-        
-        button {
-            padding: 14px 28px;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        button:hover {
-            background: linear-gradient(135deg, #2980b9, #2573a7);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
-        button:disabled {
-            background: linear-gradient(135deg, #bdc3c7, #95a5a6);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .quiz-section {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-            margin-top: 40px;
-        }
-        
-        .quiz-title {
-            font-size: 26px;
-            margin-bottom: 20px;
-            color: #2c3e50;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #3498db;
-            text-align: center;
-        }
-        
-        .quiz-instructions {
-            background-color: #e8f4fc;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #3498db;
-            text-align: center;
-        }
-        
-        .quiz-item {
-            margin-bottom: 20px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        }
-        
-        .quiz-question {
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 18px;
-            color: #2c3e50;
-        }
-        
-        .quiz-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        
-        .quiz-option {
-            padding: 12px;
-            background-color: #eee;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            text-align: center;
-        }
-        
-        .quiz-option:hover {
-            background-color: #ddd;
-        }
-        
-        .quiz-option.selected {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            font-weight: bold;
-        }
-        
-        .submit-btn {
-            margin-top: 20px;
-            background: linear-gradient(135deg, #27ae60, #219653);
-            display: block;
-            width: 100%;
-            padding: 16px;
-            font-size: 18px;
-        }
-        
-        .submit-btn:hover {
-            background: linear-gradient(135deg, #219653, #1e8449);
-        }
-        
-        .result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .correct {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .incorrect {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        @media (max-width: 768px) {
-            .vocabulary-list {
-                grid-template-columns: 1fr;
-            }
-            
-            .quiz-options {
-                grid-template-columns: 1fr;
-            }
-            
-            .section-title {
-                font-size: 28px;
-            }
-            
-            .content-text {
-                font-size: 16px;
-            }
-        }
-        
-        .progress-bar {
-            height: 8px;
-            background-color: #ecf0f1;
-            border-radius: 4px;
-            margin-bottom: 25px;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            border-radius: 4px;
-            transition: width 0.5s;
-        }
-        
-        .section-counter {
-            text-align: center;
-            color: #7f8c8d;
-            margin-top: 10px;
-            font-size: 16px;
-        }
-        
-        .section-description {
-            font-style: italic;
-            margin-top: 10px;
-            opacity: 0.9;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-        
-        .language-note {
-            background-color: #ffeaa7;
-            padding: 10px;
-            border-radius: 6px;
-            text-align: center;
-            margin: 15px 0;
-            font-weight: bold;
-            color: #2d3436;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Vocabulary Learning</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #f9f5f0;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background-color: white;
+      padding: 20px;
+    }
+
+    .page {
+      width: 100%;
+      padding: 20px;
+      position: relative;
+      min-height: 600px;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      color: #8b1a1a;
+      margin-bottom: 10px;
+      text-align: left;
+      border-bottom: 2px solid #e0d7d0;
+      padding-bottom: 5px;
+    }
+
+    .text-box {
+      border: 1px dashed #999;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      background-color: #fff;
+    }
+
+    .word-focus {
+      background-color: #ffe0e0;
+      border-top: 5px solid #8b1a1a;
+      padding: 15px;
+      margin-top: 20px;
+      border-left: 4px solid #8b1a1a;
+      font-size: 0.95rem;
+    }
+
+    .word-focus h3 {
+      margin-top: 0;
+      color: white;
+      background-color: #8b1a1a;
+      padding: 5px;
+      display: inline-block;
+      font-size: 1.1rem;
+    }
+
+    .vocabulary {
+      margin-top: 20px;
+      font-size: 1.05rem;
+    }
+
+    .vocab-item {
+      margin-bottom: 10px;
+    }
+
+    .vocab-word {
+      font-weight: bold;
+      color: #8b1a1a;
+      font-style: italic;
+    }
+
+    .vocab-definition {
+      margin-left: 10px;
+      color: #555;
+    }
+
+    .controls {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .btn {
+      background-color: #8b1a1a;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #6c1313;
+    }
+
+    .btn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1 id="current-section">EDUCATION</h1>
-            <div class="progress-bar">
-                <div class="progress" id="progress-bar"></div>
-            </div>
-            <div class="section-counter" id="section-counter">Section 1 of 3</div>
-            <div class="section-description" id="section-description">Why education?</div>
-        </header>
-        
-        <div class="language-note">
-            <i class="fas fa-info-circle"></i> All vocabulary includes English words with Arabic translation
-        </div>
-        
-        <div class="section-content">
-            <div class="content-text" id="content-display">
-                <!-- Content will be displayed here dynamically -->
-            </div>
-            
-            <div class="vocabulary-section">
-                <h2 class="vocabulary-title">Vocabulary List</h2>
-                <div class="vocabulary-list" id="vocabulary-list">
-                    <!-- Vocabulary will be displayed here dynamically -->
-                </div>
-            </div>
-            
-            <div class="navigation">
-                <button id="prev-btn" disabled><i class="fas fa-arrow-left"></i> Previous Section</button>
-                <button id="next-btn">Next Section <i class="fas fa-arrow-right"></i></button>
-            </div>
-        </div>
-        
-        <div class="quiz-section" id="quiz-section">
-            <h2 class="quiz-title">Vocabulary Quiz</h2>
-            <div class="quiz-instructions">
-                <p>Test your knowledge! Select the correct meaning for each word. This quiz includes <strong>10 questions</strong> based on the vocabulary from this section.</p>
-            </div>
-            <div id="quiz-container">
-                <!-- Quiz questions will be displayed here dynamically -->
-            </div>
-            <button class="submit-btn" id="submit-quiz"><i class="fas fa-paper-plane"></i> Submit Answers</button>
-            <div id="quiz-result"></div>
-        </div>
-        
-        <div class="footer">
-            <p>English Vocabulary Learning Platform &copy; 2023</p>
-        </div>
-    </div>
 
-    <script>
-        // Educational sections data
-        const sections = [
-            {
-                title: "EDUCATION - Why education?",
-                description: "Why education?",
-                content: "We still have high levels of <b>illiteracy, truancy</b> is <b>rife</b>, and many young people think school is a waste of time. But it shouldn't be. It is <b>proven</b> that a good education will improve children's <b>prospects</b>, and <b>open doors</b> that might otherwise be closed. It will increase their chance of finding a good job, and with it the <b>likelihood</b> of more money and higher <b>status</b>. But a good education should be more than that. It should help children to develop <b>self-esteem</b> and <b>self-awareness</b>. It should teach them to <b>take responsibility for</b> the world they <b>inhabit</b>, so they understand why they <b>vote</b> in elections, why <b>freedom of speech</b> is important, why <b>preventive</b> health care <b>matters</b>, etc. Education should also help children to unlock their <b>innate capacity</b> to be creative. Finally, it should teach them to have respect for other <b>human beings</b> and give them a sense of <b>morality</b>.",
-                vocabulary: [
-                    { word: "Illiteracy", meaning: "the inability to read or write", arabic: "الأمية - عدم القدرة على القراءة أو الكتابة" },
-                    { word: "truancy", meaning: "the practice of staying away from school without permission", arabic: "التغيب عن المدرسة - عدم الذهاب إلى المدرسة دون إذن" },
-                    { word: "rife", meaning: "(of bad or unpleasant things) very common", arabic: "منتشر - (أشياء سيئة أو غير سارة) شائعة جدًا" },
-                    { word: "proven", meaning: "tested and shown to be true", arabic: "مثبت - تم اختباره وتبين أنه صحيح" },
-                    { word: "prospects", meaning: "the chances of being successful in the future", arabic: "التوقعات المستقبلية - فرص النجاح في المستقبل" },
-                    { word: "open doors", meaning: "give someone opportunities", arabic: "يفتح الأبواب - يمنح شخصًا ما فرصًا" },
-                    { word: "likelihood", meaning: "the chance of something happening", arabic: "الاحتمالية - فرصة حدوث شيء ما" },
-                    { word: "status", meaning: "your social or professional position", arabic: "المركز الاجتماعي - مكانتك الاجتماعية أو المهنية" },
-                    { word: "self-esteem", meaning: "the feeling of being happy with your own character", arabic: "احترام الذات - الشعور بالسعادة مع شخصيتك الخاصة" },
-                    { word: "self-awareness", meaning: "a knowledge and understanding of yourself", arabic: "الوعي الذاتي - معرفة وفهم نفسك" },
-                    { word: "take responsibility for", meaning: "make decisions and accept the consequences if they are wrong", arabic: "تحمل المسؤولية - اتخاذ القرارات وقبول العواقب إذا كانت خاطئة" },
-                    { word: "inhabit", meaning: "live in a particular place", arabic: "يسكن - يعيش في مكان معين" },
-                    { word: "vote", meaning: "choose someone/something by marking a paper or raising your hand", arabic: "يصوت - يختار شخص/شيء بوضع علامة على ورقة أو رفع اليد" },
-                    { word: "freedom of speech", meaning: "the right to say what you want without anyone stopping you", arabic: "حرية التعبير - الحق في قول ما تريد دون أن يوقفك أحد" },
-                    { word: "preventive", meaning: "intended to stop something that causes problems from happening", arabic: "وقائي - يهدف إلى منع شيء يسبب المشاكل من الحدوث" },
-                    { word: "matters", meaning: "be important", arabic: "يهم - يكون مهمًا" },
-                    { word: "innate", meaning: "(of a quality, feeling, etc.) that you have when you are born", arabic: "فطري - (صفة، شعور، إلخ) يكون لديك منذ الولادة" },
-                    { word: "capacity", meaning: "ability to do something", arabic: "قدرة - القدرة على فعل شيء" },
-                    { word: "human being", meaning: "a living person", arabic: "إنسان - شخص حي" },
-                    { word: "morality", meaning: "the principles of right or wrong behaviour", arabic: "الأخلاق - مبادئ السلوك الصحيح والخاطئ" }
-                ]
-            },
-            {
-                title: "EDUCATION - School issues",
-                description: "School issues",
-                content: "In the UK, there is a continuing debate about many issues regarding the education of our children.",
-                vocabulary: [
-                    { word: "debate", meaning: "an argument or discussion expressing different opinions", arabic: "نقاش - جدال أو مناقشة تعبر عن آراء مختلفة" },
-                    { word: "issue", meaning: "an important topic that people are discussing", arabic: "قضية - موضوع مهم يناقشه الناس" },
-                    { word: "regarding", meaning: "about something/someone", arabic: "بخصوص - حول شيء/شخص ما" },
-                    { word: "be better off", meaning: "used to say that someone would be happier or more satisfied if they did a particular thing", arabic: "يكون في وضع أفضل - يستخدم لقول أن شخصًا سيكون أكثر سعادة أو رضا إذا فعل شيئًا معينًا" },
-                    { word: "nursery school", meaning: "a school for children between the ages of about two and five", arabic: "روضة أطفال - مدرسة للأطفال بين عمر سنتين وخمس سنوات" },
-                    { word: "childminder", meaning: "a person who is paid to care for children while their parents are at work", arabic: "جليسة أطفال - شخص يُدفع له لرعاية الأطفال بينما والداهم في العمل" },
-                    { word: "independent", meaning: "receiving no money from the government", arabic: "مستقل - لا يتلقى أموالاً من الحكومة" },
-                    { word: "divisive", meaning: "likely to cause arguments between people", arabic: "مسبب للانقسام - من المحتمل أن يسبب جدالاً بين الناس" },
-                    { word: "elitist", meaning: "based on a system in which a small group of people have a lot of advantages", arabic: "نخبوي - مبني على نظام حيث تتمتع مجموعة صغيرة من الناس بالكثير من المزايا" },
-                    { word: "statistically", meaning: "based on information shown in numbers", arabic: "إحصائياً - مبني على معلومات معروضة بأرقام" },
-                    { word: "be distracted by", meaning: "have your concentration interrupted by something", arabic: "ينشغل بـ - تنقطع تركيزك بسبب شيء ما" },
-                    { word: "co-educational", meaning: "educating boys and girls in the same school", arabic: "مختلط - تعليم الأولاد والبنات في نفس المدرسة" },
-                    { word: "compulsory", meaning: "if something is compulsory, you have to do it", arabic: "إلزامي - إذا كان شيء إلزاميًا، يجب عليك فعله" },
-                    { word: "curriculum", meaning: "the group of subjects that students study at school or college", arabic: "منهاج دراسي - مجموعة المواد التي يدرسها الطلاب في المدرسة أو الكلية" },
-                    { word: "tackle", meaning: "make a big effort to deal with a difficult situation", arabic: "يعالج - يبذل جهدًا كبيرًا لل التعامل مع وضع صعب" },
-                    { word: "bullying", meaning: "behaviour that frightens or hurts someone smaller and weaker", arabic: "تنمر - سلوك يخيف أو يؤذي شخصًا أصغر وأضعف" }
-                ]
-            },
-            {
-                title: "Discipline - Has discipline got worse?",
-                description: "Has discipline got worse?",
-                content: "Discipline is often cited as one of the biggest problems in schools, and these are some of the reasons that people give...",
-                vocabulary: [
-                    { word: "cite", meaning: "give something as a reason or example to support what you are saying", arabic: "يستشهد - يعطي شيئًا كسبب أو مثال لدعم ما تقوله" },
-                    { word: "abolition", meaning: "the ending of a law, a system, or an institution", arabic: "إلغاء - إنهاء قانون أو نظام أو مؤسسة" },
-                    { word: "corporal punishment", meaning: "the physical punishment of someone by hitting them", arabic: "عقاب بدني - معاقبة شخص جسديًا بضربه" },
-                    { word: "deterrent", meaning: "something that, because it is unpleasant, makes someone decide not to do something", arabic: "رادع - شيء ما، لأنه غير سار، يجعل شخصًا ما يقرر عدم فعل شيء" },
-                    { word: "enforce", meaning: "make people follow a particular law or rule", arabic: "يفرض - يجعل الناس يتبعون قانونًا أو قاعدة معينة" },
-                    { word: "ignore", meaning: "pay no attention to something", arabic: "يتجاهل - لا يولي أي اهتمام لشيء ما" },
-                    { word: "misconduct", meaning: "bad or unacceptable behaviour", arabic: "سوء السلوك - سلوك سيء أو غير مقبول" },
-                    { word: "suspend", meaning: "officially stop a student from going to school for a period of time", arabic: "يوقف - يمنع طالبًا من الذهاب إلى المدرسة بشكل رسمي لفترة من الوقت" },
-                    { word: "expel", meaning: "officially make someone leave a school or organization", arabic: "يطرد - يجبر شخصًا على مغادرة مدرسة أو منظمة بشكل رسمي" },
-                    { word: "disruptive", meaning: "causing problems, noise, etc. so that something cannot continue normally", arabic: "مسبب للاضطراب - يسبب مشاكل، ضوضاء، إلخ، بحيث لا يمكن لشيء ما أن يستمر بشكل طبيعي" },
-                    { word: "be to blame for", meaning: "be responsible for something bad", arabic: "يُلام على - يكون مسؤولاً عن شيء سيء" },
-                    { word: "gang", meaning: "a group of young people who spend time together and often cause trouble", arabic: "عصابة - مجموعة من الشباب يقضون الوقت معًا وغالبًا ما يسببون المشاكل" },
-                    { word: "result in", meaning: "cause something to happen", arabic: "ينتج عنه - يتسبب في حدوث شيء" },
-                    { word: "deterioration", meaning: "a situation in which something becomes worse", arabic: "تدهور - وضع يصبح فيه شيء أسوأ" },
-                    { word: "respect", meaning: "a feeling of admiration for someone because of their status or importance", arabic: "احترام - شعور بالإعجاب بشخص ما بسبب مكانته أو أهميته" },
-                    { word: "in authority", meaning: "having a position of power to give orders to people", arabic: "في سلطة - يكون في موقع قوة لإعطاء الأوامر للناس" }
-                ]
-            }
-        ];
+<div class="container">
+  <div id="content" class="page">
+    <!-- Content will be injected here -->
+  </div>
+  <div class="controls">
+    <button id="prevBtn" class="btn" onclick="prev()">Previous</button>
+    <button id="nextBtn" class="btn" onclick="next()">Next</button>
+  </div>
+</div>
 
-        let currentSectionIndex = 0;
+<script>
+  // Data for each section
+  const sections = [
+    {
+      title: "Postgraduate courses",
+      text: `
+        <strong>Qualifications and duration</strong><br>
+        MA (FT 1 year; PT 2-5 years)<br>
+        Postgraduate Diploma in Education (PDE) (FT 9 months; PT 2-5 years)<br><br>
 
-        // Display current section content and vocabulary
-        function displayCurrentSection() {
-            const section = sections[currentSectionIndex];
-            
-            // Update title
-            document.getElementById('current-section').textContent = section.title;
-            document.getElementById('section-description').textContent = section.description;
-            
-            // Update progress bar
-            const progressPercent = ((currentSectionIndex + 1) / sections.length) * 100;
-            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
-            
-            // Update section counter
-            document.getElementById('section-counter').textContent = `Section ${currentSectionIndex + 1} of ${sections.length}`;
-            
-            // Display section content
-            const contentDisplay = document.getElementById('content-display');
-            contentDisplay.innerHTML = `<p>${section.content}</p>`;
-            
-            // Display vocabulary
-            const vocabularyList = document.getElementById('vocabulary-list');
-            vocabularyList.innerHTML = '';
-            
-            section.vocabulary.forEach(vocab => {
-                const vocabItem = document.createElement('div');
-                vocabItem.className = 'vocab-item';
-                vocabItem.innerHTML = `
-                    <div class="vocab-word">${vocab.word}</div>
-                    <div class="vocab-meaning">${vocab.meaning}</div>
-                    <div class="vocab-arabic">${vocab.arabic}</div>
-                `;
-                vocabularyList.appendChild(vocabItem);
-            });
-            
-            // Update navigation buttons state
-            document.getElementById('prev-btn').disabled = currentSectionIndex === 0;
-            document.getElementById('next-btn').disabled = currentSectionIndex === sections.length - 1;
-            
-            // Generate and update quiz
-            generateQuiz();
-        }
+        <strong>Overview</strong><br>
+        90 credits are required for the MA: 60 credits from taught modules and 30 credits for a 15,000 word dissertation. Students who opt for the PDE require 60 credits. A unit on research methods in education (12 credits) is compulsory on both courses.<br><br>
 
-        // Generate vocabulary quiz
-        function generateQuiz() {
-            const quizContainer = document.getElementById('quiz-container');
-            quizContainer.innerHTML = '';
-            
-            const section = sections[currentSectionIndex];
-            const vocabularies = section.vocabulary;
-            
-            // Take 10 random words for the quiz (or all words if less than 10)
-            const quizWords = [...vocabularies].sort(() => 0.5 - Math.random()).slice(0, 10);
-            
-            quizWords.forEach((vocab, index) => {
-                const quizItem = document.createElement('div');
-                quizItem.className = 'quiz-item';
-                
-                // Create random options (correct answer + 3 wrong answers)
-                const options = [vocab.meaning];
-                while (options.length < 4) {
-                    const randomOption = vocabularies[Math.floor(Math.random() * vocabularies.length)].meaning;
-                    if (!options.includes(randomOption)) {
-                        options.push(randomOption);
-                    }
-                }
-                
-                // Shuffle options
-                options.sort(() => 0.5 - Math.random());
-                
-                quizItem.innerHTML = `
-                    <div class="quiz-question">${index + 1}. What is the meaning of "${vocab.word}"?</div>
-                    <div class="quiz-options">
-                        ${options.map(option => 
-                            `<div class="quiz-option" data-correct="${option === vocab.meaning}" 
-                                  onclick="selectOption(this)">${option}</div>`
-                        ).join('')}
-                    </div>
-                `;
-                
-                quizContainer.appendChild(quizItem);
-            });
-            
-            // Reset quiz result
-            document.getElementById('quiz-result').innerHTML = '';
-        }
+        Students can specialize in a particular area or combine units in different areas. Units are available in various modes of study, including taught modules as well as a distance learning programme.<br><br>
 
-        // Select option in quiz
-        function selectOption(element) {
-            // Deselect all options in the same question
-            const parent = element.parentElement;
-            const options = parent.querySelectorAll('.quiz-option');
-            options.forEach(opt => opt.classList.remove('selected'));
-            
-            // Select current option
-            element.classList.add('selected');
-        }
+        <strong>Entry requirements</strong><br>
+        A first degree or equivalent from a recognized university.
+      `,
+      wordFocus: "A dissertation is a long piece of writing, e.g. 10,000 words, on a particular subject, often for a university degree. It is usually longer than an essay, e.g. 500 words, but shorter than a thesis, e.g. 60,000 words.",
+      vocabulary: [
+        { word: "qualification", meaning: "often plural sth such as a degree or diploma that you get when you successfully finish a course of study." },
+        { word: "duration", meaning: "the length of time sth continues." },
+        { word: "MA", meaning: "abbrev Master of Arts) a higher degree in an arts subject. (Also MSc. abbrev Master of Science.)" },
+        { word: "postgraduate", meaning: "(postgrad inf) a person who already has a first degree and who is doing advanced study or research." },
+        { word: "diploma", meaning: "a qualification at the end of a course of study at a college or university." },
+        { word: "overview", meaning: "a general description of sth." },
+        { word: "credit", meaning: "a part of a college or university course that you have completed successfully." },
+        { word: "module", meaning: "a unit that forms part of a course of study at college or university." },
+        { word: "opt for sth", meaning: "choose sth." },
+        { word: "specialize in sth", meaning: "spend more time on one area of work, and become very knowledgeable in that area." },
+        { word: "mode", meaning: "a particular way of doing sth." },
+        { word: "distance learning", meaning: "a system of education in which people study at home with the help of the internet and videos, and then send or email their work to their teachers." },
+        { word: "entry requirement", meaning: "a qualification or experience that you need in order to enter a college or university." },
+        { word: "equivalent", meaning: "equal in value, meaning, etc." },
+        { word: "recognize sth", meaning: "if sth is recognized, it is officially approved of and accepted." }
+      ]
+    },
+    {
+      title: "Why education?",
+      text: `
+        We still have high levels of illiteracy, truancy is rife, and many young people think school is a waste of time. But it shouldn't be.<br><br>
 
-        // Submit answers and check results
-        function submitQuiz() {
-            const quizItems = document.querySelectorAll('.quiz-item');
-            let correctAnswers = 0;
-            let totalQuestions = quizItems.length;
-            
-            quizItems.forEach(item => {
-                const selectedOption = item.querySelector('.quiz-option.selected');
-                if (selectedOption && selectedOption.getAttribute('data-correct') === 'true') {
-                    correctAnswers++;
-                    selectedOption.classList.add('correct');
-                } else if (selectedOption) {
-                    selectedOption.classList.add('incorrect');
-                    
-                    // Show correct answer
-                    const correctOption = item.querySelector('.quiz-option[data-correct="true"]');
-                    correctOption.classList.add('correct');
-                }
-            });
-            
-            // Display result
-            const resultElement = document.getElementById('quiz-result');
-            const percentage = (correctAnswers / totalQuestions) * 100;
-            let message = '';
-            
-            if (percentage >= 80) {
-                message = `Excellent! You got ${correctAnswers} out of ${totalQuestions} correct!`;
-            } else if (percentage >= 60) {
-                message = `Good job! You got ${correctAnswers} out of ${totalQuestions} correct!`;
-            } else {
-                message = `You got ${correctAnswers} out of ${totalQuestions} correct. Keep practicing!`;
-            }
-            
-            resultElement.innerHTML = `
-                <div class="result ${correctAnswers === totalQuestions ? 'correct' : (percentage >= 60 ? 'correct' : 'incorrect')}">
-                    ${message}
-                </div>
-            `;
-        }
+        It is proven that a good education will improve children's prospects, and open doors that might otherwise be closed. It will increase their chance of finding a good job, and with it the likelihood of more money and higher status. But a good education should be more than that. It should help children to develop self-esteem and self-awareness. It should teach them to take responsibility for the world they inhabit, so they understand why they vote in elections, why freedom of speech is important, why preventive health care matters, etc.<br><br>
 
-        // Navigation between sections
-        document.getElementById('prev-btn').addEventListener('click', () => {
-            if (currentSectionIndex > 0) {
-                currentSectionIndex--;
-                displayCurrentSection();
-            }
-        });
+        Education should also help children to unlock their innate capacity to be creative. Finally, it should teach them to have respect for other human beings and give them a sense of morality.
+      `,
+      wordFocus: "Self- is often combined with other nouns and adjectives to mean 'of yourself': self-esteem is the feeling of being happy with your own character; self-awareness is a knowledge and understanding of yourself.",
+      vocabulary: [
+        { word: "illiteracy", meaning: "the inability to read or write." },
+        { word: "illiterate", meaning: "adj, opp literate." },
+        { word: "truancy", meaning: "the practice of staying away from school without permission. Someone who does this is playing truant." },
+        { word: "rife", meaning: "(of bad or unpleasant things) very common: corruption is rife. syn widespread." },
+        { word: "proven", meaning: "tested and shown to be true." },
+        { word: "prospects", meaning: "pl n the chances of being successful in the future." },
+        { word: "open doors", meaning: "give sb opportunities." },
+        { word: "likelihood", meaning: "the chance of sth happening. syn probability." },
+        { word: "status", meaning: "your social or professional position." },
+        { word: "take responsibility for sth", meaning: "make decisions and accept the consequences if they are wrong." },
+        { word: "inhabit sth", meaning: "live in a particular place." },
+        { word: "vote (for sb/sth)", meaning: "choose sb/sth by marking a paper or raising your hand." },
+        { word: "freedom of speech", meaning: "the right to say what you want without anyone stopping you." },
+        { word: "preventive", meaning: "(also preventative) intended to stop sth that causes problems from happening." },
+        { word: "matter", meaning: "be important." },
+        { word: "innate", meaning: "(of a quality, feeling, etc.) that you have when you are born." },
+        { word: "capacity to do sth", meaning: "ability to do sth." },
+        { word: "human being", meaning: "a living person." },
+        { word: "morality", meaning: "the principles of right or wrong behaviour." }
+      ]
+    },
+    {
+      title: "School issues",
+      text: `
+        In the UK, there is a continuing debate about many issues regarding the education of our children. For example:<br><br>
 
-        document.getElementById('next-btn').addEventListener('click', () => {
-            if (currentSectionIndex < sections.length - 1) {
-                currentSectionIndex++;
-                displayCurrentSection();
-            }
-        });
+        • At the age of two or three, is a child better off in a nursery school with other children, or at home with their mother or childminder?<br><br>
 
-        document.getElementById('submit-quiz').addEventListener('click', submitQuiz);
+        • Are independent schools divisive and elitist, or do parents have the right to send their children to fee-paying private schools with smaller class sizes, and statistically a much higher chance of getting into university?<br><br>
 
-        // Make selectOption function globally available for onclick
-        window.selectOption = selectOption;
+        • There is some evidence that girls do well in single-sex schools where they are not being distracted by boys. If that is true, are co-educational schools still better than single-sex schools?<br><br>
 
-        // Initialize page on load
-        window.onload = displayCurrentSection;
-    </script>
+        • Should religion be a compulsory subject on the curriculum? And if so, what should we be teaching?<br><br>
+
+        • How should we tackle bullying in schools?
+      `,
+      wordFocus: "An independent school receives no money from the government, and the education of the pupils is paid for by the parents. syn private school. opp state school.",
+      vocabulary: [
+        { word: "debate", meaning: "an argument or discussion expressing different opinions." },
+        { word: "issue", meaning: "an important topic that people are discussing." },
+        { word: "regarding sth/sb", meaning: "about sth/sb. syn concerning sth/sb." },
+        { word: "be better off (doing sth)", meaning: "used to say that sb would be happier or more satisfied if they did a particular thing. opp be worse off." },
+        { word: "nursery school", meaning: "a school for children between the ages of about two and five." },
+        { word: "childminder", meaning: "a person who is paid to care for children while their parents are at work." },
+        { word: "divisive", meaning: "likely to cause arguments between people." },
+        { word: "elitist", meaning: "based on a system in which a small group of people (= an elite) have a lot of advantages and have the most influence." },
+        { word: "statistically", meaning: "based on information shown in numbers. statistics n." },
+        { word: "be distracted by sth", meaning: "have your concentration interrupted by sth." },
+        { word: "co-educational", meaning: "(co-ed inf) educating boys and girls in the same school." },
+        { word: "compulsory", meaning: "if sth is compulsory, you have to do it. syn obligatory." },
+        { word: "curriculum", meaning: "the group of subjects that students study at school or college." },
+        { word: "tackle sth", meaning: "make a big effort to deal with a difficult situation: tackle a problem." },
+        { word: "bullying", meaning: "behaviour that frightens or hurts sb smaller and weaker. The person is a bully." }
+      ]
+    },
+    {
+      title: "Discipline",
+      text: `
+        <strong>Has discipline got worse?</strong><br>
+        Discipline is often cited as one of the biggest problems in schools, and these are some of the reasons that people give:<br><br>
+
+        • The abolition of corporal punishment has removed a common deterrent to bad behaviour.<br><br>
+
+        • Rules are not consistently enforced, and some teachers ignore misconduct.<br><br>
+
+        • Head teachers are frightened to suspend or expel disruptive students in case the students or their parents take legal action against them.<br><br>
+
+        • Parents are to blame for not disciplining their children at home.<br><br>
+
+        • Gang culture, common in society, is spreading into schools, creating more violence and discipline problems.<br><br>
+
+        • Poor teaching results in a deterioration in classroom behaviour.<br><br>
+
+        • Children in general have lost respect for people in authority.
+      `,
+      wordFocus: "Discipline is the practice of making people obey rules (= do what the rules say), and then punishing them (= making them suffer) if they don't. We also use discipline as a verb: Parents have to discipline their children.",
+      vocabulary: [
+        { word: "cite sth", meaning: "fml give sth as a reason or example to support what you are saying." },
+        { word: "abolition", meaning: "the ending of a law, a system, or an institution. abolish sth v." },
+        { word: "corporal punishment", meaning: "the physical punishment of sb by hitting them." },
+        { word: "deterrent", meaning: "sth that, because it is unpleasant, makes sb decide not to do sth. deter sb v." },
+        { word: "enforce sth", meaning: "make people follow a particular law or rule. enforcement n." },
+        { word: "ignore sth", meaning: "pay no attention to sth." },
+        { word: "misconduct", meaning: "bad or unacceptable behaviour." },
+        { word: "suspend sb (from sth)", meaning: "officially stop a student from going to school, or a person from going to work, for a period of time." },
+        { word: "expel sb (from sth)", meaning: "officially make sb leave a school or organization." },
+        { word: "disruptive", meaning: "causing problems, noise, etc. so that sth cannot continue normally. disrupt sth v." },
+        { word: "be to blame for sth", meaning: "be responsible for sth bad." },
+        { word: "gang", meaning: "a group of young people who spend time together and often cause trouble." },
+        { word: "result in sth", meaning: "cause sth to happen." },
+        { word: "deterioration", meaning: "a situation in which sth becomes worse. deteriorate v." },
+        { word: "respect", meaning: "a feeling of admiration for sb because of their status or importance." },
+        { word: "in authority", meaning: "having a position of power to give orders to people." }
+      ]
+    },
+    {
+      title: "Exam revision",
+      text: `
+        Here are some tips for exam revision.<br><br>
+
+        • The first step is to draw up a revision schedule. Be realistic. You can't revise all the time.<br><br>
+
+        • Consider how long you can concentrate at any one time. There's no point in sitting in front of your notes for hours if you're not absorbing anything. It is probably wiser to revise in short bursts.<br><br>
+
+        • Taking short breaks in your revision periods can be really beneficial. For one thing, it allows time for ideas and information to sink in.<br><br>
+
+        • There won't be enough time to do everything, so prioritize your revision. Which topics are bound to come up and therefore essential to revise?<br><br>
+
+        • When you've come up with a timetable, it's important to realize that things will not always go according to plan. Be ready to reorganize your schedule and your priorities to make sure you stay on track.
+      `,
+      wordFocus: "Point can mean the purpose or aim of something. It is often used in these ways: There's no point in trying to do it all. What's the point of revising everything? I don't see the point of exams.",
+      vocabulary: [
+        { word: "tip", meaning: "a small piece of advice about sth." },
+        { word: "revision", meaning: "the process of preparing for an exam by looking again at the work you have done. revise (for sth) v." },
+        { word: "step", meaning: "one of a series of things that you do in order to achieve sth." },
+        { word: "draw sth up", meaning: "make or write sth that needs careful thought: draw up a plan." },
+        { word: "schedule", meaning: "a plan of activities or events and when they will happen." },
+        { word: "realistic", meaning: "sensible and accepting things as they are." },
+        { word: "absorb sth", meaning: "take information into your mind and understand or remember it." },
+        { word: "in short bursts", meaning: "in short periods in which you do sth with a lot of energy or effort." },
+        { word: "beneficial (to sth/sb)", meaning: "improving a situation or having a helpful or useful effect." },
+        { word: "sink in", meaning: "(of words, information, etc.) be fully understood." },
+        { word: "prioritize sth", meaning: "put tasks, problems, etc. in order of importance so that you deal with the most important first. priority n." },
+        { word: "bound to do sth", meaning: "be certain to do sth or happen." },
+        { word: "come up", meaning: "happen or appear." },
+        { word: "come up with sth", meaning: "find or produce an answer, a plan, a sum of money, etc." },
+        { word: "go according to plan", meaning: "happen in the way that you expect." },
+        { word: "stay on track", meaning: "keep going in the right direction, or doing the right things." }
+      ]
+    }
+  ];
+
+  let currentSectionIndex = 0;
+
+  function displaySection(index) {
+    const section = sections[index];
+    document.getElementById("content").innerHTML = `
+      <h1 class="page-title">${section.title}</h1>
+      <div class="text-box">
+        ${section.text}
+      </div>
+      <div class="word-focus">
+        <h3>WORD FOCUS</h3>
+        ${section.wordFocus}
+      </div>
+      <div class="vocabulary">
+        <h3>Vocabulary</h3>
+        ${section.vocabulary.map(item => `
+          <div class="vocab-item">
+            <span class="vocab-word">${item.word}</span>
+            <span class="vocab-definition">${item.meaning}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  function next() {
+    if (currentSectionIndex < sections.length - 1) {
+      currentSectionIndex++;
+      displaySection(currentSectionIndex);
+    }
+  }
+
+  function prev() {
+    if (currentSectionIndex > 0) {
+      currentSectionIndex--;
+      displaySection(currentSectionIndex);
+    }
+  }
+
+  // Initialize the page
+  window.onload = () => {
+    displaySection(currentSectionIndex);
+  };
+</script>
+
 </body>
 </html>
