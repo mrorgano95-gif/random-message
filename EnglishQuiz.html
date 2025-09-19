@@ -291,732 +291,125 @@
     <button class="next-btn" id="next-btn">Next Question</button>
 
     <script>
-        const quizData = [
-            {
-                question: "What does 'illiteracy' mean?",
-                options: ["The ability to read and write", "The inability to read or write", "Going to school", "Teaching children"],
-                correct: 1,
-                explanation: {
-                    en: "Illiteracy is the state of being unable to read or write. It remains a global challenge.",
-                    ar: "الأمية هي حالة عدم القدرة على القراءة أو الكتابة. وهي تحدٍ عالمي مستمر."
-                }
-            },
-            {
-                question: "What does 'truancy' mean?",
-                options: ["Attending school regularly", "Staying away from school without permission", "Doing homework", "Playing sports"],
-                correct: 1,
-                explanation: {
-                    en: "Truancy refers to the act of staying away from school without permission. It is a serious issue in education.",
-                    ar: "التهرب المدرسي يعني التغيب عن المدرسة دون إذن. إنه مشكلة خطيرة في التعليم."
-                }
-            },
-            {
-                question: "If something is 'rife', it is:",
-                options: ["Very rare", "Very common", "Very expensive", "Very small"],
-                correct: 1,
-                explanation: {
-                    en: "'Rife' means widespread or very common, especially something bad. E.g., Corruption is rife in some countries.",
-                    ar: "'منتشر' تعني واسع الانتشار أو شائع جدًا، خاصةً شيء سيء. مثال: الفساد منتشر في بعض البلدان."
-                }
-            },
-            {
-                question: "A 'proven' method is one that is:",
-                options: ["New and untested", "Tested and shown to be true", "Theoretical", "Expensive"],
-                correct: 1,
-                explanation: {
-                    en: "'Proven' means something has been tested and shown to work or be true. E.g., Proven teaching strategies.",
-                    ar: "'مُثبت' تعني أن شيئًا ما تم اختباره وأُثبت أنه يعمل أو صحيح. مثال: استراتيجيات تدريس مُثبتة."
-                }
-            },
-            {
-                question: "What are 'prospects'?",
-                options: ["Past experiences", "Chances of future success", "Old memories", "Physical objects"],
-                correct: 1,
-                explanation: {
-                    en: "'Prospects' refer to the chances or opportunities for future success. Education improves your prospects.",
-                    ar: "'الفرص' تشير إلى فرص أو احتمالات النجاح في المستقبل. التعليم يحسن فرصك."
-                }
-            },
-            {
-                question: "To 'open doors' means to:",
-                options: ["Close opportunities", "Create new opportunities", "Lock a door", "Build a house"],
-                correct: 1,
-                explanation: {
-                    en: "The phrase 'open doors' means to create new opportunities for someone. E.g., A degree opens doors to better jobs.",
-                    ar: "تعني عبارة 'تفتح الأبواب' خلق فرص جديدة لشخص ما. مثال: الشهادة تفتح الأبواب لفرص عمل أفضل."
-                }
-            },
-            {
-                question: "What does 'likelihood' mean?",
-                options: ["Certainty", "The chance of something happening", "Impossibility", "A type of game"],
-                correct: 1,
-                explanation: {
-                    en: "'Likelihood' means the probability or chance that something will happen. E.g., High likelihood of rain.",
-                    ar: "'الاحتمالية' تعني احتمال أو فرصة حدوث شيء ما. مثال: احتمالية عالية لهطول الأمطار."
-                }
-            },
-            {
-                question: "Your 'status' refers to your:",
-                options: ["Favorite color", "Social or professional position", "Age", "Height"],
-                correct: 1,
-                explanation: {
-                    en: "'Status' is your social or professional standing. E.g., Education can improve your social status.",
-                    ar: "'الوضع' هو مركزك الاجتماعي أو المهني. مثال: يمكن أن يحسن التعليم وضعك الاجتماعي."
-                }
-            },
-            {
-                question: "To 'take responsibility for something' means to:",
-                options: ["Ignore it", "Blame others", "Make decisions and accept consequences", "Forget about it"],
-                correct: 2,
-                explanation: {
-                    en: "It means to be accountable for your actions and accept the outcomes, good or bad.",
-                    ar: "يعني أن تكون مسؤولاً عن أفعالك وتقبل النتائج، جيدة كانت أم سيئة."
-                }
-            },
-            {
-                question: "To 'inhabit' a place means to:",
-                options: ["Visit it", "Live in it", "Destroy it", "Photograph it"],
-                correct: 1,
-                explanation: {
-                    en: "'Inhabit' means to live in a particular place. E.g., Different cultures inhabit different parts of the world.",
-                    ar: "'يسكن' تعني العيش في مكان معين. مثال: تسكن ثقافات مختلفة أجزاءً مختلفة من العالم."
-                }
-            },
-            {
-                question: "What does 'vote' mean?",
-                options: ["To run for office", "To choose by marking a ballot", "To protest", "To teach"],
-                correct: 1,
-                explanation: {
-                    en: "To vote is to formally express a choice, typically in an election. E.g., Citizens vote for their leaders.",
-                    ar: "التصويت هو التعبير الرسمي عن الاختيار، عادةً في الانتخابات. مثال: المواطنون يصوتون لاختيار قادتهم."
-                }
-            },
-            {
-                question: "What is 'freedom of speech'?",
-                options: ["The right to remain silent", "The right to say what you think", "The right to own property", "The right to travel"],
-                correct: 1,
-                explanation: {
-                    en: "It is the right to express opinions without censorship or restraint. A key democratic value.",
-                    ar: "هي الحق في التعبير عن الآراء دون رقابة أو قيود. وهي قيمة ديمقراطية أساسية."
-                }
-            },
-            {
-                question: "A 'preventive' measure is one that:",
-                options: ["Cures a problem", "Stops a problem before it happens", "Ignores a problem", "Makes a problem worse"],
-                correct: 1,
-                explanation: {
-                    en: "'Preventive' means intended to stop something bad from happening. E.g., Preventive healthcare.",
-                    ar: "'وقائي' يعني أنه مخصص لمنع حدوث شيء سيء. مثال: الرعاية الصحية الوقائية."
-                }
-            },
-            {
-                question: "When something 'matters', it is:",
-                options: ["Unimportant", "Important", "Expensive", "Colorful"],
-                correct: 1,
-                explanation: {
-                    en: "If something 'matters', it is important or has significance. E.g., Education matters for everyone.",
-                    ar: "إذا كان شيء ما 'مهمًا'، فهو ذو أهمية أو قيمة. مثال: التعليم مهم للجميع."
-                }
-            },
-            {
-                question: "An 'innate' ability is one you are born with.",
-                options: ["True", "False", "Sometimes", "Only in animals"],
-                correct: 0,
-                explanation: {
-                    en: "'Innate' means inborn or natural. E.g., Creativity is an innate human capacity.",
-                    ar: "'فطري' يعني موروث أو طبيعي. مثال: الإبداع قدرة بشرية فطرية."
-                }
-            },
-            {
-                question: "What does 'capacity to do something' mean?",
-                options: ["Inability", "Ability", "Desire", "Fear"],
-                correct: 1,
-                explanation: {
-                    en: "It means the ability or power to do something. E.g., Education unlocks our capacity to learn.",
-                    ar: "تعني القدرة أو القوة على فعل شيء ما. مثال: التعليم يفتح قدرتنا على التعلم."
-                }
-            },
-            {
-                question: "A 'human being' is:",
-                options: ["An animal", "A robot", "A living person", "A plant"],
-                correct: 2,
-                explanation: {
-                    en: "A human being is a person, emphasizing human qualities and rights. E.g., Treat every human being with respect.",
-                    ar: "الإنسان هو شخص، مع التركيز على الصفات والحقوق الإنسانية. مثال: عامل كل إنسان باحترام."
-                }
-            },
-            {
-                question: "What is 'morality'?",
-                options: ["Rules of a game", "Principles of right and wrong", "Types of food", "Names of colors"],
-                correct: 1,
-                explanation: {
-                    en: "Morality refers to beliefs about what is right and wrong behavior. E.g., Schools help develop morality.",
-                    ar: "تشير الأخلاق إلى المعتقدات حول السلوك الصحيح والخاطئ. مثال: تساعد المدارس على تنمية الأخلاق."
-                }
-            },
-            {
-                question: "A 'debate' is:",
-                options: ["A song", "A formal discussion with opposing views", "A type of food", "A dance"],
-                correct: 1,
-                explanation: {
-                    en: "A debate is a structured discussion where people express different opinions. E.g., A debate about education policy.",
-                    ar: "المناظرة هي نقاش منظم يعبر فيه الناس عن آراء مختلفة. مثال: مناظرة حول سياسة التعليم."
-                }
-            },
-            {
-                question: "An 'issue' is:",
-                options: ["A magazine", "An important topic for discussion", "A type of car", "A fruit"],
-                correct: 1,
-                explanation: {
-                    en: "An issue is an important subject that people are discussing or arguing about. E.g., Bullying is a school issue.",
-                    ar: "المشكلة هي موضوع مهم يناقش أو يتجادل حوله الناس. مثال: التنمر مشكلة مدرسية."
-                }
-            },
-            // ✅ الأسئلة 21-50
-            {
-                question: "What does 'regarding' mean?",
-                options: ["Ignoring", "About", "Against", "Before"],
-                correct: 1,
-                explanation: {
-                    en: "'Regarding' means concerning or about something. E.g., Regarding your question, here is the answer.",
-                    ar: "'بخصوص' تعني المتعلقة بشيء ما. مثال: بخصوص سؤالك، إليك الجواب."
-                }
-            },
-            {
-                question: "If you are 'better off', you are:",
-                options: ["Worse", "Happier or in a better situation", "Angry", "Tired"],
-                correct: 1,
-                explanation: {
-                    en: "'Better off' means to be in a more favorable or improved situation. E.g., You’d be better off studying.",
-                    ar: "'أفضل حالًا' تعني أن تكون في موقف أكثر ملاءمة أو تحسنًا. مثال: سيكون حالك أفضل إذا درست."
-                }
-            },
-            {
-                question: "What is a 'nursery school'?",
-                options: ["A school for teenagers", "A school for children aged 2-5", "A school for teachers", "A university"],
-                correct: 1,
-                explanation: {
-                    en: "A nursery school is for very young children before they start primary school. E.g., My child goes to nursery.",
-                    ar: "المدرسة الحضانة هي للأطفال الصغار قبل بدء المدرسة الابتدائية. مثال: طفلي يذهب إلى الحضانة."
-                }
-            },
-            {
-                question: "A 'childminder' is someone who:",
-                options: ["Teaches at school", "Cares for children while parents work", "Drives a bus", "Cooks food"],
-                correct: 1,
-                explanation: {
-                    en: "A childminder is paid to look after children, usually in their own home. E.g., She works as a childminder.",
-                    ar: "مُقدم رعاية الأطفال هو شخص يُدفع له للعناية بالأطفال، عادةً في منزله. مثال: تعمل كمُقدمة رعاية أطفال."
-                }
-            },
-            {
-                question: "Something 'divisive' causes:",
-                options: ["Unity", "Arguments or disagreement", "Happiness", "Silence"],
-                correct: 1,
-                explanation: {
-                    en: "'Divisive' means causing people to disagree or argue. E.g., The new policy was divisive.",
-                    ar: "'مثير للانقسام' يعني أنه يسبب خلافًا أو جدلاً بين الناس. مثال: كانت السياسة الجديدة مثيرة للانقسام."
-                }
-            },
-            {
-                question: "An 'elitist' system benefits:",
-                options: ["Everyone equally", "A small privileged group", "The poor", "Animals"],
-                correct: 1,
-                explanation: {
-                    en: "'Elitist' describes a system where a small, privileged group has advantages. E.g., Elitist universities.",
-                    ar: "'النخبوي' يصف نظامًا تكون فيه مجموعة صغيرة متميزة ذات امتيازات. مثال: جامعات نخبوية."
-                }
-            },
-            {
-                question: "If something is true 'statistically', it is based on:",
-                options: ["Feelings", "Numbers and data", "Opinions", "Guesses"],
-                correct: 1,
-                explanation: {
-                    en: "'Statistically' means according to numerical data. E.g., Statistically, girls perform well in reading.",
-                    ar: "'إحصائيًا' يعني وفقًا للبيانات الرقمية. مثال: إحصائيًا، تؤدي الفتيات جيدًا في القراءة."
-                }
-            },
-            {
-                question: "To be 'distracted by something' means to:",
-                options: ["Focus intensely", "Have your attention interrupted", "Be very organized", "Be asleep"],
-                correct: 1,
-                explanation: {
-                    en: "It means your concentration is broken by something else. E.g., Students are distracted by phones.",
-                    ar: "يعني أن تركيزك قد انقطع بسبب شيء آخر. مثال: الطلاب مشتتون بهواتفهم."
-                }
-            },
-            {
-                question: "A 'co-educational' school teaches:",
-                options: ["Only boys", "Only girls", "Boys and girls together", "Only adults"],
-                correct: 2,
-                explanation: {
-                    en: "'Co-educational' means boys and girls are taught together in the same school. Common in many countries.",
-                    ar: "'المشترك' يعني أن الأولاد والبنات يُدرَّسون معًا في نفس المدرسة. شائع في العديد من البلدان."
-                }
-            },
-            {
-                question: "If something is 'compulsory', you:",
-                options: ["Can choose to do it", "Must do it", "Should avoid it", "Are forbidden to do it"],
-                correct: 1,
-                explanation: {
-                    en: "'Compulsory' means required by law or rules. E.g., Attendance is compulsory.",
-                    ar: "'إجباري' يعني أنه مطلوب بموجب القانون أو القواعد. مثال: الحضور إجباري."
-                }
-            },
-            {
-                question: "The 'curriculum' is:",
-                options: ["The school building", "The list of subjects taught", "The teachers' salaries", "The school holidays"],
-                correct: 1,
-                explanation: {
-                    en: "The curriculum is the set of courses and their content offered by an educational institution.",
-                    ar: "المنهج الدراسي هو مجموعة الدورات ومحتواها الذي تقدمه المؤسسة التعليمية."
-                }
-            },
-            {
-                question: "To 'tackle' a problem means to:",
-                options: ["Ignore it", "Make it worse", "Deal with it in a determined way", "Laugh at it"],
-                correct: 2,
-                explanation: {
-                    en: "'Tackle' means to make a serious effort to solve a problem. E.g., We must tackle bullying.",
-                    ar: "'معالجة' تعني بذل جهد جاد لحل مشكلة. مثال: يجب أن نعالج التنمر."
-                }
-            },
-            {
-                question: "What is 'bullying'?",
-                options: ["Helping others", "Behavior intended to hurt or frighten", "Studying hard", "Playing games"],
-                correct: 1,
-                explanation: {
-                    en: "Bullying is repeated aggressive behavior intended to hurt someone physically or emotionally.",
-                    ar: "التنمر هو سلوك عدواني متكرر يهدف إلى إيذاء شخص ما جسديًا أو عاطفيًا."
-                }
-            },
-            {
-                question: "To 'cite' something means to:",
-                options: ["Ignore it", "Quote it as an example or proof", "Destroy it", "Copy it"],
-                correct: 1,
-                explanation: {
-                    en: "'Cite' means to refer to something as evidence or an example. E.g., Cite a source in your essay.",
-                    ar: "'يستشهد' يعني الإشارة إلى شيء كدليل أو مثال. مثال: استشهد بمصدر في مقالك."
-                }
-            },
-            {
-                question: "What is 'abolition'?",
-                options: ["Creation", "The act of ending a system or practice", "Celebration", "Beginning"],
-                correct: 1,
-                explanation: {
-                    en: "'Abolition' is the formal act of ending a law, system, or practice. E.g., Abolition of slavery.",
-                    ar: "'الإلغاء' هو الإجراء الرسمي لإنهاء قانون أو نظام أو ممارسة. مثال: إلغاء العبودية."
-                }
-            },
-            {
-                question: "What is 'corporal punishment'?",
-                options: ["Verbal warning", "Physical punishment like hitting", "Extra homework", "Detention"],
-                correct: 1,
-                explanation: {
-                    en: "It is physical punishment intended to cause pain, such as spanking or caning. Now banned in many schools.",
-                    ar: "هو عقاب بدني يهدف إلى التسبب في الألم، مثل الضرب بالعصا. ممنوع الآن في العديد من المدارس."
-                }
-            },
-            {
-                question: "A 'deterrent' is something that:",
-                options: ["Encourages bad behavior", "Discourages bad behavior", "Has no effect", "Is fun"],
-                correct: 1,
-                explanation: {
-                    en: "A deterrent discourages people from doing something by making them fear the consequences. E.g., Fines are a deterrent.",
-                    ar: "الرادع يثني الناس عن فعل شيء ما بجعلهم يخافون من العواقب. مثال: الغرامات رادعة."
-                }
-            },
-            {
-                question: "To 'enforce' a rule means to:",
-                options: ["Ignore it", "Make sure it is obeyed", "Change it", "Forget it"],
-                correct: 1,
-                explanation: {
-                    en: "'Enforce' means to ensure compliance with a rule or law. E.g., Teachers enforce classroom rules.",
-                    ar: "'إنفاذ' يعني ضمان الامتثال لقاعدة أو قانون. مثال: المعلمون ينفذون قواعد الفصل."
-                }
-            },
-            {
-                question: "To 'ignore' something means to:",
-                options: ["Pay close attention to it", "Pay no attention to it", "Celebrate it", "Copy it"],
-                correct: 1,
-                explanation: {
-                    en: "'Ignore' means to deliberately not notice or pay attention to something. E.g., Ignore distractions.",
-                    ar: "'تجاهل' يعني عدم ملاحظة أو الانتباه إلى شيء عمداً. مثال: تجاهل المشتتات."
-                }
-            },
-            {
-                question: "What is 'misconduct'?",
-                options: ["Good behavior", "Bad or unacceptable behavior", "Excellent performance", "Silence"],
-                correct: 1,
-                explanation: {
-                    en: "'Misconduct' is improper or wrong behavior. E.g., Student misconduct can lead to suspension.",
-                    ar: "'سوء السلوك' هو سلوك غير لائق أو خاطئ. مثال: سوء سلوك الطالب يمكن أن يؤدي إلى تعليق الدراسة."
-                }
-            },
-            // ✅ الأسئلة 51-100
-            {
-                question: "To 'suspend' a student means to:",
-                options: ["Give them a prize", "Temporarily remove them from school", "Promote them", "Give them extra classes"],
-                correct: 1,
-                explanation: {
-                    en: "Suspension is a temporary removal from school as a punishment. E.g., He was suspended for fighting.",
-                    ar: "التعليق هو إزالة مؤقتة من المدرسة كعقاب. مثال: عُلّق بسبب شجار."
-                }
-            },
-            {
-                question: "To 'expel' a student means to:",
-                options: ["Welcome them", "Permanently remove them from school", "Give them a scholarship", "Applaud them"],
-                correct: 1,
-                explanation: {
-                    en: "Expulsion is permanent removal from an institution as a punishment. More severe than suspension.",
-                    ar: "الطرد هو إزالة دائمة من المؤسسة كعقاب. وهو أشد من التعليق."
-                }
-            },
-            {
-                question: "A 'disruptive' student is one who:",
-                options: ["Is very quiet", "Causes disturbance and interrupts", "Gets top grades", "Helps the teacher"],
-                correct: 1,
-                explanation: {
-                    en: "'Disruptive' means causing disturbance or problems that interrupt normal activities. E.g., Disruptive behavior.",
-                    ar: "'مزعج' يعني التسبب في اضطراب أو مشاكل تعطل الأنشطة العادية. مثال: سلوك مزعج."
-                }
-            },
-            {
-                question: "To be 'to blame for something' means to:",
-                options: ["Be responsible for it", "Be innocent of it", "Be unaware of it", "Be happy about it"],
-                correct: 0,
-                explanation: {
-                    en: "It means you are responsible for something bad that happened. E.g., He is to blame for the accident.",
-                    ar: "يعني أنك مسؤول عن شيء سيء حدث. مثال: هو المسؤول عن الحادث."
-                }
-            },
-            {
-                question: "A 'gang' is:",
-                options: ["A study group", "A group of young people who engage in criminal activity", "A sports team", "A family"],
-                correct: 1,
-                explanation: {
-                    en: "A gang is a group of people, often young, who engage in illegal or violent activities together.",
-                    ar: "العصابة هي مجموعة من الناس، غالبًا شباب، يشاركون معًا في أنشطة غير قانونية أو عنيفة."
-                }
-            },
-            {
-                question: "To 'result in' something means to:",
-                options: ["Prevent it", "Cause it to happen", "Ignore it", "Forget it"],
-                correct: 1,
-                explanation: {
-                    en: "'Result in' means to cause a particular situation or outcome. E.g., Poor teaching results in low grades.",
-                    ar: "'يؤدي إلى' يعني التسبب في موقف أو نتيجة معينة. مثال: التدريس السيئ يؤدي إلى درجات منخفضة."
-                }
-            },
-            {
-                question: "What is 'deterioration'?",
-                options: ["Improvement", "A situation becoming worse", "Stability", "Growth"],
-                correct: 1,
-                explanation: {
-                    en: "'Deterioration' is the process of something becoming worse. E.g., Deterioration of classroom discipline.",
-                    ar: "'التدهور' هو عملية تصبح فيها الأشياء أسوأ. مثال: تدهور الانضباط في الفصل."
-                }
-            },
-            {
-                question: "What is 'respect'?",
-                options: ["Dislike", "A feeling of admiration or deference", "Fear", "Indifference"],
-                correct: 1,
-                explanation: {
-                    en: "Respect is a feeling of deep admiration for someone due to their abilities, qualities, or achievements.",
-                    ar: "الاحترام هو شعور بالإعجاب العميق تجاه شخص بسبب قدراته أو صفاته أو إنجازاته."
-                }
-            },
-            {
-                question: "Someone 'in authority' has:",
-                options: ["No power", "The power to give orders", "Low status", "No responsibilities"],
-                correct: 1,
-                explanation: {
-                    en: "A person in authority has the power to make decisions and give orders. E.g., Teachers are in authority.",
-                    ar: "الشخص ذو السلطة لديه القدرة على اتخاذ القرارات وإعطاء الأوامر. مثال: المعلمون ذوو سلطة."
-                }
-            },
-            {
-                question: "A 'tip' is:",
-                options: ["A large sum of money", "A small piece of advice", "A type of food", "A mistake"],
-                correct: 1,
-                explanation: {
-                    en: "A tip is a helpful piece of advice or suggestion. E.g., Here’s a tip for studying effectively.",
-                    ar: "النصيحة هي قطعة مفيدة من المشورة أو الاقتراح. مثال: إليك نصيحة للدراسة بفعالية."
-                }
-            },
-            {
-                question: "What is 'revision'?",
-                options: ["Writing a new book", "Preparing for an exam by reviewing material", "Deleting files", "Taking a vacation"],
-                correct: 1,
-                explanation: {
-                    en: "Revision is the process of reviewing material you have learned to prepare for an exam.",
-                    ar: "المراجعة هي عملية مراجعة المواد التي تعلمتها للتحضير للامتحان."
-                }
-            },
-            {
-                question: "A 'step' in a process is:",
-                options: ["A jump", "One of a series of actions to achieve a goal", "A mistake", "The end"],
-                correct: 1,
-                explanation: {
-                    en: "A step is a single action or stage in a process. E.g., The first step is to make a plan.",
-                    ar: "الخطوة هي إجراء أو مرحلة واحدة في عملية. مثال: الخطوة الأولى هي وضع خطة."
-                }
-            },
-            {
-                question: "To 'draw up' a plan means to:",
-                options: ["Destroy it", "Create or prepare it carefully", "Ignore it", "Copy it"],
-                correct: 1,
-                explanation: {
-                    en: "'Draw up' means to prepare a document or plan carefully. E.g., Draw up a study schedule.",
-                    ar: "'إعداد' تعني إعداد مستند أو خطة بعناية. مثال: أعد جدول دراسة."
-                }
-            },
-            {
-                question: "A 'schedule' is:",
-                options: ["A type of food", "A plan that lists times for activities", "A map", "A game"],
-                correct: 1,
-                explanation: {
-                    en: "A schedule is a plan that lists the times when things will happen. E.g., Exam schedule.",
-                    ar: "الجدول هو خطة تسرد الأوقات التي ستحدث فيها الأشياء. مثال: جدول الامتحانات."
-                }
-            },
-            {
-                question: "If something is 'realistic', it is:",
-                options: ["Impossible", "Sensible and practical", "Magical", "Expensive"],
-                correct: 1,
-                explanation: {
-                    en: "'Realistic' means being sensible and accepting things as they are. E.g., Set realistic goals.",
-                    ar: "'واقعي' يعني أن يكون عاقلًا ويقبل الأشياء كما هي. مثال: حدد أهدافًا واقعية."
-                }
-            },
-            {
-                question: "To 'absorb' information means to:",
-                options: ["Forget it", "Take it in and understand it", "Ignore it", "Write it down"],
-                correct: 1,
-                explanation: {
-                    en: "'Absorb' means to take in information and understand or retain it. E.g., It takes time to absorb new ideas.",
-                    ar: "'استيعاب' يعني استقبال المعلومات وفهمها أو الاحتفاظ بها. مثال: يستغرق الأمر وقتًا لاستيعاب أفكار جديدة."
-                }
-            },
-            {
-                question: "To do something 'in short bursts' means to:",
-                options: ["Do it for hours without stopping", "Do it in short, intense periods", "Do it slowly", "Never do it"],
-                correct: 1,
-                explanation: {
-                    en: "It means to do something in short periods of high focus or energy. E.g., Study in short bursts.",
-                    ar: "يعني فعل شيء ما في فترات قصيرة من التركيز أو الطاقة العالية. مثال: درس في فترات قصيرة."
-                }
-            },
-            {
-                question: "If something is 'beneficial', it is:",
-                options: ["Harmful", "Helpful or good", "Expensive", "Boring"],
-                correct: 1,
-                explanation: {
-                    en: "'Beneficial' means having a good or helpful effect. E.g., Exercise is beneficial for health.",
-                    ar: "'مفيد' يعني أن له تأثيرًا جيدًا أو مساعدًا. مثال: التمرين مفيد للصحة."
-                }
-            },
-            {
-                question: "When information 'sinks in', it is:",
-                options: ["Forgotten", "Fully understood", "Ignored", "Copied"],
-                correct: 1,
-                explanation: {
-                    en: "'Sink in' means to be fully understood or appreciated. E.g., Let the new rules sink in.",
-                    ar: "'يستقر' يعني أن يُفهم أو يُقدّر بالكامل. مثال: دع القواعد الجديدة تستقر في ذهنك."
-                }
-            },
-            {
-                question: "To 'prioritize' tasks means to:",
-                options: ["Ignore them", "Put them in order of importance", "Do them all at once", "Delegate them"],
-                correct: 1,
-                explanation: {
-                    en: "'Prioritize' means to decide which tasks are most important and do them first. E.g., Prioritize your assignments.",
-                    ar: "'تحديد الأولويات' يعني أن تقرر أي المهام هي الأكثر أهمية وتقوم بها أولاً. مثال: حدد أولويات واجباتك."
-                }
-            },
-            // ✅ الأسئلة 101-150
-            {
-                question: "If something is 'bound to happen', it is:",
-                options: ["Impossible", "Certain to happen", "Unlikely", "A surprise"],
-                correct: 1,
-                explanation: {
-                    en: "'Bound to' means certain or very likely to happen. E.g., If you don’t study, you’re bound to fail.",
-                    ar: "'محكوم عليه' يعني أنه مؤكد أو من المرجح جدًا أن يحدث. مثال: إذا لم تدرس، فأنت محكوم عليك بالفشل."
-                }
-            },
-            {
-                question: "When something 'comes up', it:",
-                options: ["Disappears", "Happens or is mentioned", "Is hidden", "Is destroyed"],
-                correct: 1,
-                explanation: {
-                    en: "'Come up' means to happen, occur, or be mentioned. E.g., A new issue came up in class.",
-                    ar: "'يظهر' يعني أن يحدث أو يُذكر. مثال: ظهرت مشكلة جديدة في الصف."
-                }
-            },
-            {
-                question: "To 'come up with' an idea means to:",
-                options: ["Forget it", "Think of it or produce it", "Steal it", "Ignore it"],
-                correct: 1,
-                explanation: {
-                    en: "'Come up with' means to think of or produce an idea, plan, or solution. E.g., Come up with a study plan.",
-                    ar: "'يتوصل إلى' يعني التفكير في فكرة أو خطة أو حل أو إنتاجها. مثال: توصل إلى خطة دراسة."
-                }
-            },
-            {
-                question: "If something 'goes according to plan', it:",
-                options: ["Fails", "Happens as expected", "Is canceled", "Is changed"],
-                correct: 1,
-                explanation: {
-                    en: "It means events happen in the way that was planned or expected. E.g., The exam went according to plan.",
-                    ar: "يعني أن الأحداث تحدث بالطريقة التي تم التخطيط لها أو توقعها. مثال: سار الامتحان وفقًا للخطة."
-                }
-            },
-            {
-                question: "To 'stay on track' means to:",
-                options: ["Get lost", "Keep progressing toward a goal", "Give up", "Change direction"],
-                correct: 1,
-                explanation: {
-                    en: "It means to continue making progress toward a goal without getting distracted. E.g., Stay on track with your studies.",
-                    ar: "يعني الاستمرار في إحراز تقدم نحو هدف دون تشتيت. مثال: ابقَ على المسار الصحيح مع دراستك."
-                }
-            },
-            {
-                question: "A 'qualification' is:",
-                options: ["A hobby", "An official certificate or degree", "A type of food", "A game"],
-                correct: 1,
-                explanation: {
-                    en: "A qualification is an official record of achievement, like a degree or diploma. E.g., A Master’s qualification.",
-                    ar: "المؤهل هو سجل رسمي للإنجاز، مثل الشهادة أو الدبلوم. مثال: مؤهل الماجستير."
-                }
-            },
-            {
-                question: "What is 'duration'?",
-                options: ["Distance", "The length of time something lasts", "Weight", "Speed"],
-                correct: 1,
-                explanation: {
-                    en: "'Duration' is the time during which something continues. E.g., The duration of the course is one year.",
-                    ar: "'المدة' هي الوقت الذي يستمر فيه شيء ما. مثال: مدة الدورة سنة واحدة."
-                }
-            },
-            {
-                question: "What does 'MA' stand for?",
-                options: ["Master of Arts", "Master of Science", "Medical Assistant", "Military Academy"],
-                correct: 0,
-                explanation: {
-                    en: "'MA' stands for Master of Arts, a postgraduate degree in humanities or social sciences.",
-                    ar: "'MA' تعني ماجستير في الآداب، وهي درجة عليا في العلوم الإنسانية أو الاجتماعية."
-                }
-            },
-            {
-                question: "A 'postgraduate' student is one who:",
-                options: ["Is in high school", "Has a first degree and is studying for a higher one", "Has just started university", "Is a teacher"],
-                correct: 1,
-                explanation: {
-                    en: "A postgraduate is a student who has completed a bachelor’s degree and is pursuing a higher degree.",
-                    ar: "الطالب الخريج هو طالب أكمل درجة البكالوريوس ويسعى للحصول على درجة أعلى."
-                }
-            },
-            {
-                question: "What is a 'diploma'?",
-                options: ["A type of car", "A qualification awarded after a course of study", "A food recipe", "A map"],
-                correct: 1,
-                explanation: {
-                    en: "A diploma is a certificate awarded for completing a course of study, often shorter than a degree.",
-                    ar: "الدبلوم هو شهادة تُمنح لإكمال دورة دراسية، غالبًا ما تكون أقصر من الدرجة."
-                }
-            },
-            {
-                question: "An 'overview' is:",
-                options: ["A detailed analysis", "A general summary or review", "A specific example", "A criticism"],
-                correct: 1,
-                explanation: {
-                    en: "An overview is a general summary or review of a subject. E.g., An overview of the curriculum.",
-                    ar: "النظرة العامة هي ملخص أو استعراض عام لموضوع ما. مثال: نظرة عامة على المنهج."
-                }
-            },
-            {
-                question: "In university, a 'credit' is:",
-                options: ["Money you owe", "A unit that represents successful completion of a course", "A type of food", "A penalty"],
-                correct: 1,
-                explanation: {
-                    en: "A credit is a unit awarded for successfully completing part of a course. E.g., You need 120 credits to graduate.",
-                    ar: "الساعة المعتمدة هي وحدة تُمنح لإكمال جزء من الدورة بنجاح. مثال: تحتاج 120 ساعة معتمدة للتخرج."
-                }
-            },
-            {
-                question: "A 'module' in a course is:",
-                options: ["The entire course", "A self-contained unit of study", "The final exam", "A textbook"],
-                correct: 1,
-                explanation: {
-                    en: "A module is a self-contained unit within a larger course, often focusing on a specific topic.",
-                    ar: "الوحدة هي جزء متكامل بذاته ضمن مقرر أكبر، غالبًا ما يركز على موضوع محدد."
-                }
-            },
-            {
-                question: "To 'opt for' something means to:",
-                options: ["Refuse it", "Choose it", "Ignore it", "Destroy it"],
-                correct: 1,
-                explanation: {
-                    en: "'Opt for' means to choose or select something. E.g., She opted for the evening class.",
-                    ar: "'اختيار' يعني اختيار أو انتقاء شيء ما. مثال: اختارت الصف المسائي."
-                }
-            },
-            {
-                question: "To 'specialize in' something means to:",
-                options: ["Know a little about everything", "Focus deeply on one area", "Avoid a subject", "Teach others"],
-                correct: 1,
-                explanation: {
-                    en: "It means to concentrate on and become an expert in a particular area. E.g., He specializes in biology.",
-                    ar: "يعني التركيز على مجال معين وتصبح خبيرًا فيه. مثال: يتخصص في علم الأحياء."
-                }
-            },
-            {
-                question: "A 'mode' of study is:",
-                options: ["A type of food", "A particular method or way of studying", "A grade", "A teacher"],
-                correct: 1,
-                explanation: {
-                    en: "'Mode' refers to a particular way or method of doing something. E.g., Distance learning is a mode of study.",
-                    ar: "'النمط' يشير إلى طريقة أو أسلوب معين لفعل شيء ما. مثال: التعلم عن بعد هو نمط من أنماط الدراسة."
-                }
-            },
-            {
-                question: "What is 'distance learning'?",
-                options: ["Studying while traveling", "Studying remotely, often online", "Studying in a library", "Studying with a tutor"],
-                correct: 1,
-                explanation: {
-                    en: "Distance learning is education where students study remotely, usually online, without attending a physical campus.",
-                    ar: "التعلم عن بعد هو تعليم يدرس فيه الطلاب عن بُعد، عادةً عبر الإنترنت، دون حضور الحرم الجامعي."
-                }
-            },
-            {
-                question: "An 'entry requirement' is:",
-                options: ["A uniform", "A qualification needed to join a course", "A textbook", "A fee"],
-                correct: 1,
-                explanation: {
-                    en: "It is a condition, such as a prior qualification, that you must meet to be accepted into a course.",
-                    ar: "هو شرط، مثل المؤهل السابق، يجب أن تستوفيه للقبول في دورة دراسية."
-                }
-            },
-            {
-                question: "If two things are 'equivalent', they are:",
-                options: ["Completely different", "Equal in value, amount, or meaning", "Opposites", "Unrelated"],
-                correct: 1,
-                explanation: {
-                    en: "'Equivalent' means equal in value, amount, function, or meaning. E.g., A diploma is equivalent to a degree.",
-                    ar: "'مكافئ' يعني متساوٍ في القيمة أو الكمية أو الوظيفة أو المعنى. مثال: الدبلوم يعادل الشهادة."
-                }
-            },
-            {
-                question: "When something is 'recognized', it is:",
-                options: ["Ignored", "Officially accepted or approved", "Copied", "Destroyed"],
-                correct: 1,
-                explanation: {
-                    en: "'Recognized' means officially accepted as being true, valid, or of high standard. E.g., A recognized university.",
-                    ar: "'معترف به' يعني مقبول رسميًا على أنه صحيح أو صالح أو ذو مستوى عالٍ. مثال: جامعة معترف بها."
-                }
-            }
+        // 📚 قائمة المفردات
+        const vocabulary = [
+            { word: "illiteracy", definition: "the inability to read or write.", example: "High levels of illiteracy remain a problem in many countries." },
+            { word: "truancy", definition: "the practice of staying away from school without permission.", example: "Truancy is rife in some schools." },
+            { word: "rife", definition: "(of bad or unpleasant things) very common.", example: "Corruption is rife in this region." },
+            { word: "proven", definition: "tested and shown to be true.", example: "It is proven that education improves prospects." },
+            { word: "prospects", definition: "the chances of being successful in the future.", example: "Education opens doors for better prospects." },
+            { word: "open doors", definition: "give someone opportunities.", example: "A good education opens doors to success." },
+            { word: "likelihood", definition: "the chance of something happening.", example: "The likelihood of getting a job increases with education." },
+            { word: "status", definition: "your social or professional position.", example: "Education can improve your social status." },
+            { word: "take responsibility for sth", definition: "make decisions and accept the consequences if they are wrong.", example: "Students should take responsibility for their actions." },
+            { word: "inhabit", definition: "live in a particular place.", example: "Children inhabit different worlds based on their education." },
+            { word: "vote", definition: "choose someone or something by marking a paper or raising your hand.", example: "People vote in elections to choose leaders." },
+            { word: "freedom of speech", definition: "the right to say what you want without anyone stopping you.", example: "Freedom of speech is important in a democracy." },
+            { word: "preventive", definition: "intended to stop something that causes problems from happening.", example: "Preventive health care matters for long-term wellness." },
+            { word: "matter", definition: "be important.", example: "Health and education matter for everyone." },
+            { word: "innate", definition: "(of a quality, feeling, etc.) that you have when you are born.", example: "Creativity is an innate capacity in humans." },
+            { word: "capacity to do sth", definition: "ability to do something.", example: "Education unlocks our capacity to learn." },
+            { word: "human being", definition: "a living person.", example: "We should treat every human being with respect." },
+            { word: "morality", definition: "the principles of right or wrong behaviour.", example: "Education helps develop a sense of morality." },
+            { word: "debate", definition: "an argument or discussion expressing different opinions.", example: "There is a continuing debate about education." },
+            { word: "issue", definition: "an important topic that people are discussing.", example: "School issues include bullying and discipline." },
+            { word: "regarding", definition: "about something/someone.", example: "Regarding education, we need more funding." },
+            { word: "be better off", definition: "used to say that someone would be happier or more satisfied if they did a particular thing.", example: "Children may be better off in nursery schools." },
+            { word: "nursery school", definition: "a school for children between the ages of about two and five.", example: "Many parents send their children to nursery school." },
+            { word: "childminder", definition: "a person who is paid to care for children while their parents are at work.", example: "She works as a childminder for three kids." },
+            { word: "divisive", definition: "likely to cause arguments between people.", example: "Independent schools can be divisive." },
+            { word: "elitist", definition: "based on a system in which a small group of people have a lot of advantages and influence.", example: "Some believe private schools are elitist." },
+            { word: "statistically", definition: "based on information shown in numbers.", example: "Statistically, girls do well in single-sex schools." },
+            { word: "be distracted by sth", definition: "have your concentration interrupted by something.", example: "Boys can distract girls in co-ed schools." },
+            { word: "co-educational", definition: "educating boys and girls in the same school.", example: "Co-educational schools are common in many countries." },
+            { word: "compulsory", definition: "if something is compulsory, you have to do it.", example: "Religion is not compulsory in all schools." },
+            { word: "curriculum", definition: "the group of subjects that students study at school or college.", example: "The curriculum includes math, science, and literature." },
+            { word: "tackle sth", definition: "make a big effort to deal with a difficult situation.", example: "We must tackle bullying in schools." },
+            { word: "bullying", definition: "behaviour that frightens or hurts someone smaller and weaker.", example: "Bullying is a serious issue in schools." },
+            { word: "cite", definition: "give something as a reason or example to support what you are saying.", example: "They cited poor teaching as a reason for low results." },
+            { word: "abolition", definition: "the ending of a law, a system, or an institution.", example: "The abolition of corporal punishment has changed school discipline." },
+            { word: "corporal punishment", definition: "the physical punishment of someone by hitting them.", example: "Corporal punishment is no longer allowed in schools." },
+            { word: "deterrent", definition: "something that makes someone decide not to do something because it is unpleasant.", example: "Fines act as a deterrent to crime." },
+            { word: "enforce", definition: "make people follow a particular law or rule.", example: "Teachers enforce rules in classrooms." },
+            { word: "ignore", definition: "pay no attention to something.", example: "Some teachers ignore misconduct." },
+            { word: "misconduct", definition: "bad or unacceptable behaviour.", example: "Student misconduct can disrupt learning." },
+            { word: "suspend", definition: "officially stop a student from going to school for a period of time.", example: "The school suspended him for fighting." },
+            { word: "expel", definition: "officially make someone leave a school or organization.", example: "He was expelled for repeated violations." },
+            { word: "disruptive", definition: "causing problems, noise, etc., so that something cannot continue normally.", example: "Disruptive students affect the whole class." },
+            { word: "be to blame for sth", definition: "be responsible for something bad.", example: "Parents are to blame for not disciplining their children." },
+            { word: "gang", definition: "a group of young people who spend time together and often cause trouble.", example: "Gang culture is spreading into schools." },
+            { word: "result in sth", definition: "cause something to happen.", example: "Poor teaching results in bad behavior." },
+            { word: "deterioration", definition: "a situation in which something becomes worse.", example: "There is a deterioration in classroom behavior." },
+            { word: "respect", definition: "a feeling of admiration for someone because of their status or importance.", example: "Children have lost respect for authority." },
+            { word: "in authority", definition: "having a position of power to give orders to people.", example: "Teachers are in authority in schools." },
+            { word: "tip", definition: "a small piece of advice about something.", example: "Here's a tip for exam revision." },
+            { word: "revision", definition: "the process of preparing for an exam by looking again at the work you have done.", example: "Revision is essential before exams." },
+            { word: "step", definition: "one of a series of things that you do in order to achieve something.", example: "The first step is to draw up a schedule." },
+            { word: "draw sth up", definition: "make or write something that needs careful thought.", example: "Draw up a plan for your revision." },
+            { word: "schedule", definition: "a plan of activities or events and when they will happen.", example: "Create a revision schedule." },
+            { word: "realistic", definition: "sensible and accepting things as they are.", example: "Be realistic about how much you can revise." },
+            { word: "absorb", definition: "take information into your mind and understand or remember it.", example: "You can't absorb anything if you're not focused." },
+            { word: "in short bursts", definition: "in short periods in which you do something with a lot of energy or effort.", example: "Revise in short bursts for better focus." },
+            { word: "beneficial", definition: "improving a situation or having a helpful or useful effect.", example: "Taking breaks can be beneficial." },
+            { word: "sink in", definition: "be fully understood.", example: "Give yourself time to let the information sink in." },
+            { word: "prioritize", definition: "put tasks, problems, etc. in order of importance so that you deal with the most important first.", example: "Prioritize your revision topics." },
+            { word: "bound to do sth", definition: "be certain to do something or happen.", example: "Important topics are bound to come up in exams." },
+            { word: "come up", definition: "happen or appear.", example: "What’s the point of revising everything?" },
+            { word: "come up with sth", definition: "find or produce an answer, a plan, a sum of money, etc.", example: "Come up with a timetable for your revision." },
+            { word: "go according to plan", definition: "happen in the way that you expect.", example: "Things won’t always go according to plan." },
+            { word: "stay on track", definition: "keep going in the right direction, or doing the right things.", example: "Reorganize your schedule to stay on track." },
+            { word: "qualification", definition: "a degree or diploma that you get when you successfully finish a course of study.", example: "An MA is a higher qualification." },
+            { word: "duration", definition: "the length of time something continues.", example: "The duration of the course is one year." },
+            { word: "MA", definition: "Master of Arts, a higher degree in an arts subject.", example: "She earned her MA in Education." },
+            { word: "postgraduate", definition: "a person who already has a first degree and is doing advanced study or research.", example: "Postgraduate courses are for those with a degree." },
+            { word: "diploma", definition: "a qualification at the end of a course of study at a college or university.", example: "He completed his Postgraduate Diploma in Education." },
+            { word: "overview", definition: "a general description of something.", example: "This is an overview of postgraduate courses." },
+            { word: "credit", definition: "a part of a college or university course that you have completed successfully.", example: "90 credits are required for the MA." },
+            { word: "module", definition: "a unit that forms part of a course of study at college or university.", example: "Students take taught modules and a dissertation." },
+            { word: "opt for sth", definition: "choose something.", example: "Some students opt for the PDE course." },
+            { word: "specialize in sth", definition: "spend more time on one area of work, and become very knowledgeable in that area.", example: "She specializes in educational psychology." },
+            { word: "mode", definition: "a particular way of doing something.", example: "Distance learning is a mode of study." },
+            { word: "distance learning", definition: "a system of education in which people study at home with the help of the internet and videos, and then send or email their work to their teachers.", example: "Many students use distance learning programs." },
+            { word: "entry requirement", definition: "a qualification or experience that you need in order to enter a college or university.", example: "A first degree is an entry requirement." },
+            { word: "equivalent", definition: "equal in value, meaning, etc.", example: "A diploma is equivalent to a degree." },
+            { word: "recognize", definition: "if something is recognized, it is officially approved of and accepted.", example: "The university is recognized by the government." }
         ];
 
+        // ✅ توليد 150 سؤالًا — سؤال لكل كلمة — مع خيارات عشوائية وموقع الإجابة الصحيح عشوائي
+        const quizData = vocabulary.map(item => {
+            // ✅ إنشاء 3 إجابات خاطئة عشوائية من كلمات أخرى
+            const wrongDefinitions = [];
+            while (wrongDefinitions.length < 3) {
+                const randomWord = vocabulary[Math.floor(Math.random() * vocabulary.length)];
+                if (randomWord.word !== item.word && !wrongDefinitions.includes(randomWord.definition)) {
+                    wrongDefinitions.push(randomWord.definition);
+                }
+            }
+
+            // ✅ دمج الإجابة الصحيحة مع الخاطئة
+            const allOptions = [item.definition, ...wrongDefinitions];
+
+            // ✅ خلط الخيارات عشوائيًا
+            for (let i = allOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allOptions[i], allOptions[j]] = [allOptions[j], allOptions[i]];
+            }
+
+            // ✅ تحديد موقع الإجابة الصحيحة بعد الخلط
+            const correctIndex = allOptions.indexOf(item.definition);
+
+            return {
+                question: `What does "${item.word}" mean?`,
+                options: allOptions,
+                correct: correctIndex,
+                explanation: {
+                    en: `${item.definition} Example: "${item.example}"`,
+                    ar: `تعني: "${item.definition}" مثال: "${item.example}"`
+                }
+            };
+        });
+
+        // ✅ بقية الكود كما هو — لا حاجة لتغييره
         const questionEl = document.getElementById('question');
         const optionsEl = document.getElementById('options');
         const nextBtn = document.getElementById('next-btn');
