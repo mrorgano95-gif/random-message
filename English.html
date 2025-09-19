@@ -90,6 +90,41 @@
       color: #555;
     }
 
+    /* Quiz Styles */
+    .quiz-section {
+      margin-top: 30px;
+      padding: 20px;
+      border: 2px solid #8b1a1a;
+      border-radius: 10px;
+      background-color: #fdf6f6;
+    }
+
+    .quiz-section h3 {
+      color: #8b1a1a;
+      margin-bottom: 15px;
+    }
+
+    .quiz-question {
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .quiz-question label {
+      display: block;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #8b1a1a;
+    }
+
     .controls {
       margin-top: 30px;
       text-align: center;
@@ -114,6 +149,14 @@
     .btn:disabled {
       background-color: #cccccc;
       cursor: not-allowed;
+    }
+
+    .btn-check {
+      background-color: #2c5aa0;
+    }
+
+    .btn-check:hover {
+      background-color: #1e3d7a;
     }
   </style>
 </head>
@@ -164,6 +207,28 @@
         { word: "entry requirement", meaning: "a qualification or experience that you need in order to enter a college or university." },
         { word: "equivalent", meaning: "equal in value, meaning, etc." },
         { word: "recognize sth", meaning: "if sth is recognized, it is officially approved of and accepted." }
+      ],
+      quiz: [
+        {
+          question: "What does 'MA' stand for?",
+          options: ["Master of Arts", "Master of Administration", "Master of Accounting", "Master of Architecture"],
+          correct: 0
+        },
+        {
+          question: "What is a 'dissertation'?",
+          options: [
+            "A short essay of 500 words",
+            "A long piece of writing for a degree",
+            "A multiple-choice test",
+            "A group project"
+          ],
+          correct: 1
+        },
+        {
+          question: "What does 'opt for' mean?",
+          options: ["Avoid", "Choose", "Ignore", "Delay"],
+          correct: 1
+        }
       ]
     },
     {
@@ -196,6 +261,28 @@
         { word: "capacity to do sth", meaning: "ability to do sth." },
         { word: "human being", meaning: "a living person." },
         { word: "morality", meaning: "the principles of right or wrong behaviour." }
+      ],
+      quiz: [
+        {
+          question: "What does 'rife' mean?",
+          options: ["Rare", "Very common", "Illegal", "Expensive"],
+          correct: 1
+        },
+        {
+          question: "What does 'self-esteem' mean?",
+          options: [
+            "Feeling happy with your own character",
+            "Feeling superior to others",
+            "Feeling lonely",
+            "Feeling angry"
+          ],
+          correct: 0
+        },
+        {
+          question: "What does 'innate' mean?",
+          options: ["Learned later in life", "Present from birth", "Taught by teachers", "Acquired through practice"],
+          correct: 1
+        }
       ]
     },
     {
@@ -230,6 +317,28 @@
         { word: "curriculum", meaning: "the group of subjects that students study at school or college." },
         { word: "tackle sth", meaning: "make a big effort to deal with a difficult situation: tackle a problem." },
         { word: "bullying", meaning: "behaviour that frightens or hurts sb smaller and weaker. The person is a bully." }
+      ],
+      quiz: [
+        {
+          question: "What does 'regarding' mean?",
+          options: ["Ignoring", "About", "Against", "Before"],
+          correct: 1
+        },
+        {
+          question: "What is a 'childminder'?",
+          options: [
+            "A teacher in school",
+            "A person paid to care for children at home",
+            "A babysitter for free",
+            "A school nurse"
+          ],
+          correct: 1
+        },
+        {
+          question: "What does 'compulsory' mean?",
+          options: ["Optional", "Fun", "You have to do it", "Difficult"],
+          correct: 2
+        }
       ]
     },
     {
@@ -270,6 +379,28 @@
         { word: "deterioration", meaning: "a situation in which sth becomes worse. deteriorate v." },
         { word: "respect", meaning: "a feeling of admiration for sb because of their status or importance." },
         { word: "in authority", meaning: "having a position of power to give orders to people." }
+      ],
+      quiz: [
+        {
+          question: "What does 'abolition' mean?",
+          options: ["Beginning", "Ending", "Changing", "Improving"],
+          correct: 1
+        },
+        {
+          question: "What is a 'deterrent'?",
+          options: [
+            "Something that encourages bad behavior",
+            "Something that stops people from doing something bad",
+            "A reward for good behavior",
+            "A school rule"
+          ],
+          correct: 1
+        },
+        {
+          question: "What does 'expel' mean?",
+          options: ["Welcome", "Praise", "Officially make someone leave", "Give extra homework"],
+          correct: 2
+        }
       ]
     },
     {
@@ -305,6 +436,28 @@
         { word: "come up with sth", meaning: "find or produce an answer, a plan, a sum of money, etc." },
         { word: "go according to plan", meaning: "happen in the way that you expect." },
         { word: "stay on track", meaning: "keep going in the right direction, or doing the right things." }
+      ],
+      quiz: [
+        {
+          question: "What does 'draw up' mean in context?",
+          options: ["Erase", "Make or write carefully", "Destroy", "Copy"],
+          correct: 1
+        },
+        {
+          question: "What does 'sink in' mean?",
+          options: [
+            "Fall into water",
+            "Be fully understood",
+            "Disappear",
+            "Become heavy"
+          ],
+          correct: 1
+        },
+        {
+          question: "What does 'bound to' mean?",
+          options: ["Not likely to", "Certain to", "Allowed to", "Forbidden to"],
+          correct: 1
+        }
       ]
     }
   ];
@@ -313,6 +466,29 @@
 
   function displaySection(index) {
     const section = sections[index];
+    let quizHTML = '';
+
+    if (section.quiz && section.quiz.length > 0) {
+      quizHTML = `
+        <div class="quiz-section">
+          <h3>QUIZ: Test Your Understanding</h3>
+          ${section.quiz.map((q, i) => `
+            <div class="quiz-question">
+              <p><strong>${i + 1}. ${q.question}</strong></p>
+              ${q.options.map((opt, j) => `
+                <label>
+                  <input type="radio" name="quiz-${index}-${i}" value="${j}">
+                  ${opt}
+                </label>
+              `).join('')}
+            </div>
+          `).join('')}
+          <button class="btn btn-check" onclick="checkQuiz(${index})">Check Answers</button>
+          <div id="result-${index}" class="result"></div>
+        </div>
+      `;
+    }
+
     document.getElementById("content").innerHTML = `
       <h1 class="page-title">${section.title}</h1>
       <div class="text-box">
@@ -331,7 +507,23 @@
           </div>
         `).join('')}
       </div>
+      ${quizHTML}
     `;
+  }
+
+  function checkQuiz(sectionIndex) {
+    const section = sections[sectionIndex];
+    let score = 0;
+
+    section.quiz.forEach((q, i) => {
+      const selected = document.querySelector(`input[name="quiz-${sectionIndex}-${i}"]:checked`);
+      if (selected && parseInt(selected.value) === q.correct) {
+        score++;
+      }
+    });
+
+    const resultDiv = document.getElementById(`result-${sectionIndex}`);
+    resultDiv.innerHTML = `You scored ${score} out of ${section.quiz.length}.`;
   }
 
   function next() {
