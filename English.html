@@ -32,7 +32,7 @@
       width: 100%;
       padding: 20px;
       position: relative;
-      min-height: 600px;
+      min-height: 700px;
     }
 
     .page-title {
@@ -90,6 +90,19 @@
       color: #555;
     }
 
+    /* Arabic Text */
+    .arabic-text {
+      direction: rtl;
+      text-align: right;
+      font-family: 'Times New Roman', serif;
+      margin-top: 10px;
+      color: #333;
+      padding: 10px;
+      background-color: #f9f0f0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
     /* Quiz Styles */
     .quiz-section {
       margin-top: 30px;
@@ -123,6 +136,16 @@
       font-weight: bold;
       font-size: 1.1rem;
       color: #8b1a1a;
+    }
+
+    .correct {
+      color: green;
+      font-weight: bold;
+    }
+
+    .incorrect {
+      color: red;
+      font-weight: bold;
     }
 
     .controls {
@@ -190,45 +213,47 @@
         <strong>Entry requirements</strong><br>
         A first degree or equivalent from a recognized university.
       `,
-      wordFocus: "A dissertation is a long piece of writing, e.g. 10,000 words, on a particular subject, often for a university degree. It is usually longer than an essay, e.g. 500 words, but shorter than a thesis, e.g. 60,000 words.",
+      arabicText: `
+        <strong>المؤهلات والمدة</strong><br>
+        درجة الماجستير (MA): سنة كاملة أو 2-5 سنوات جزئيًا<br>
+        شهادة الدراسات العليا في التعليم (PDE): 9 أشهر كاملة أو 2-5 سنوات جزئيًا<br><br>
+
+        <strong>نظرة عامة</strong><br>
+        يتطلب الحصول على درجة الماجستير 90 نقطة: 60 نقطة من الوحدات الدراسية و30 نقطة لرسالة علمية بطول 15,000 كلمة. يحتاج الطلاب الذين يختارون برنامج PDE إلى 60 نقطة. ووحدة في طرق البحث في التعليم (12 نقطة) إلزامية في كلا البرنامجين.<br><br>
+
+        يمكن للطلاب التخصص في مجال معين أو دمج وحدات من مجالات مختلفة. تتوفر الوحدات بطرق دراسية مختلفة، بما في ذلك الوحدات الدراسية والتعليم عن بعد.<br><br>
+
+        <strong>المتطلبات الدخول</strong><br>
+        درجة أولية أو ما يعادلها من جامعة معترف بها.
+      `,
       vocabulary: [
-        { word: "qualification", meaning: "often plural sth such as a degree or diploma that you get when you successfully finish a course of study." },
-        { word: "duration", meaning: "the length of time sth continues." },
-        { word: "MA", meaning: "abbrev Master of Arts) a higher degree in an arts subject. (Also MSc. abbrev Master of Science.)" },
-        { word: "postgraduate", meaning: "(postgrad inf) a person who already has a first degree and who is doing advanced study or research." },
-        { word: "diploma", meaning: "a qualification at the end of a course of study at a college or university." },
-        { word: "overview", meaning: "a general description of sth." },
-        { word: "credit", meaning: "a part of a college or university course that you have completed successfully." },
-        { word: "module", meaning: "a unit that forms part of a course of study at college or university." },
-        { word: "opt for sth", meaning: "choose sth." },
-        { word: "specialize in sth", meaning: "spend more time on one area of work, and become very knowledgeable in that area." },
-        { word: "mode", meaning: "a particular way of doing sth." },
-        { word: "distance learning", meaning: "a system of education in which people study at home with the help of the internet and videos, and then send or email their work to their teachers." },
-        { word: "entry requirement", meaning: "a qualification or experience that you need in order to enter a college or university." },
-        { word: "equivalent", meaning: "equal in value, meaning, etc." },
-        { word: "recognize sth", meaning: "if sth is recognized, it is officially approved of and accepted." }
+        { word: "qualification", meaning: "often plural sth such as a degree or diploma that you get when you successfully finish a course of study.", arabic: "مؤهل" },
+        { word: "duration", meaning: "the length of time sth continues.", arabic: "المدة" },
+        { word: "MA", meaning: "abbrev Master of Arts) a higher degree in an arts subject. (Also MSc. abbrev Master of Science.)", arabic: "ماجستير" },
+        { word: "postgraduate", meaning: "(postgrad inf) a person who already has a first degree and who is doing advanced study or research.", arabic: "طالب دراسات عليا" },
+        { word: "diploma", meaning: "a qualification at the end of a course of study at a college or university.", arabic: "دبلوم" },
+        { word: "overview", meaning: "a general description of sth.", arabic: "نظرة عامة" },
+        { word: "credit", meaning: "a part of a college or university course that you have completed successfully.", arabic: "نقطة دراسية" },
+        { word: "module", meaning: "a unit that forms part of a course of study at college or university.", arabic: "وحدة دراسية" },
+        { word: "opt for sth", meaning: "choose sth.", arabic: "يختار شيئًا" },
+        { word: "specialize in sth", meaning: "spend more time on one area of work, and become very knowledgeable in that area.", arabic: "يتخصص في شيء" },
+        { word: "mode", meaning: "a particular way of doing sth.", arabic: "أسلوب" },
+        { word: "distance learning", meaning: "a system of education in which people study at home with the help of the internet and videos, and then send or email their work to their teachers.", arabic: "التعلم عن بعد" },
+        { word: "entry requirement", meaning: "a qualification or experience that you need in order to enter a college or university.", arabic: "متطلب دخول" },
+        { word: "equivalent", meaning: "equal in value, meaning, etc.", arabic: "متكافئ" },
+        { word: "recognize sth", meaning: "if sth is recognized, it is officially approved of and accepted.", arabic: "يُعترف بشيء" }
       ],
       quiz: [
-        {
-          question: "What does 'MA' stand for?",
-          options: ["Master of Arts", "Master of Administration", "Master of Accounting", "Master of Architecture"],
-          correct: 0
-        },
-        {
-          question: "What is a 'dissertation'?",
-          options: [
-            "A short essay of 500 words",
-            "A long piece of writing for a degree",
-            "A multiple-choice test",
-            "A group project"
-          ],
-          correct: 1
-        },
-        {
-          question: "What does 'opt for' mean?",
-          options: ["Avoid", "Choose", "Ignore", "Delay"],
-          correct: 1
-        }
+        { question: "What does 'MA' stand for?", options: ["Master of Arts", "Master of Administration", "Master of Accounting", "Master of Architecture"], correct: 0 },
+        { question: "What is a 'dissertation'?", options: ["A short essay", "A long piece of writing for a degree", "A test", "A group project"], correct: 1 },
+        { question: "What does 'opt for' mean?", options: ["Avoid", "Choose", "Ignore", "Delay"], correct: 1 },
+        { question: "What is a 'module'?", options: ["A book", "A unit of study", "A teacher", "A school"], correct: 1 },
+        { question: "What does 'credit' mean?", options: ["Money", "A grade", "A part of a course", "A certificate"], correct: 2 },
+        { question: "What is 'distance learning'?", options: ["Studying at school", "Studying online", "Studying at home", "Studying abroad"], correct: 1 },
+        { question: "What does 'equivalent' mean?", options: ["Different", "Equal", "Better", "Worse"], correct: 1 },
+        { question: "What does 'recognize' mean?", options: ["Ignore", "Accept", "Reject", "Forget"], correct: 1 },
+        { question: "What is a 'diploma'?", options: ["A degree", "A certificate", "A job", "A license"], correct: 1 },
+        { question: "What does 'specialize in' mean?", options: ["Work in many fields", "Focus on one area", "Change jobs", "Quit school"], correct: 1 }
       ]
     },
     {
@@ -240,49 +265,41 @@
 
         Education should also help children to unlock their innate capacity to be creative. Finally, it should teach them to have respect for other human beings and give them a sense of morality.
       `,
-      wordFocus: "Self- is often combined with other nouns and adjectives to mean 'of yourself': self-esteem is the feeling of being happy with your own character; self-awareness is a knowledge and understanding of yourself.",
+      arabicText: `
+        لا تزال لدينا مستويات عالية من الأمية، والغياب المدرسي منتشر، ويعتقد العديد من الشباب أن المدرسة ضياع للوقت. ولكن لا ينبغي أن يكون كذلك.<br><br>
+
+        أثبت أن التعليم الجيد سيحسن فرص الأطفال، ويفتح أبوابًا قد تكون مغلقة. وسيزيد من فرصهم في العثور على وظيفة جيدة، وبالتالي زيادة المال والمكانة الاجتماعية. لكن التعليم الجيد يجب أن يكون أكثر من ذلك. يجب أن يساعد الأطفال على تطوير تقدير الذات ووعي الذات. ويجب أن يعلّمهم تحمل المسؤولية عن العالم الذي يعيشون فيه، حتى يفهموا لماذا يصوتون في الانتخابات، ولماذا حرية التعبير مهمة، ولماذا الرعاية الصحية الوقائية مهمة، وهكذا.<br><br>
+
+        يجب أن يساعد التعليم أيضًا الأطفال على فتح إمكاناتهم الفطرية للإبداع. وأخيرًا، يجب أن يعلّمهم احترام الآخرين ويمنحهم شعورًا بالأخلاق.
+      `,
       vocabulary: [
-        { word: "illiteracy", meaning: "the inability to read or write." },
-        { word: "illiterate", meaning: "adj, opp literate." },
-        { word: "truancy", meaning: "the practice of staying away from school without permission. Someone who does this is playing truant." },
-        { word: "rife", meaning: "(of bad or unpleasant things) very common: corruption is rife. syn widespread." },
-        { word: "proven", meaning: "tested and shown to be true." },
-        { word: "prospects", meaning: "pl n the chances of being successful in the future." },
-        { word: "open doors", meaning: "give sb opportunities." },
-        { word: "likelihood", meaning: "the chance of sth happening. syn probability." },
-        { word: "status", meaning: "your social or professional position." },
-        { word: "take responsibility for sth", meaning: "make decisions and accept the consequences if they are wrong." },
-        { word: "inhabit sth", meaning: "live in a particular place." },
-        { word: "vote (for sb/sth)", meaning: "choose sb/sth by marking a paper or raising your hand." },
-        { word: "freedom of speech", meaning: "the right to say what you want without anyone stopping you." },
-        { word: "preventive", meaning: "(also preventative) intended to stop sth that causes problems from happening." },
-        { word: "matter", meaning: "be important." },
-        { word: "innate", meaning: "(of a quality, feeling, etc.) that you have when you are born." },
-        { word: "capacity to do sth", meaning: "ability to do sth." },
-        { word: "human being", meaning: "a living person." },
-        { word: "morality", meaning: "the principles of right or wrong behaviour." }
+        { word: "illiteracy", meaning: "the inability to read or write.", arabic: "الأمية" },
+        { word: "truancy", meaning: "the practice of staying away from school without permission.", arabic: "الغياب المدرسي" },
+        { word: "rife", meaning: "very common.", arabic: "منتشر" },
+        { word: "proven", meaning: "tested and shown to be true.", arabic: "أُثبت" },
+        { word: "prospects", meaning: "the chances of being successful in the future.", arabic: "الفرص" },
+        { word: "open doors", meaning: "give sb opportunities.", arabic: "يفتح أبوابًا" },
+        { word: "likelihood", meaning: "the chance of sth happening.", arabic: "احتمالية" },
+        { word: "status", meaning: "your social or professional position.", arabic: "المكانة" },
+        { word: "take responsibility for sth", meaning: "make decisions and accept consequences.", arabic: "تحمل المسؤولية عن شيء" },
+        { word: "inhabit", meaning: "live in a particular place.", arabic: "يعيش في مكان" },
+        { word: "vote", meaning: "choose sb/sth by marking a paper or raising your hand.", arabic: "يُصوّت" },
+        { word: "freedom of speech", meaning: "the right to say what you want without stopping.", arabic: "حرية التعبير" },
+        { word: "preventive", meaning: "intended to stop problems from happening.", arabic: "وقائي" },
+        { word: "innate", meaning: "something you have from birth.", arabic: "فطري" },
+        { word: "morality", meaning: "the principles of right or wrong behaviour.", arabic: "الأخلاق" }
       ],
       quiz: [
-        {
-          question: "What does 'rife' mean?",
-          options: ["Rare", "Very common", "Illegal", "Expensive"],
-          correct: 1
-        },
-        {
-          question: "What does 'self-esteem' mean?",
-          options: [
-            "Feeling happy with your own character",
-            "Feeling superior to others",
-            "Feeling lonely",
-            "Feeling angry"
-          ],
-          correct: 0
-        },
-        {
-          question: "What does 'innate' mean?",
-          options: ["Learned later in life", "Present from birth", "Taught by teachers", "Acquired through practice"],
-          correct: 1
-        }
+        { question: "What does 'illiteracy' mean?", options: ["Can read", "Cannot read or write", "Good student", "Smart"], correct: 1 },
+        { question: "What does 'rife' mean?", options: ["Rare", "Very common", "Expensive", "Useful"], correct: 1 },
+        { question: "What does 'proven' mean?", options: ["Not tested", "Tested and true", "Guess", "Wrong"], correct: 1 },
+        { question: "What does 'prospects' mean?", options: ["Past", "Future chances", "Money", "Job"], correct: 1 },
+        { question: "What does 'open doors' mean?", options: ["Close", "Give opportunities", "Break", "Lock"], correct: 1 },
+        { question: "What does 'likelihood' mean?", options: ["Unlikely", "Probability", "Impossible", "Certain"], correct: 1 },
+        { question: "What does 'status' mean?", options: ["Age", "Position", "Name", "Color"], correct: 1 },
+        { question: "What does 'inhabit' mean?", options: ["Leave", "Live in", "Visit", "Buy"], correct: 1 },
+        { question: "What does 'vote' mean?", options: ["Talk", "Choose", "Walk", "Run"], correct: 1 },
+        { question: "What does 'morality' mean?", options: ["Money", "Rules", "Ethics", "Laws"], correct: 2 }
       ]
     },
     {
@@ -300,51 +317,53 @@
 
         • How should we tackle bullying in schools?
       `,
-      wordFocus: "An independent school receives no money from the government, and the education of the pupils is paid for by the parents. syn private school. opp state school.",
+      arabicText: `
+        في المملكة المتحدة، هناك نقاش مستمر حول العديد من القضايا المتعلقة بتعليم أطفالنا. على سبيل المثال:<br><br>
+
+        • هل يكون الطفل أفضل حالًا في روضة أطفال مع أطفال آخرين، أم في المنزل مع والدته أو مربية؟<br><br>
+
+        • هل المدارس المستقلة تمييزية ومحصورة في طبقة معينة، أم أن للآباء الحق بإرسال أطفالهم إلى مدارس خاصة مدفوعة الرسوم ذات حجم صفوف أصغر، وبفرصة أعلى إحصائيًا للالتحاق بالجامعة؟<br><br>
+
+        • هناك بعض الأدلة التي تشير إلى أن الفتيات يتألقن في المدارس المختلطة الجنسين حيث لا تتعرض لتشتت بسبب الأولاد. إذا كان هذا صحيحًا، هل المدارس المختلطة لا تزال أفضل من المدارس المختصة بالجنس الواحد؟<br><br>
+
+        • هل يجب أن تكون الدين موضوعًا إلزاميًا في المنهاج؟ وإذا كان كذلك، ماذا يجب أن نُدرّس؟<br><br>
+
+        • كيف يجب أن نتعامل مع التنمر في المدارس؟
+      `,
       vocabulary: [
-        { word: "debate", meaning: "an argument or discussion expressing different opinions." },
-        { word: "issue", meaning: "an important topic that people are discussing." },
-        { word: "regarding sth/sb", meaning: "about sth/sb. syn concerning sth/sb." },
-        { word: "be better off (doing sth)", meaning: "used to say that sb would be happier or more satisfied if they did a particular thing. opp be worse off." },
-        { word: "nursery school", meaning: "a school for children between the ages of about two and five." },
-        { word: "childminder", meaning: "a person who is paid to care for children while their parents are at work." },
-        { word: "divisive", meaning: "likely to cause arguments between people." },
-        { word: "elitist", meaning: "based on a system in which a small group of people (= an elite) have a lot of advantages and have the most influence." },
-        { word: "statistically", meaning: "based on information shown in numbers. statistics n." },
-        { word: "be distracted by sth", meaning: "have your concentration interrupted by sth." },
-        { word: "co-educational", meaning: "(co-ed inf) educating boys and girls in the same school." },
-        { word: "compulsory", meaning: "if sth is compulsory, you have to do it. syn obligatory." },
-        { word: "curriculum", meaning: "the group of subjects that students study at school or college." },
-        { word: "tackle sth", meaning: "make a big effort to deal with a difficult situation: tackle a problem." },
-        { word: "bullying", meaning: "behaviour that frightens or hurts sb smaller and weaker. The person is a bully." }
+        { word: "debate", meaning: "an argument or discussion expressing different opinions.", arabic: "نقاش" },
+        { word: "issue", meaning: "an important topic that people are discussing.", arabic: "قضية" },
+        { word: "regarding", meaning: "about sth/sb.", arabic: "بشأن" },
+        { word: "better off", meaning: "happier or more satisfied.", arabic: "أفضل حالًا" },
+        { word: "nursery school", meaning: "a school for children between 2-5 years.", arabic: "روضة أطفال" },
+        { word: "childminder", meaning: "a person paid to care for children.", arabic: "مربية" },
+        { word: "divisive", meaning: "likely to cause arguments.", arabic: "تمييزي" },
+        { word: "elitist", meaning: "based on a small elite group.", arabic: "محصور في الطبقة العليا" },
+        { word: "statistically", meaning: "based on numbers.", arabic: "إحصائيًا" },
+        { word: "distracted", meaning: "have concentration interrupted.", arabic: "مشتت" },
+        { word: "co-educational", meaning: "educating boys and girls together.", arabic: "مختلط الجنسين" },
+        { word: "compulsory", meaning: "must do it.", arabic: "إلزامي" },
+        { word: "curriculum", meaning: "subjects studied at school.", arabic: "المنهاج الدراسي" },
+        { word: "tackle", meaning: "deal with a difficult situation.", arabic: "التعامل مع" },
+        { word: "bullying", meaning: "behaviour that frightens or hurts others.", arabic: "التنمر" }
       ],
       quiz: [
-        {
-          question: "What does 'regarding' mean?",
-          options: ["Ignoring", "About", "Against", "Before"],
-          correct: 1
-        },
-        {
-          question: "What is a 'childminder'?",
-          options: [
-            "A teacher in school",
-            "A person paid to care for children at home",
-            "A babysitter for free",
-            "A school nurse"
-          ],
-          correct: 1
-        },
-        {
-          question: "What does 'compulsory' mean?",
-          options: ["Optional", "Fun", "You have to do it", "Difficult"],
-          correct: 2
-        }
+        { question: "What does 'debate' mean?", options: ["Agreement", "Argument", "Meeting", "Lesson"], correct: 1 },
+        { question: "What does 'issue' mean?", options: ["Problem", "Topic", "Rule", "Game"], correct: 1 },
+        { question: "What does 'regarding' mean?", options: ["About", "After", "Before", "Without"], correct: 0 },
+        { question: "What does 'better off' mean?", options: ["Worse", "Happier", "Poorer", "Sadder"], correct: 1 },
+        { question: "What is a 'nursery school'?", options: ["High school", "Kindergarten", "University", "College"], correct: 1 },
+        { question: "What is a 'childminder'?", options: ["Teacher", "Nurse", "Person who cares for children", "Principal"], correct: 2 },
+        { question: "What does 'divisive' mean?", options: ["Unifying", "Causing arguments", "Friendly", "Quiet"], correct: 1 },
+        { question: "What does 'compulsory' mean?", options: ["Optional", "Must do", "Easy", "Free"], correct: 1 },
+        { question: "What is a 'curriculum'?", options: ["Book", "Subjects", "Grade", "Exam"], correct: 1 },
+        { question: "What does 'tackle' mean?", options: ["Ignore", "Deal with", "Avoid", "Run"], correct: 1 }
       ]
     },
     {
       title: "Discipline",
       text: `
-        <strong>Has discipline got worse?</strong><br>
+        Has discipline got worse?<br>
         Discipline is often cited as one of the biggest problems in schools, and these are some of the reasons that people give:<br><br>
 
         • The abolition of corporal punishment has removed a common deterrent to bad behaviour.<br><br>
@@ -361,46 +380,52 @@
 
         • Children in general have lost respect for people in authority.
       `,
-      wordFocus: "Discipline is the practice of making people obey rules (= do what the rules say), and then punishing them (= making them suffer) if they don't. We also use discipline as a verb: Parents have to discipline their children.",
+      arabicText: `
+        هل أصبحت الانضباط أسوأ؟<br>
+        يُذكر أن الانضباط هو أحد أكبر المشاكل في المدارس، وهذه بعض الأسباب التي يعطيها الناس:<br><br>
+
+        • إلغاء العقوبة الجسدية أزال رادعًا شائعًا للسلوك السيء.<br><br>
+
+        • لا يتم تطبيق القواعد بشكل متسق، ويعمل بعض المعلمين على تجاهل السلوك غير اللائق.<br><br>
+
+        • يخشى المديرون من تعليق أو طرد الطلاب المزعجين خشية أن يتخذ الطلاب أو أولياء أمورهم إجراءات قانونية ضدَهم.<br><br>
+
+        • يُعتبر الآباء مسؤولين عن عدم انضباط أطفالهم في المنزل.<br><br>
+
+        • ثقافة العصابات، الشائعة في المجتمع، تنتشر في المدارس، مما يؤدي إلى المزيد من العنف ومشاكل الانضباط.<br><br>
+
+        • يؤدي التدريس الضعيف إلى تدهور السلوك في الصف.<br><br>
+
+        • فقد الأطفال بشكل عام احترامهم للأشخاص ذوي السلطة.
+      `,
       vocabulary: [
-        { word: "cite sth", meaning: "fml give sth as a reason or example to support what you are saying." },
-        { word: "abolition", meaning: "the ending of a law, a system, or an institution. abolish sth v." },
-        { word: "corporal punishment", meaning: "the physical punishment of sb by hitting them." },
-        { word: "deterrent", meaning: "sth that, because it is unpleasant, makes sb decide not to do sth. deter sb v." },
-        { word: "enforce sth", meaning: "make people follow a particular law or rule. enforcement n." },
-        { word: "ignore sth", meaning: "pay no attention to sth." },
-        { word: "misconduct", meaning: "bad or unacceptable behaviour." },
-        { word: "suspend sb (from sth)", meaning: "officially stop a student from going to school, or a person from going to work, for a period of time." },
-        { word: "expel sb (from sth)", meaning: "officially make sb leave a school or organization." },
-        { word: "disruptive", meaning: "causing problems, noise, etc. so that sth cannot continue normally. disrupt sth v." },
-        { word: "be to blame for sth", meaning: "be responsible for sth bad." },
-        { word: "gang", meaning: "a group of young people who spend time together and often cause trouble." },
-        { word: "result in sth", meaning: "cause sth to happen." },
-        { word: "deterioration", meaning: "a situation in which sth becomes worse. deteriorate v." },
-        { word: "respect", meaning: "a feeling of admiration for sb because of their status or importance." },
-        { word: "in authority", meaning: "having a position of power to give orders to people." }
+        { word: "discipline", meaning: "making people obey rules.", arabic: "انضباط" },
+        { word: "abolition", meaning: "ending a law or system.", arabic: "إلغاء" },
+        { word: "corporal punishment", meaning: "physical punishment.", arabic: "عقوبة جسدية" },
+        { word: "deterrent", meaning: "something that stops bad behavior.", arabic: "رادع" },
+        { word: "enforce", meaning: "make people follow rules.", arabic: "تطبيق" },
+        { word: "misconduct", meaning: "bad or unacceptable behavior.", arabic: "سلوك غير لائق" },
+        { word: "suspend", meaning: "officially stop someone from going to school.", arabic: "تعليق" },
+        { word: "expel", meaning: "officially make someone leave school.", arabic: "طرد" },
+        { word: "disruptive", meaning: "causing problems.", arabic: "مزعج" },
+        { word: "to blame", meaning: "responsible for something bad.", arabic: "مسؤول عن" },
+        { word: "gang", meaning: "group of young people causing trouble.", arabic: "عصابة" },
+        { word: "result in", meaning: "cause something to happen.", arabic: "يؤدي إلى" },
+        { word: "deterioration", meaning: "becoming worse.", arabic: "تدهور" },
+        { word: "respect", meaning: "admiration for someone.", arabic: "احترام" },
+        { word: "authority", meaning: "position of power.", arabic: "سلطة" }
       ],
       quiz: [
-        {
-          question: "What does 'abolition' mean?",
-          options: ["Beginning", "Ending", "Changing", "Improving"],
-          correct: 1
-        },
-        {
-          question: "What is a 'deterrent'?",
-          options: [
-            "Something that encourages bad behavior",
-            "Something that stops people from doing something bad",
-            "A reward for good behavior",
-            "A school rule"
-          ],
-          correct: 1
-        },
-        {
-          question: "What does 'expel' mean?",
-          options: ["Welcome", "Praise", "Officially make someone leave", "Give extra homework"],
-          correct: 2
-        }
+        { question: "What does 'discipline' mean?", options: ["Play", "Obey rules", "Fight", "Sleep"], correct: 1 },
+        { question: "What does 'abolition' mean?", options: ["Begin", "End", "Continue", "Improve"], correct: 1 },
+        { question: "What is 'corporal punishment'?", options: ["Mental punishment", "Physical punishment", "Verbal warning", "Detention"], correct: 1 },
+        { question: "What is a 'deterrent'?", options: ["Encouragement", "Something that stops bad behavior", "Reward", "Prize"], correct: 1 },
+        { question: "What does 'enforce' mean?", options: ["Ignore", "Make follow", "Change", "Cancel"], correct: 1 },
+        { question: "What does 'misconduct' mean?", options: ["Good behavior", "Bad behavior", "Helping", "Listening"], correct: 1 },
+        { question: "What does 'suspend' mean?", options: ["Promote", "Stop temporarily", "Fire", "Praise"], correct: 1 },
+        { question: "What does 'expel' mean?", options: ["Invite", "Remove permanently", "Warn", "Teach"], correct: 1 },
+        { question: "What does 'disruptive' mean?", options: ["Quiet", "Calm", "Causing problems", "Polite"], correct: 2 },
+        { question: "What does 'to blame' mean?", options: ["To praise", "To be responsible", "To ignore", "To forget"], correct: 1 }
       ]
     },
     {
@@ -418,46 +443,44 @@
 
         • When you've come up with a timetable, it's important to realize that things will not always go according to plan. Be ready to reorganize your schedule and your priorities to make sure you stay on track.
       `,
-      wordFocus: "Point can mean the purpose or aim of something. It is often used in these ways: There's no point in trying to do it all. What's the point of revising everything? I don't see the point of exams.",
+      arabicText: `
+        إليك بعض النصائح لاستعداد الامتحانات:<br><br>
+
+        • الخطوة الأولى هي وضع جدول مراجعة. كن واقعيًا. لا يمكنك المراجعة باستمرار.<br><br>
+
+        • فكر في مدى تمركّزك في وقت واحد. ليس هناك معنى في الجلوس أمام ملاحظاتك لساعات إذا لم تكن تُمتص أي شيء. من الأرجح أن يكون من الحكمة المراجعة بفترات قصيرة.<br><br>
+
+        • أخذ فترات قصيرة من الراحة خلال فترة المراجعة يمكن أن يكون مفيدًا جدًا. إذ يسمح بوقت للفكرة والمعلومة بأن تُمتص.<br><br>
+
+        • لن يكون هناك وقت كافٍ لفعل كل شيء، لذلك حدد أولوياتك في المراجعة. أي المواضيع ستظهر بالتأكيد وبالتالي ضرورية للمراجعة؟<br><br>
+
+        • عندما تضع جدولًا زمنيًا، من المهم أن تدرك أن الأمور لن تسير دائمًا كما هو مخطط لها. كن مستعدًا لإعادة تنظيم جدولك وأولوياتك لضمان استمرارك في المسار الصحيح.
+      `,
       vocabulary: [
-        { word: "tip", meaning: "a small piece of advice about sth." },
-        { word: "revision", meaning: "the process of preparing for an exam by looking again at the work you have done. revise (for sth) v." },
-        { word: "step", meaning: "one of a series of things that you do in order to achieve sth." },
-        { word: "draw sth up", meaning: "make or write sth that needs careful thought: draw up a plan." },
-        { word: "schedule", meaning: "a plan of activities or events and when they will happen." },
-        { word: "realistic", meaning: "sensible and accepting things as they are." },
-        { word: "absorb sth", meaning: "take information into your mind and understand or remember it." },
-        { word: "in short bursts", meaning: "in short periods in which you do sth with a lot of energy or effort." },
-        { word: "beneficial (to sth/sb)", meaning: "improving a situation or having a helpful or useful effect." },
-        { word: "sink in", meaning: "(of words, information, etc.) be fully understood." },
-        { word: "prioritize sth", meaning: "put tasks, problems, etc. in order of importance so that you deal with the most important first. priority n." },
-        { word: "bound to do sth", meaning: "be certain to do sth or happen." },
-        { word: "come up", meaning: "happen or appear." },
-        { word: "come up with sth", meaning: "find or produce an answer, a plan, a sum of money, etc." },
-        { word: "go according to plan", meaning: "happen in the way that you expect." },
-        { word: "stay on track", meaning: "keep going in the right direction, or doing the right things." }
+        { word: "revision", meaning: "preparing for an exam by reviewing work.", arabic: "مراجعة" },
+        { word: "schedule", meaning: "a plan of activities and when they happen.", arabic: "جدول" },
+        { word: "realistic", meaning: "sensible and accepting things as they are.", arabic: "واقعي" },
+        { word: "absorb", meaning: "take information into your mind.", arabic: "يُمتص" },
+        { word: "in short bursts", meaning: "do sth in short periods of energy.", arabic: "بفترات قصيرة" },
+        { word: "beneficial", meaning: "improving a situation.", arabic: "مفيد" },
+        { word: "sink in", meaning: "be fully understood.", arabic: "يُمتص" },
+        { word: "prioritize", meaning: "put tasks in order of importance.", arabic: "تحديد الأولويات" },
+        { word: "bound to", meaning: "certain to happen.", arabic: "مُضمون أن يحدث" },
+        { word: "come up with", meaning: "find or produce an answer.", arabic: "يأتي بحل" },
+        { word: "go according to plan", meaning: "happen as expected.", arabic: "يحدث كما هو مخطط له" },
+        { word: "stay on track", meaning: "keep going in the right direction.", arabic: "البقاء على المسار الصحيح" }
       ],
       quiz: [
-        {
-          question: "What does 'draw up' mean in context?",
-          options: ["Erase", "Make or write carefully", "Destroy", "Copy"],
-          correct: 1
-        },
-        {
-          question: "What does 'sink in' mean?",
-          options: [
-            "Fall into water",
-            "Be fully understood",
-            "Disappear",
-            "Become heavy"
-          ],
-          correct: 1
-        },
-        {
-          question: "What does 'bound to' mean?",
-          options: ["Not likely to", "Certain to", "Allowed to", "Forbidden to"],
-          correct: 1
-        }
+        { question: "What does 'revision' mean?", options: ["Exam", "Reviewing work", "Playing", "Sleeping"], correct: 1 },
+        { question: "What is a 'schedule'?", options: ["Book", "Plan", "Note", "Test"], correct: 1 },
+        { question: "What does 'realistic' mean?", options: ["Fake", "Sensible", "Hard", "Easy"], correct: 1 },
+        { question: "What does 'absorb' mean?", options: ["Forget", "Take in", "Ignore", "Write"], correct: 1 },
+        { question: "What does 'in short bursts' mean?", options: ["Long time", "Short periods", "All day", "At night"], correct: 1 },
+        { question: "What does 'beneficial' mean?", options: ["Bad", "Helpful", "Expensive", "Difficult"], correct: 1 },
+        { question: "What does 'sink in' mean?", options: ["Sink in water", "Be understood", "Be forgotten", "Be written"], correct: 1 },
+        { question: "What does 'prioritize' mean?", options: ["Ignore", "Put in order", "Delete", "Copy"], correct: 1 },
+        { question: "What does 'bound to' mean?", options: ["Maybe", "Certain", "Never", "Sometimes"], correct: 1 },
+        { question: "What does 'stay on track' mean?", options: ["Get lost", "Keep going right", "Stop", "Change"], correct: 1 }
       ]
     }
   ];
@@ -494,16 +517,20 @@
       <div class="text-box">
         ${section.text}
       </div>
+      <div class="arabic-text">
+        <strong>النص العربي:</strong><br>
+        ${section.arabicText}
+      </div>
       <div class="word-focus">
         <h3>WORD FOCUS</h3>
-        ${section.wordFocus}
+        ${section.wordFocus || ""}
       </div>
       <div class="vocabulary">
         <h3>Vocabulary</h3>
         ${section.vocabulary.map(item => `
           <div class="vocab-item">
             <span class="vocab-word">${item.word}</span>
-            <span class="vocab-definition">${item.meaning}</span>
+            <span class="vocab-definition">${item.meaning} (${item.arabic})</span>
           </div>
         `).join('')}
       </div>
@@ -514,15 +541,32 @@
   function checkQuiz(sectionIndex) {
     const section = sections[sectionIndex];
     let score = 0;
+    const resultDiv = document.getElementById(`result-${sectionIndex}`);
+    const quizElements = document.querySelectorAll(`[name^="quiz-${sectionIndex}-"]`);
 
+    // Reset colors
+    quizElements.forEach(el => {
+      el.parentElement.style.color = '';
+    });
+
+    // Check answers
     section.quiz.forEach((q, i) => {
       const selected = document.querySelector(`input[name="quiz-${sectionIndex}-${i}"]:checked`);
       if (selected && parseInt(selected.value) === q.correct) {
         score++;
+        // Green
+        selected.parentElement.style.color = 'green';
+      } else {
+        // Red
+        selected.parentElement.style.color = 'red';
+        // Show correct answer
+        const correctOption = document.querySelector(`input[name="quiz-${sectionIndex}-${i}"][value="${q.correct}"]`);
+        if (correctOption) {
+          correctOption.parentElement.style.color = 'green';
+        }
       }
     });
 
-    const resultDiv = document.getElementById(`result-${sectionIndex}`);
     resultDiv.innerHTML = `You scored ${score} out of ${section.quiz.length}.`;
   }
 
@@ -540,7 +584,6 @@
     }
   }
 
-  // Initialize the page
   window.onload = () => {
     displaySection(currentSectionIndex);
   };
