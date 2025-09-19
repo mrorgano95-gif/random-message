@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocabulary Quiz</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>English Vocabulary Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #9c27b0;
-            --secondary: #f44336;
-            --accent: #4caf50;
-            --bg-light: #fff8e1;
-            --text-dark: #333;
-            --border-color: #ddd;
+            --primary: #4338ca;
+            --secondary: #f59e0b;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --light-bg: #f9fafb;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -22,159 +23,249 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #fde7e7, #f6d5d5);
-            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe, #fbeafe);
+            color: #222;
             padding: 20px;
             min-height: 100vh;
-            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 100px;
         }
 
         .container {
             width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 780px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 12px 30px var(--shadow);
             overflow: hidden;
+            margin-bottom: 40px;
+            border: 3px solid #f0f9ff;
         }
 
         .header {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
             color: white;
-            padding: 20px;
+            padding: 30px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: rotate 10s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .header h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
+            font-weight: 700;
+            font-size: 36px;
+            letter-spacing: -0.5px;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .header p {
-            font-size: 14px;
-            opacity: 0.9;
+            margin-top: 10px;
+            opacity: 0.95;
+            font-size: 16px;
+            position: relative;
+            z-index: 2;
         }
 
         .content {
-            padding: 25px;
+            padding: 40px;
         }
 
-        .word-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+        .question-box {
             margin-bottom: 30px;
         }
 
-        .word-card {
-            background: var(--bg-light);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-            font-weight: 500;
-            font-size: 16px;
-        }
-
-        .word-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
-        .quiz-section {
-            display: none;
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            margin-top: 20px;
-        }
-
-        .quiz-question {
-            font-size: 18px;
-            margin-bottom: 15px;
-            font-weight: 500;
+        .question-text {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 30px;
+            line-height: 1.5;
+            background: linear-gradient(to right, #4338ca, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
         }
 
         .options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: grid;
+            gap: 16px;
         }
 
         .option-btn {
-            padding: 12px 15px;
-            background: white;
-            border: 2px solid var(--border-color);
-            border-radius: 6px;
+            padding: 20px 24px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 18px;
             cursor: pointer;
-            font-size: 15px;
-            transition: all 0.2s ease;
+            font-size: 17px;
+            font-weight: 600;
+            text-align: left;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
         }
 
         .option-btn:hover {
-            background: #f0f0f0;
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .option-btn:active {
+            transform: translateY(0) scale(1);
         }
 
         .option-btn.correct {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: white;
+            background: #dcfce7;
+            border-color: #bbf7d0;
+            color: #166534;
+            font-weight: 700;
+            animation: popIn 0.4s ease;
         }
 
         .option-btn.incorrect {
-            background: var(--secondary);
-            border-color: var(--secondary);
-            color: white;
+            background: #fee2e2;
+            border-color: #fecaca;
+            color: #991b1b;
+            font-weight: 700;
+            animation: shake 0.5s ease;
         }
 
-        .feedback {
-            margin-top: 15px;
+        @keyframes popIn {
+            0% { transform: scale(0.95); opacity: 0; }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        .explanation {
+            margin-top: 35px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-radius: 20px;
+            border: 2px dashed #a7f3d0;
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .explanation h4 {
+            margin: 0 0 15px 0;
+            color: #065f46;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .explanation h4::before {
+            content: "💡";
+            font-size: 22px;
+        }
+
+        .explanation .en {
+            margin-bottom: 20px;
+            line-height: 1.7;
             font-weight: 500;
-            color: var(--accent);
+            color: #1f2937;
         }
 
-        .back-btn {
+        .explanation .ar {
+            font-family: 'Tajawal', 'Segoe UI', sans-serif;
+            font-weight: 700;
+            color: #1e40af;
+            direction: rtl;
+            text-align: right;
+            line-height: 1.8;
+            font-size: 17px;
+            background: #dbeafe;
+            padding: 16px;
+            border-radius: 12px;
+            border-right: 4px solid #3b82f6;
+        }
+
+        .next-btn {
             display: block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background: var(--primary);
+            width: 90%;
+            max-width: 760px;
+            padding: 18px 0;
+            background: linear-gradient(135deg, var(--secondary), #ea580c);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 15px;
-            text-align: center;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            letter-spacing: 0.5px;
         }
 
-        .back-btn:hover {
-            background: #8e24aa;
+        .next-btn:hover {
+            transform: translateX(-50%) scale(1.03);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.6);
+            background: linear-gradient(135deg, #ea580c, var(--secondary));
         }
 
-        .word-focus {
-            background: #f8d7da;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            border-left: 4px solid var(--secondary);
+        .next-btn:active {
+            transform: translateX(-50%) scale(0.98);
         }
 
-        .word-focus h3 {
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&display=swap');
 
         @media (max-width: 768px) {
-            .word-list {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            .content {
-                padding: 15px;
-            }
+            .header h1 { font-size: 28px; }
+            .content { padding: 25px; }
+            .question-text { font-size: 20px; }
+            .option-btn { padding: 18px 20px; font-size: 16px; }
+            .next-btn { width: 92%; padding: 16px 0; font-size: 19px; }
         }
     </style>
 </head>
@@ -182,496 +273,795 @@
     <div class="container">
         <div class="header">
             <h1>English Vocabulary Quiz</h1>
-            <p>Click on any word to see questions about its meaning and usage.</p>
+            <p>Master Essential Words with Fun & Colors! 📚</p>
         </div>
         <div class="content">
-            <div class="word-list" id="word-list"></div>
-            <div class="quiz-section" id="quiz-section">
-                <div class="quiz-question" id="question">Loading question...</div>
+            <div class="question-box">
+                <div class="question-text" id="question">Loading question...</div>
                 <div class="options" id="options"></div>
-                <div class="feedback" id="feedback"></div>
-                <button class="back-btn" onclick="showWordList()">Back to Words</button>
-            </div>
-            <div class="word-focus">
-                <h3>WORD FOCUS</h3>
-                <p>These are the most important vocabulary words from the education topic. Click on any word to test your knowledge with quizzes!</p>
+                <div class="explanation" id="explanation">
+                    <h4>Explanation</h4>
+                    <div class="en" id="explanation-en">English explanation will appear here.</div>
+                    <div class="ar" id="explanation-ar">سيظهر التفسير بالعربية هنا.</div>
+                </div>
             </div>
         </div>
     </div>
 
+    <button class="next-btn" id="next-btn">Next Question</button>
+
     <script>
-        // 📚 الكلمات والمفردات من الصفحات التي أرسلتها
-        const vocabulary = [
-            { word: "illiteracy", definition: "the inability to read or write.", example: "High levels of illiteracy remain a problem in many countries." },
-            { word: "truancy", definition: "the practice of staying away from school without permission.", example: "Truancy is rife in some schools." },
-            { word: "rife", definition: "(of bad or unpleasant things) very common.", example: "Corruption is rife in this region." },
-            { word: "proven", definition: "tested and shown to be true.", example: "It is proven that education improves prospects." },
-            { word: "prospects", definition: "the chances of being successful in the future.", example: "Education opens doors for better prospects." },
-            { word: "open doors", definition: "give someone opportunities.", example: "A good education opens doors to success." },
-            { word: "likelihood", definition: "the chance of something happening.", example: "The likelihood of getting a job increases with education." },
-            { word: "status", definition: "your social or professional position.", example: "Education can improve your social status." },
-            { word: "take responsibility for sth", definition: "make decisions and accept the consequences if they are wrong.", example: "Students should take responsibility for their actions." },
-            { word: "inhabit", definition: "live in a particular place.", example: "Children inhabit different worlds based on their education." },
-            { word: "vote", definition: "choose someone or something by marking a paper or raising your hand.", example: "People vote in elections to choose leaders." },
-            { word: "freedom of speech", definition: "the right to say what you want without anyone stopping you.", example: "Freedom of speech is important in a democracy." },
-            { word: "preventive", definition: "intended to stop something that causes problems from happening.", example: "Preventive health care matters for long-term wellness." },
-            { word: "matter", definition: "be important.", example: "Health and education matter for everyone." },
-            { word: "innate", definition: "(of a quality, feeling, etc.) that you have when you are born.", example: "Creativity is an innate capacity in humans." },
-            { word: "capacity to do sth", definition: "ability to do something.", example: "Education unlocks our capacity to learn." },
-            { word: "human being", definition: "a living person.", example: "We should treat every human being with respect." },
-            { word: "morality", definition: "the principles of right or wrong behaviour.", example: "Education helps develop a sense of morality." },
-            { word: "debate", definition: "an argument or discussion expressing different opinions.", example: "There is a continuing debate about education." },
-            { word: "issue", definition: "an important topic that people are discussing.", example: "School issues include bullying and discipline." },
-            { word: "regarding", definition: "about something/someone.", example: "Regarding education, we need more funding." },
-            { word: "be better off", definition: "used to say that someone would be happier or more satisfied if they did a particular thing.", example: "Children may be better off in nursery schools." },
-            { word: "nursery school", definition: "a school for children between the ages of about two and five.", example: "Many parents send their children to nursery school." },
-            { word: "childminder", definition: "a person who is paid to care for children while their parents are at work.", example: "She works as a childminder for three kids." },
-            { word: "divisive", definition: "likely to cause arguments between people.", example: "Independent schools can be divisive." },
-            { word: "elitist", definition: "based on a system in which a small group of people have a lot of advantages and influence.", example: "Some believe private schools are elitist." },
-            { word: "statistically", definition: "based on information shown in numbers.", example: "Statistically, girls do well in single-sex schools." },
-            { word: "be distracted by sth", definition: "have your concentration interrupted by something.", example: "Boys can distract girls in co-ed schools." },
-            { word: "co-educational", definition: "educating boys and girls in the same school.", example: "Co-educational schools are common in many countries." },
-            { word: "compulsory", definition: "if something is compulsory, you have to do it.", example: "Religion is not compulsory in all schools." },
-            { word: "curriculum", definition: "the group of subjects that students study at school or college.", example: "The curriculum includes math, science, and literature." },
-            { word: "tackle sth", definition: "make a big effort to deal with a difficult situation.", example: "We must tackle bullying in schools." },
-            { word: "bullying", definition: "behaviour that frightens or hurts someone smaller and weaker.", example: "Bullying is a serious issue in schools." },
-            { word: "cite", definition: "give something as a reason or example to support what you are saying.", example: "They cited poor teaching as a reason for low results." },
-            { word: "abolition", definition: "the ending of a law, a system, or an institution.", example: "The abolition of corporal punishment has changed school discipline." },
-            { word: "corporal punishment", definition: "the physical punishment of someone by hitting them.", example: "Corporal punishment is no longer allowed in schools." },
-            { word: "deterrent", definition: "something that makes someone decide not to do something because it is unpleasant.", example: "Fines act as a deterrent to crime." },
-            { word: "enforce", definition: "make people follow a particular law or rule.", example: "Teachers enforce rules in classrooms." },
-            { word: "ignore", definition: "pay no attention to something.", example: "Some teachers ignore misconduct." },
-            { word: "misconduct", definition: "bad or unacceptable behaviour.", example: "Student misconduct can disrupt learning." },
-            { word: "suspend", definition: "officially stop a student from going to school for a period of time.", example: "The school suspended him for fighting." },
-            { word: "expel", definition: "officially make someone leave a school or organization.", example: "He was expelled for repeated violations." },
-            { word: "disruptive", definition: "causing problems, noise, etc., so that something cannot continue normally.", example: "Disruptive students affect the whole class." },
-            { word: "be to blame for sth", definition: "be responsible for something bad.", example: "Parents are to blame for not disciplining their children." },
-            { word: "gang", definition: "a group of young people who spend time together and often cause trouble.", example: "Gang culture is spreading into schools." },
-            { word: "result in sth", definition: "cause something to happen.", example: "Poor teaching results in bad behavior." },
-            { word: "deterioration", definition: "a situation in which something becomes worse.", example: "There is a deterioration in classroom behavior." },
-            { word: "respect", definition: "a feeling of admiration for someone because of their status or importance.", example: "Children have lost respect for authority." },
-            { word: "in authority", definition: "having a position of power to give orders to people.", example: "Teachers are in authority in schools." },
-            { word: "tip", definition: "a small piece of advice about something.", example: "Here's a tip for exam revision." },
-            { word: "revision", definition: "the process of preparing for an exam by looking again at the work you have done.", example: "Revision is essential before exams." },
-            { word: "step", definition: "one of a series of things that you do in order to achieve something.", example: "The first step is to draw up a schedule." },
-            { word: "draw sth up", definition: "make or write something that needs careful thought.", example: "Draw up a plan for your revision." },
-            { word: "schedule", definition: "a plan of activities or events and when they will happen.", example: "Create a revision schedule." },
-            { word: "realistic", definition: "sensible and accepting things as they are.", example: "Be realistic about how much you can revise." },
-            { word: "absorb", definition: "take information into your mind and understand or remember it.", example: "You can't absorb anything if you're not focused." },
-            { word: "in short bursts", definition: "in short periods in which you do something with a lot of energy or effort.", example: "Revise in short bursts for better focus." },
-            { word: "beneficial", definition: "improving a situation or having a helpful or useful effect.", example: "Taking breaks can be beneficial." },
-            { word: "sink in", definition: "be fully understood.", example: "Give yourself time to let the information sink in." },
-            { word: "prioritize", definition: "put tasks, problems, etc. in order of importance so that you deal with the most important first.", example: "Prioritize your revision topics." },
-            { word: "bound to do sth", definition: "be certain to do something or happen.", example: "Important topics are bound to come up in exams." },
-            { word: "come up", definition: "happen or appear.", example: "What’s the point of revising everything?" },
-            { word: "come up with sth", definition: "find or produce an answer, a plan, a sum of money, etc.", example: "Come up with a timetable for your revision." },
-            { word: "go according to plan", definition: "happen in the way that you expect.", example: "Things won’t always go according to plan." },
-            { word: "stay on track", definition: "keep going in the right direction, or doing the right things.", example: "Reorganize your schedule to stay on track." },
-            { word: "qualification", definition: "a degree or diploma that you get when you successfully finish a course of study.", example: "An MA is a higher qualification." },
-            { word: "duration", definition: "the length of time something continues.", example: "The duration of the course is one year." },
-            { word: "MA", definition: "Master of Arts, a higher degree in an arts subject.", example: "She earned her MA in Education." },
-            { word: "postgraduate", definition: "a person who already has a first degree and is doing advanced study or research.", example: "Postgraduate courses are for those with a degree." },
-            { word: "diploma", definition: "a qualification at the end of a course of study at a college or university.", example: "He completed his Postgraduate Diploma in Education." },
-            { word: "overview", definition: "a general description of something.", example: "This is an overview of postgraduate courses." },
-            { word: "credit", definition: "a part of a college or university course that you have completed successfully.", example: "90 credits are required for the MA." },
-            { word: "module", definition: "a unit that forms part of a course of study at college or university.", example: "Students take taught modules and a dissertation." },
-            { word: "opt for sth", definition: "choose something.", example: "Some students opt for the PDE course." },
-            { word: "specialize in sth", definition: "spend more time on one area of work, and become very knowledgeable in that area.", example: "She specializes in educational psychology." },
-            { word: "mode", definition: "a particular way of doing something.", example: "Distance learning is a mode of study." },
-            { word: "distance learning", definition: "a system of education in which people study at home with the help of the internet and videos, and then send or email their work to their teachers.", example: "Many students use distance learning programs." },
-            { word: "entry requirement", definition: "a qualification or experience that you need in order to enter a college or university.", example: "A first degree is an entry requirement." },
-            { word: "equivalent", definition: "equal in value, meaning, etc.", example: "A diploma is equivalent to a degree." },
-            { word: "recognize", definition: "if something is recognized, it is officially approved of and accepted.", example: "The university is recognized by the government." }
+        const quizData = [
+            {
+                question: "What does 'illiteracy' mean?",
+                options: ["The ability to read and write", "The inability to read or write", "Going to school", "Teaching children"],
+                correct: 1,
+                explanation: {
+                    en: "Illiteracy is the state of being unable to read or write. It remains a global challenge.",
+                    ar: "الأمية هي حالة عدم القدرة على القراءة أو الكتابة. وهي تحدٍ عالمي مستمر."
+                }
+            },
+            {
+                question: "What does 'truancy' mean?",
+                options: ["Attending school regularly", "Staying away from school without permission", "Doing homework", "Playing sports"],
+                correct: 1,
+                explanation: {
+                    en: "Truancy refers to the act of staying away from school without permission. It is a serious issue in education.",
+                    ar: "التهرب المدرسي يعني التغيب عن المدرسة دون إذن. إنه مشكلة خطيرة في التعليم."
+                }
+            },
+            {
+                question: "If something is 'rife', it is:",
+                options: ["Very rare", "Very common", "Very expensive", "Very small"],
+                correct: 1,
+                explanation: {
+                    en: "'Rife' means widespread or very common, especially something bad. E.g., Corruption is rife in some countries.",
+                    ar: "'منتشر' تعني واسع الانتشار أو شائع جدًا، خاصةً شيء سيء. مثال: الفساد منتشر في بعض البلدان."
+                }
+            },
+            {
+                question: "A 'proven' method is one that is:",
+                options: ["New and untested", "Tested and shown to be true", "Theoretical", "Expensive"],
+                correct: 1,
+                explanation: {
+                    en: "'Proven' means something has been tested and shown to work or be true. E.g., Proven teaching strategies.",
+                    ar: "'مُثبت' تعني أن شيئًا ما تم اختباره وأُثبت أنه يعمل أو صحيح. مثال: استراتيجيات تدريس مُثبتة."
+                }
+            },
+            {
+                question: "What are 'prospects'?",
+                options: ["Past experiences", "Chances of future success", "Old memories", "Physical objects"],
+                correct: 1,
+                explanation: {
+                    en: "'Prospects' refer to the chances or opportunities for future success. Education improves your prospects.",
+                    ar: "'الفرص' تشير إلى فرص أو احتمالات النجاح في المستقبل. التعليم يحسن فرصك."
+                }
+            },
+            {
+                question: "To 'open doors' means to:",
+                options: ["Close opportunities", "Create new opportunities", "Lock a door", "Build a house"],
+                correct: 1,
+                explanation: {
+                    en: "The phrase 'open doors' means to create new opportunities for someone. E.g., A degree opens doors to better jobs.",
+                    ar: "تعني عبارة 'تفتح الأبواب' خلق فرص جديدة لشخص ما. مثال: الشهادة تفتح الأبواب لفرص عمل أفضل."
+                }
+            },
+            {
+                question: "What does 'likelihood' mean?",
+                options: ["Certainty", "The chance of something happening", "Impossibility", "A type of game"],
+                correct: 1,
+                explanation: {
+                    en: "'Likelihood' means the probability or chance that something will happen. E.g., High likelihood of rain.",
+                    ar: "'الاحتمالية' تعني احتمال أو فرصة حدوث شيء ما. مثال: احتمالية عالية لهطول الأمطار."
+                }
+            },
+            {
+                question: "Your 'status' refers to your:",
+                options: ["Favorite color", "Social or professional position", "Age", "Height"],
+                correct: 1,
+                explanation: {
+                    en: "'Status' is your social or professional standing. E.g., Education can improve your social status.",
+                    ar: "'الوضع' هو مركزك الاجتماعي أو المهني. مثال: يمكن أن يحسن التعليم وضعك الاجتماعي."
+                }
+            },
+            {
+                question: "To 'take responsibility for something' means to:",
+                options: ["Ignore it", "Blame others", "Make decisions and accept consequences", "Forget about it"],
+                correct: 2,
+                explanation: {
+                    en: "It means to be accountable for your actions and accept the outcomes, good or bad.",
+                    ar: "يعني أن تكون مسؤولاً عن أفعالك وتقبل النتائج، جيدة كانت أم سيئة."
+                }
+            },
+            {
+                question: "To 'inhabit' a place means to:",
+                options: ["Visit it", "Live in it", "Destroy it", "Photograph it"],
+                correct: 1,
+                explanation: {
+                    en: "'Inhabit' means to live in a particular place. E.g., Different cultures inhabit different parts of the world.",
+                    ar: "'يسكن' تعني العيش في مكان معين. مثال: تسكن ثقافات مختلفة أجزاءً مختلفة من العالم."
+                }
+            },
+            {
+                question: "What does 'vote' mean?",
+                options: ["To run for office", "To choose by marking a ballot", "To protest", "To teach"],
+                correct: 1,
+                explanation: {
+                    en: "To vote is to formally express a choice, typically in an election. E.g., Citizens vote for their leaders.",
+                    ar: "التصويت هو التعبير الرسمي عن الاختيار، عادةً في الانتخابات. مثال: المواطنون يصوتون لاختيار قادتهم."
+                }
+            },
+            {
+                question: "What is 'freedom of speech'?",
+                options: ["The right to remain silent", "The right to say what you think", "The right to own property", "The right to travel"],
+                correct: 1,
+                explanation: {
+                    en: "It is the right to express opinions without censorship or restraint. A key democratic value.",
+                    ar: "هي الحق في التعبير عن الآراء دون رقابة أو قيود. وهي قيمة ديمقراطية أساسية."
+                }
+            },
+            {
+                question: "A 'preventive' measure is one that:",
+                options: ["Cures a problem", "Stops a problem before it happens", "Ignores a problem", "Makes a problem worse"],
+                correct: 1,
+                explanation: {
+                    en: "'Preventive' means intended to stop something bad from happening. E.g., Preventive healthcare.",
+                    ar: "'وقائي' يعني أنه مخصص لمنع حدوث شيء سيء. مثال: الرعاية الصحية الوقائية."
+                }
+            },
+            {
+                question: "When something 'matters', it is:",
+                options: ["Unimportant", "Important", "Expensive", "Colorful"],
+                correct: 1,
+                explanation: {
+                    en: "If something 'matters', it is important or has significance. E.g., Education matters for everyone.",
+                    ar: "إذا كان شيء ما 'مهمًا'، فهو ذو أهمية أو قيمة. مثال: التعليم مهم للجميع."
+                }
+            },
+            {
+                question: "An 'innate' ability is one you are born with.",
+                options: ["True", "False", "Sometimes", "Only in animals"],
+                correct: 0,
+                explanation: {
+                    en: "'Innate' means inborn or natural. E.g., Creativity is an innate human capacity.",
+                    ar: "'فطري' يعني موروث أو طبيعي. مثال: الإبداع قدرة بشرية فطرية."
+                }
+            },
+            {
+                question: "What does 'capacity to do something' mean?",
+                options: ["Inability", "Ability", "Desire", "Fear"],
+                correct: 1,
+                explanation: {
+                    en: "It means the ability or power to do something. E.g., Education unlocks our capacity to learn.",
+                    ar: "تعني القدرة أو القوة على فعل شيء ما. مثال: التعليم يفتح قدرتنا على التعلم."
+                }
+            },
+            {
+                question: "A 'human being' is:",
+                options: ["An animal", "A robot", "A living person", "A plant"],
+                correct: 2,
+                explanation: {
+                    en: "A human being is a person, emphasizing human qualities and rights. E.g., Treat every human being with respect.",
+                    ar: "الإنسان هو شخص، مع التركيز على الصفات والحقوق الإنسانية. مثال: عامل كل إنسان باحترام."
+                }
+            },
+            {
+                question: "What is 'morality'?",
+                options: ["Rules of a game", "Principles of right and wrong", "Types of food", "Names of colors"],
+                correct: 1,
+                explanation: {
+                    en: "Morality refers to beliefs about what is right and wrong behavior. E.g., Schools help develop morality.",
+                    ar: "تشير الأخلاق إلى المعتقدات حول السلوك الصحيح والخاطئ. مثال: تساعد المدارس على تنمية الأخلاق."
+                }
+            },
+            {
+                question: "A 'debate' is:",
+                options: ["A song", "A formal discussion with opposing views", "A type of food", "A dance"],
+                correct: 1,
+                explanation: {
+                    en: "A debate is a structured discussion where people express different opinions. E.g., A debate about education policy.",
+                    ar: "المناظرة هي نقاش منظم يعبر فيه الناس عن آراء مختلفة. مثال: مناظرة حول سياسة التعليم."
+                }
+            },
+            {
+                question: "An 'issue' is:",
+                options: ["A magazine", "An important topic for discussion", "A type of car", "A fruit"],
+                correct: 1,
+                explanation: {
+                    en: "An issue is an important subject that people are discussing or arguing about. E.g., Bullying is a school issue.",
+                    ar: "المشكلة هي موضوع مهم يناقش أو يتجادل حوله الناس. مثال: التنمر مشكلة مدرسية."
+                }
+            },
+            // ✅ الأسئلة 21-50
+            {
+                question: "What does 'regarding' mean?",
+                options: ["Ignoring", "About", "Against", "Before"],
+                correct: 1,
+                explanation: {
+                    en: "'Regarding' means concerning or about something. E.g., Regarding your question, here is the answer.",
+                    ar: "'بخصوص' تعني المتعلقة بشيء ما. مثال: بخصوص سؤالك، إليك الجواب."
+                }
+            },
+            {
+                question: "If you are 'better off', you are:",
+                options: ["Worse", "Happier or in a better situation", "Angry", "Tired"],
+                correct: 1,
+                explanation: {
+                    en: "'Better off' means to be in a more favorable or improved situation. E.g., You’d be better off studying.",
+                    ar: "'أفضل حالًا' تعني أن تكون في موقف أكثر ملاءمة أو تحسنًا. مثال: سيكون حالك أفضل إذا درست."
+                }
+            },
+            {
+                question: "What is a 'nursery school'?",
+                options: ["A school for teenagers", "A school for children aged 2-5", "A school for teachers", "A university"],
+                correct: 1,
+                explanation: {
+                    en: "A nursery school is for very young children before they start primary school. E.g., My child goes to nursery.",
+                    ar: "المدرسة الحضانة هي للأطفال الصغار قبل بدء المدرسة الابتدائية. مثال: طفلي يذهب إلى الحضانة."
+                }
+            },
+            {
+                question: "A 'childminder' is someone who:",
+                options: ["Teaches at school", "Cares for children while parents work", "Drives a bus", "Cooks food"],
+                correct: 1,
+                explanation: {
+                    en: "A childminder is paid to look after children, usually in their own home. E.g., She works as a childminder.",
+                    ar: "مُقدم رعاية الأطفال هو شخص يُدفع له للعناية بالأطفال، عادةً في منزله. مثال: تعمل كمُقدمة رعاية أطفال."
+                }
+            },
+            {
+                question: "Something 'divisive' causes:",
+                options: ["Unity", "Arguments or disagreement", "Happiness", "Silence"],
+                correct: 1,
+                explanation: {
+                    en: "'Divisive' means causing people to disagree or argue. E.g., The new policy was divisive.",
+                    ar: "'مثير للانقسام' يعني أنه يسبب خلافًا أو جدلاً بين الناس. مثال: كانت السياسة الجديدة مثيرة للانقسام."
+                }
+            },
+            {
+                question: "An 'elitist' system benefits:",
+                options: ["Everyone equally", "A small privileged group", "The poor", "Animals"],
+                correct: 1,
+                explanation: {
+                    en: "'Elitist' describes a system where a small, privileged group has advantages. E.g., Elitist universities.",
+                    ar: "'النخبوي' يصف نظامًا تكون فيه مجموعة صغيرة متميزة ذات امتيازات. مثال: جامعات نخبوية."
+                }
+            },
+            {
+                question: "If something is true 'statistically', it is based on:",
+                options: ["Feelings", "Numbers and data", "Opinions", "Guesses"],
+                correct: 1,
+                explanation: {
+                    en: "'Statistically' means according to numerical data. E.g., Statistically, girls perform well in reading.",
+                    ar: "'إحصائيًا' يعني وفقًا للبيانات الرقمية. مثال: إحصائيًا، تؤدي الفتيات جيدًا في القراءة."
+                }
+            },
+            {
+                question: "To be 'distracted by something' means to:",
+                options: ["Focus intensely", "Have your attention interrupted", "Be very organized", "Be asleep"],
+                correct: 1,
+                explanation: {
+                    en: "It means your concentration is broken by something else. E.g., Students are distracted by phones.",
+                    ar: "يعني أن تركيزك قد انقطع بسبب شيء آخر. مثال: الطلاب مشتتون بهواتفهم."
+                }
+            },
+            {
+                question: "A 'co-educational' school teaches:",
+                options: ["Only boys", "Only girls", "Boys and girls together", "Only adults"],
+                correct: 2,
+                explanation: {
+                    en: "'Co-educational' means boys and girls are taught together in the same school. Common in many countries.",
+                    ar: "'المشترك' يعني أن الأولاد والبنات يُدرَّسون معًا في نفس المدرسة. شائع في العديد من البلدان."
+                }
+            },
+            {
+                question: "If something is 'compulsory', you:",
+                options: ["Can choose to do it", "Must do it", "Should avoid it", "Are forbidden to do it"],
+                correct: 1,
+                explanation: {
+                    en: "'Compulsory' means required by law or rules. E.g., Attendance is compulsory.",
+                    ar: "'إجباري' يعني أنه مطلوب بموجب القانون أو القواعد. مثال: الحضور إجباري."
+                }
+            },
+            {
+                question: "The 'curriculum' is:",
+                options: ["The school building", "The list of subjects taught", "The teachers' salaries", "The school holidays"],
+                correct: 1,
+                explanation: {
+                    en: "The curriculum is the set of courses and their content offered by an educational institution.",
+                    ar: "المنهج الدراسي هو مجموعة الدورات ومحتواها الذي تقدمه المؤسسة التعليمية."
+                }
+            },
+            {
+                question: "To 'tackle' a problem means to:",
+                options: ["Ignore it", "Make it worse", "Deal with it in a determined way", "Laugh at it"],
+                correct: 2,
+                explanation: {
+                    en: "'Tackle' means to make a serious effort to solve a problem. E.g., We must tackle bullying.",
+                    ar: "'معالجة' تعني بذل جهد جاد لحل مشكلة. مثال: يجب أن نعالج التنمر."
+                }
+            },
+            {
+                question: "What is 'bullying'?",
+                options: ["Helping others", "Behavior intended to hurt or frighten", "Studying hard", "Playing games"],
+                correct: 1,
+                explanation: {
+                    en: "Bullying is repeated aggressive behavior intended to hurt someone physically or emotionally.",
+                    ar: "التنمر هو سلوك عدواني متكرر يهدف إلى إيذاء شخص ما جسديًا أو عاطفيًا."
+                }
+            },
+            {
+                question: "To 'cite' something means to:",
+                options: ["Ignore it", "Quote it as an example or proof", "Destroy it", "Copy it"],
+                correct: 1,
+                explanation: {
+                    en: "'Cite' means to refer to something as evidence or an example. E.g., Cite a source in your essay.",
+                    ar: "'يستشهد' يعني الإشارة إلى شيء كدليل أو مثال. مثال: استشهد بمصدر في مقالك."
+                }
+            },
+            {
+                question: "What is 'abolition'?",
+                options: ["Creation", "The act of ending a system or practice", "Celebration", "Beginning"],
+                correct: 1,
+                explanation: {
+                    en: "'Abolition' is the formal act of ending a law, system, or practice. E.g., Abolition of slavery.",
+                    ar: "'الإلغاء' هو الإجراء الرسمي لإنهاء قانون أو نظام أو ممارسة. مثال: إلغاء العبودية."
+                }
+            },
+            {
+                question: "What is 'corporal punishment'?",
+                options: ["Verbal warning", "Physical punishment like hitting", "Extra homework", "Detention"],
+                correct: 1,
+                explanation: {
+                    en: "It is physical punishment intended to cause pain, such as spanking or caning. Now banned in many schools.",
+                    ar: "هو عقاب بدني يهدف إلى التسبب في الألم، مثل الضرب بالعصا. ممنوع الآن في العديد من المدارس."
+                }
+            },
+            {
+                question: "A 'deterrent' is something that:",
+                options: ["Encourages bad behavior", "Discourages bad behavior", "Has no effect", "Is fun"],
+                correct: 1,
+                explanation: {
+                    en: "A deterrent discourages people from doing something by making them fear the consequences. E.g., Fines are a deterrent.",
+                    ar: "الرادع يثني الناس عن فعل شيء ما بجعلهم يخافون من العواقب. مثال: الغرامات رادعة."
+                }
+            },
+            {
+                question: "To 'enforce' a rule means to:",
+                options: ["Ignore it", "Make sure it is obeyed", "Change it", "Forget it"],
+                correct: 1,
+                explanation: {
+                    en: "'Enforce' means to ensure compliance with a rule or law. E.g., Teachers enforce classroom rules.",
+                    ar: "'إنفاذ' يعني ضمان الامتثال لقاعدة أو قانون. مثال: المعلمون ينفذون قواعد الفصل."
+                }
+            },
+            {
+                question: "To 'ignore' something means to:",
+                options: ["Pay close attention to it", "Pay no attention to it", "Celebrate it", "Copy it"],
+                correct: 1,
+                explanation: {
+                    en: "'Ignore' means to deliberately not notice or pay attention to something. E.g., Ignore distractions.",
+                    ar: "'تجاهل' يعني عدم ملاحظة أو الانتباه إلى شيء عمداً. مثال: تجاهل المشتتات."
+                }
+            },
+            {
+                question: "What is 'misconduct'?",
+                options: ["Good behavior", "Bad or unacceptable behavior", "Excellent performance", "Silence"],
+                correct: 1,
+                explanation: {
+                    en: "'Misconduct' is improper or wrong behavior. E.g., Student misconduct can lead to suspension.",
+                    ar: "'سوء السلوك' هو سلوك غير لائق أو خاطئ. مثال: سوء سلوك الطالب يمكن أن يؤدي إلى تعليق الدراسة."
+                }
+            },
+            // ✅ الأسئلة 51-100
+            {
+                question: "To 'suspend' a student means to:",
+                options: ["Give them a prize", "Temporarily remove them from school", "Promote them", "Give them extra classes"],
+                correct: 1,
+                explanation: {
+                    en: "Suspension is a temporary removal from school as a punishment. E.g., He was suspended for fighting.",
+                    ar: "التعليق هو إزالة مؤقتة من المدرسة كعقاب. مثال: عُلّق بسبب شجار."
+                }
+            },
+            {
+                question: "To 'expel' a student means to:",
+                options: ["Welcome them", "Permanently remove them from school", "Give them a scholarship", "Applaud them"],
+                correct: 1,
+                explanation: {
+                    en: "Expulsion is permanent removal from an institution as a punishment. More severe than suspension.",
+                    ar: "الطرد هو إزالة دائمة من المؤسسة كعقاب. وهو أشد من التعليق."
+                }
+            },
+            {
+                question: "A 'disruptive' student is one who:",
+                options: ["Is very quiet", "Causes disturbance and interrupts", "Gets top grades", "Helps the teacher"],
+                correct: 1,
+                explanation: {
+                    en: "'Disruptive' means causing disturbance or problems that interrupt normal activities. E.g., Disruptive behavior.",
+                    ar: "'مزعج' يعني التسبب في اضطراب أو مشاكل تعطل الأنشطة العادية. مثال: سلوك مزعج."
+                }
+            },
+            {
+                question: "To be 'to blame for something' means to:",
+                options: ["Be responsible for it", "Be innocent of it", "Be unaware of it", "Be happy about it"],
+                correct: 0,
+                explanation: {
+                    en: "It means you are responsible for something bad that happened. E.g., He is to blame for the accident.",
+                    ar: "يعني أنك مسؤول عن شيء سيء حدث. مثال: هو المسؤول عن الحادث."
+                }
+            },
+            {
+                question: "A 'gang' is:",
+                options: ["A study group", "A group of young people who engage in criminal activity", "A sports team", "A family"],
+                correct: 1,
+                explanation: {
+                    en: "A gang is a group of people, often young, who engage in illegal or violent activities together.",
+                    ar: "العصابة هي مجموعة من الناس، غالبًا شباب، يشاركون معًا في أنشطة غير قانونية أو عنيفة."
+                }
+            },
+            {
+                question: "To 'result in' something means to:",
+                options: ["Prevent it", "Cause it to happen", "Ignore it", "Forget it"],
+                correct: 1,
+                explanation: {
+                    en: "'Result in' means to cause a particular situation or outcome. E.g., Poor teaching results in low grades.",
+                    ar: "'يؤدي إلى' يعني التسبب في موقف أو نتيجة معينة. مثال: التدريس السيئ يؤدي إلى درجات منخفضة."
+                }
+            },
+            {
+                question: "What is 'deterioration'?",
+                options: ["Improvement", "A situation becoming worse", "Stability", "Growth"],
+                correct: 1,
+                explanation: {
+                    en: "'Deterioration' is the process of something becoming worse. E.g., Deterioration of classroom discipline.",
+                    ar: "'التدهور' هو عملية تصبح فيها الأشياء أسوأ. مثال: تدهور الانضباط في الفصل."
+                }
+            },
+            {
+                question: "What is 'respect'?",
+                options: ["Dislike", "A feeling of admiration or deference", "Fear", "Indifference"],
+                correct: 1,
+                explanation: {
+                    en: "Respect is a feeling of deep admiration for someone due to their abilities, qualities, or achievements.",
+                    ar: "الاحترام هو شعور بالإعجاب العميق تجاه شخص بسبب قدراته أو صفاته أو إنجازاته."
+                }
+            },
+            {
+                question: "Someone 'in authority' has:",
+                options: ["No power", "The power to give orders", "Low status", "No responsibilities"],
+                correct: 1,
+                explanation: {
+                    en: "A person in authority has the power to make decisions and give orders. E.g., Teachers are in authority.",
+                    ar: "الشخص ذو السلطة لديه القدرة على اتخاذ القرارات وإعطاء الأوامر. مثال: المعلمون ذوو سلطة."
+                }
+            },
+            {
+                question: "A 'tip' is:",
+                options: ["A large sum of money", "A small piece of advice", "A type of food", "A mistake"],
+                correct: 1,
+                explanation: {
+                    en: "A tip is a helpful piece of advice or suggestion. E.g., Here’s a tip for studying effectively.",
+                    ar: "النصيحة هي قطعة مفيدة من المشورة أو الاقتراح. مثال: إليك نصيحة للدراسة بفعالية."
+                }
+            },
+            {
+                question: "What is 'revision'?",
+                options: ["Writing a new book", "Preparing for an exam by reviewing material", "Deleting files", "Taking a vacation"],
+                correct: 1,
+                explanation: {
+                    en: "Revision is the process of reviewing material you have learned to prepare for an exam.",
+                    ar: "المراجعة هي عملية مراجعة المواد التي تعلمتها للتحضير للامتحان."
+                }
+            },
+            {
+                question: "A 'step' in a process is:",
+                options: ["A jump", "One of a series of actions to achieve a goal", "A mistake", "The end"],
+                correct: 1,
+                explanation: {
+                    en: "A step is a single action or stage in a process. E.g., The first step is to make a plan.",
+                    ar: "الخطوة هي إجراء أو مرحلة واحدة في عملية. مثال: الخطوة الأولى هي وضع خطة."
+                }
+            },
+            {
+                question: "To 'draw up' a plan means to:",
+                options: ["Destroy it", "Create or prepare it carefully", "Ignore it", "Copy it"],
+                correct: 1,
+                explanation: {
+                    en: "'Draw up' means to prepare a document or plan carefully. E.g., Draw up a study schedule.",
+                    ar: "'إعداد' تعني إعداد مستند أو خطة بعناية. مثال: أعد جدول دراسة."
+                }
+            },
+            {
+                question: "A 'schedule' is:",
+                options: ["A type of food", "A plan that lists times for activities", "A map", "A game"],
+                correct: 1,
+                explanation: {
+                    en: "A schedule is a plan that lists the times when things will happen. E.g., Exam schedule.",
+                    ar: "الجدول هو خطة تسرد الأوقات التي ستحدث فيها الأشياء. مثال: جدول الامتحانات."
+                }
+            },
+            {
+                question: "If something is 'realistic', it is:",
+                options: ["Impossible", "Sensible and practical", "Magical", "Expensive"],
+                correct: 1,
+                explanation: {
+                    en: "'Realistic' means being sensible and accepting things as they are. E.g., Set realistic goals.",
+                    ar: "'واقعي' يعني أن يكون عاقلًا ويقبل الأشياء كما هي. مثال: حدد أهدافًا واقعية."
+                }
+            },
+            {
+                question: "To 'absorb' information means to:",
+                options: ["Forget it", "Take it in and understand it", "Ignore it", "Write it down"],
+                correct: 1,
+                explanation: {
+                    en: "'Absorb' means to take in information and understand or retain it. E.g., It takes time to absorb new ideas.",
+                    ar: "'استيعاب' يعني استقبال المعلومات وفهمها أو الاحتفاظ بها. مثال: يستغرق الأمر وقتًا لاستيعاب أفكار جديدة."
+                }
+            },
+            {
+                question: "To do something 'in short bursts' means to:",
+                options: ["Do it for hours without stopping", "Do it in short, intense periods", "Do it slowly", "Never do it"],
+                correct: 1,
+                explanation: {
+                    en: "It means to do something in short periods of high focus or energy. E.g., Study in short bursts.",
+                    ar: "يعني فعل شيء ما في فترات قصيرة من التركيز أو الطاقة العالية. مثال: درس في فترات قصيرة."
+                }
+            },
+            {
+                question: "If something is 'beneficial', it is:",
+                options: ["Harmful", "Helpful or good", "Expensive", "Boring"],
+                correct: 1,
+                explanation: {
+                    en: "'Beneficial' means having a good or helpful effect. E.g., Exercise is beneficial for health.",
+                    ar: "'مفيد' يعني أن له تأثيرًا جيدًا أو مساعدًا. مثال: التمرين مفيد للصحة."
+                }
+            },
+            {
+                question: "When information 'sinks in', it is:",
+                options: ["Forgotten", "Fully understood", "Ignored", "Copied"],
+                correct: 1,
+                explanation: {
+                    en: "'Sink in' means to be fully understood or appreciated. E.g., Let the new rules sink in.",
+                    ar: "'يستقر' يعني أن يُفهم أو يُقدّر بالكامل. مثال: دع القواعد الجديدة تستقر في ذهنك."
+                }
+            },
+            {
+                question: "To 'prioritize' tasks means to:",
+                options: ["Ignore them", "Put them in order of importance", "Do them all at once", "Delegate them"],
+                correct: 1,
+                explanation: {
+                    en: "'Prioritize' means to decide which tasks are most important and do them first. E.g., Prioritize your assignments.",
+                    ar: "'تحديد الأولويات' يعني أن تقرر أي المهام هي الأكثر أهمية وتقوم بها أولاً. مثال: حدد أولويات واجباتك."
+                }
+            },
+            // ✅ الأسئلة 101-150
+            {
+                question: "If something is 'bound to happen', it is:",
+                options: ["Impossible", "Certain to happen", "Unlikely", "A surprise"],
+                correct: 1,
+                explanation: {
+                    en: "'Bound to' means certain or very likely to happen. E.g., If you don’t study, you’re bound to fail.",
+                    ar: "'محكوم عليه' يعني أنه مؤكد أو من المرجح جدًا أن يحدث. مثال: إذا لم تدرس، فأنت محكوم عليك بالفشل."
+                }
+            },
+            {
+                question: "When something 'comes up', it:",
+                options: ["Disappears", "Happens or is mentioned", "Is hidden", "Is destroyed"],
+                correct: 1,
+                explanation: {
+                    en: "'Come up' means to happen, occur, or be mentioned. E.g., A new issue came up in class.",
+                    ar: "'يظهر' يعني أن يحدث أو يُذكر. مثال: ظهرت مشكلة جديدة في الصف."
+                }
+            },
+            {
+                question: "To 'come up with' an idea means to:",
+                options: ["Forget it", "Think of it or produce it", "Steal it", "Ignore it"],
+                correct: 1,
+                explanation: {
+                    en: "'Come up with' means to think of or produce an idea, plan, or solution. E.g., Come up with a study plan.",
+                    ar: "'يتوصل إلى' يعني التفكير في فكرة أو خطة أو حل أو إنتاجها. مثال: توصل إلى خطة دراسة."
+                }
+            },
+            {
+                question: "If something 'goes according to plan', it:",
+                options: ["Fails", "Happens as expected", "Is canceled", "Is changed"],
+                correct: 1,
+                explanation: {
+                    en: "It means events happen in the way that was planned or expected. E.g., The exam went according to plan.",
+                    ar: "يعني أن الأحداث تحدث بالطريقة التي تم التخطيط لها أو توقعها. مثال: سار الامتحان وفقًا للخطة."
+                }
+            },
+            {
+                question: "To 'stay on track' means to:",
+                options: ["Get lost", "Keep progressing toward a goal", "Give up", "Change direction"],
+                correct: 1,
+                explanation: {
+                    en: "It means to continue making progress toward a goal without getting distracted. E.g., Stay on track with your studies.",
+                    ar: "يعني الاستمرار في إحراز تقدم نحو هدف دون تشتيت. مثال: ابقَ على المسار الصحيح مع دراستك."
+                }
+            },
+            {
+                question: "A 'qualification' is:",
+                options: ["A hobby", "An official certificate or degree", "A type of food", "A game"],
+                correct: 1,
+                explanation: {
+                    en: "A qualification is an official record of achievement, like a degree or diploma. E.g., A Master’s qualification.",
+                    ar: "المؤهل هو سجل رسمي للإنجاز، مثل الشهادة أو الدبلوم. مثال: مؤهل الماجستير."
+                }
+            },
+            {
+                question: "What is 'duration'?",
+                options: ["Distance", "The length of time something lasts", "Weight", "Speed"],
+                correct: 1,
+                explanation: {
+                    en: "'Duration' is the time during which something continues. E.g., The duration of the course is one year.",
+                    ar: "'المدة' هي الوقت الذي يستمر فيه شيء ما. مثال: مدة الدورة سنة واحدة."
+                }
+            },
+            {
+                question: "What does 'MA' stand for?",
+                options: ["Master of Arts", "Master of Science", "Medical Assistant", "Military Academy"],
+                correct: 0,
+                explanation: {
+                    en: "'MA' stands for Master of Arts, a postgraduate degree in humanities or social sciences.",
+                    ar: "'MA' تعني ماجستير في الآداب، وهي درجة عليا في العلوم الإنسانية أو الاجتماعية."
+                }
+            },
+            {
+                question: "A 'postgraduate' student is one who:",
+                options: ["Is in high school", "Has a first degree and is studying for a higher one", "Has just started university", "Is a teacher"],
+                correct: 1,
+                explanation: {
+                    en: "A postgraduate is a student who has completed a bachelor’s degree and is pursuing a higher degree.",
+                    ar: "الطالب الخريج هو طالب أكمل درجة البكالوريوس ويسعى للحصول على درجة أعلى."
+                }
+            },
+            {
+                question: "What is a 'diploma'?",
+                options: ["A type of car", "A qualification awarded after a course of study", "A food recipe", "A map"],
+                correct: 1,
+                explanation: {
+                    en: "A diploma is a certificate awarded for completing a course of study, often shorter than a degree.",
+                    ar: "الدبلوم هو شهادة تُمنح لإكمال دورة دراسية، غالبًا ما تكون أقصر من الدرجة."
+                }
+            },
+            {
+                question: "An 'overview' is:",
+                options: ["A detailed analysis", "A general summary or review", "A specific example", "A criticism"],
+                correct: 1,
+                explanation: {
+                    en: "An overview is a general summary or review of a subject. E.g., An overview of the curriculum.",
+                    ar: "النظرة العامة هي ملخص أو استعراض عام لموضوع ما. مثال: نظرة عامة على المنهج."
+                }
+            },
+            {
+                question: "In university, a 'credit' is:",
+                options: ["Money you owe", "A unit that represents successful completion of a course", "A type of food", "A penalty"],
+                correct: 1,
+                explanation: {
+                    en: "A credit is a unit awarded for successfully completing part of a course. E.g., You need 120 credits to graduate.",
+                    ar: "الساعة المعتمدة هي وحدة تُمنح لإكمال جزء من الدورة بنجاح. مثال: تحتاج 120 ساعة معتمدة للتخرج."
+                }
+            },
+            {
+                question: "A 'module' in a course is:",
+                options: ["The entire course", "A self-contained unit of study", "The final exam", "A textbook"],
+                correct: 1,
+                explanation: {
+                    en: "A module is a self-contained unit within a larger course, often focusing on a specific topic.",
+                    ar: "الوحدة هي جزء متكامل بذاته ضمن مقرر أكبر، غالبًا ما يركز على موضوع محدد."
+                }
+            },
+            {
+                question: "To 'opt for' something means to:",
+                options: ["Refuse it", "Choose it", "Ignore it", "Destroy it"],
+                correct: 1,
+                explanation: {
+                    en: "'Opt for' means to choose or select something. E.g., She opted for the evening class.",
+                    ar: "'اختيار' يعني اختيار أو انتقاء شيء ما. مثال: اختارت الصف المسائي."
+                }
+            },
+            {
+                question: "To 'specialize in' something means to:",
+                options: ["Know a little about everything", "Focus deeply on one area", "Avoid a subject", "Teach others"],
+                correct: 1,
+                explanation: {
+                    en: "It means to concentrate on and become an expert in a particular area. E.g., He specializes in biology.",
+                    ar: "يعني التركيز على مجال معين وتصبح خبيرًا فيه. مثال: يتخصص في علم الأحياء."
+                }
+            },
+            {
+                question: "A 'mode' of study is:",
+                options: ["A type of food", "A particular method or way of studying", "A grade", "A teacher"],
+                correct: 1,
+                explanation: {
+                    en: "'Mode' refers to a particular way or method of doing something. E.g., Distance learning is a mode of study.",
+                    ar: "'النمط' يشير إلى طريقة أو أسلوب معين لفعل شيء ما. مثال: التعلم عن بعد هو نمط من أنماط الدراسة."
+                }
+            },
+            {
+                question: "What is 'distance learning'?",
+                options: ["Studying while traveling", "Studying remotely, often online", "Studying in a library", "Studying with a tutor"],
+                correct: 1,
+                explanation: {
+                    en: "Distance learning is education where students study remotely, usually online, without attending a physical campus.",
+                    ar: "التعلم عن بعد هو تعليم يدرس فيه الطلاب عن بُعد، عادةً عبر الإنترنت، دون حضور الحرم الجامعي."
+                }
+            },
+            {
+                question: "An 'entry requirement' is:",
+                options: ["A uniform", "A qualification needed to join a course", "A textbook", "A fee"],
+                correct: 1,
+                explanation: {
+                    en: "It is a condition, such as a prior qualification, that you must meet to be accepted into a course.",
+                    ar: "هو شرط، مثل المؤهل السابق، يجب أن تستوفيه للقبول في دورة دراسية."
+                }
+            },
+            {
+                question: "If two things are 'equivalent', they are:",
+                options: ["Completely different", "Equal in value, amount, or meaning", "Opposites", "Unrelated"],
+                correct: 1,
+                explanation: {
+                    en: "'Equivalent' means equal in value, amount, function, or meaning. E.g., A diploma is equivalent to a degree.",
+                    ar: "'مكافئ' يعني متساوٍ في القيمة أو الكمية أو الوظيفة أو المعنى. مثال: الدبلوم يعادل الشهادة."
+                }
+            },
+            {
+                question: "When something is 'recognized', it is:",
+                options: ["Ignored", "Officially accepted or approved", "Copied", "Destroyed"],
+                correct: 1,
+                explanation: {
+                    en: "'Recognized' means officially accepted as being true, valid, or of high standard. E.g., A recognized university.",
+                    ar: "'معترف به' يعني مقبول رسميًا على أنه صحيح أو صالح أو ذو مستوى عالٍ. مثال: جامعة معترف بها."
+                }
+            }
         ];
 
-        // 🧩 أسئلة لكل كلمة (متنوعة)
-        const quizQuestions = {
-            "illiteracy": [
-                { q: "What does 'illiteracy' mean?", options: ["the ability to read and write", "the inability to read or write", "the practice of attending school", "the act of voting"], correct: 1 },
-                { q: "Which sentence uses 'illiteracy' correctly?", options: ["Illiteracy is rare in developed countries.", "Illiteracy helps people find jobs.", "Illiteracy means reading books.", "Illiteracy is a form of art."], correct: 0 }
-            ],
-            "truancy": [
-                { q: "What is truancy?", options: ["going to school regularly", "staying away from school without permission", "playing sports", "reading books"], correct: 1 },
-                { q: "Who is playing truant?", options: ["Someone who attends school", "Someone who skips school", "Someone who teaches", "Someone who writes"], correct: 1 }
-            ],
-            "rife": [
-                { q: "What does 'rife' mean?", options: ["very rare", "very common", "very expensive", "very quiet"], correct: 1 },
-                { q: "Which sentence uses 'rife' correctly?", options: ["Corruption is rife in this country.", "Rife means rare.", "Rife is a type of fruit.", "Rife is a verb."], correct: 0 }
-            ],
-            "proven": [
-                { q: "What does 'proven' mean?", options: ["untested", "shown to be true", "unknown", "imaginary"], correct: 1 },
-                { q: "Which sentence uses 'proven' correctly?", options: ["It is proven that exercise improves health.", "Proven means false.", "Proven is only used in math.", "Proven is a noun."], correct: 0 }
-            ],
-            "prospects": [
-                { q: "What does 'prospects' mean?", options: ["chances of success", "types of food", "names of animals", "colors"], correct: 0 },
-                { q: "Which sentence uses 'prospects' correctly?", options: ["Education improves children's prospects.", "Prospects are types of plants.", "Prospects are a kind of music.", "Prospects are clouds."], correct: 0 }
-            ],
-            "open doors": [
-                { q: "What does 'open doors' mean?", options: ["close opportunities", "give someone opportunities", "lock a door", "build a wall"], correct: 1 },
-                { q: "Which sentence uses 'open doors' correctly?", options: ["Education opens doors for success.", "Open doors means close windows.", "Open doors is a song.", "Open doors is a sport."], correct: 0 }
-            ],
-            "likelihood": [
-                { q: "What does 'likelihood' mean?", options: ["probability", "weight", "color", "shape"], correct: 0 },
-                { q: "Which sentence uses 'likelihood' correctly?", options: ["The likelihood of rain is high.", "Likelihood means speed.", "Likelihood is a verb.", "Likelihood is a fruit."], correct: 0 }
-            ],
-            "status": [
-                { q: "What does 'status' mean?", options: ["social or professional position", "type of food", "color of hair", "name of a movie"], correct: 0 },
-                { q: "Which sentence uses 'status' correctly?", options: ["Her social status improved after graduation.", "Status means weather.", "Status is a number.", "Status is a plant."], correct: 0 }
-            ],
-            "take responsibility for sth": [
-                { q: "What does 'take responsibility for sth' mean?", options: ["ignore something", "make decisions and accept consequences", "avoid problems", "forget things"], correct: 1 },
-                { q: "Which sentence uses 'take responsibility' correctly?", options: ["Students should take responsibility for their actions.", "Take responsibility means run away.", "Take responsibility is a game.", "Take responsibility is a flower."], correct: 0 }
-            ],
-            "inhabit": [
-                { q: "What does 'inhabit' mean?", options: ["live in a place", "travel to a place", "visit a place", "own a place"], correct: 0 },
-                { q: "Which sentence uses 'inhabit' correctly?", options: ["Children inhabit different worlds based on their education.", "Inhabit means travel.", "Inhabit is a verb.", "Inhabit is a noun."], correct: 0 }
-            ],
-            "vote": [
-                { q: "What does 'vote' mean?", options: ["choose someone or something", "run away", "sleep", "eat"], correct: 0 },
-                { q: "Which sentence uses 'vote' correctly?", options: ["People vote in elections to choose leaders.", "Vote means sleep.", "Vote is a noun.", "Vote is a fruit."], correct: 0 }
-            ],
-            "freedom of speech": [
-                { q: "What does 'freedom of speech' mean?", options: ["the right to say what you want", "the right to be silent", "the right to write", "the right to eat"], correct: 0 },
-                { q: "Which sentence uses 'freedom of speech' correctly?", options: ["Freedom of speech is important in a democracy.", "Freedom of speech means silence.", "Freedom of speech is a verb.", "Freedom of speech is a book."], correct: 0 }
-            ],
-            "preventive": [
-                { q: "What does 'preventive' mean?", options: ["intended to stop problems", "intended to cause problems", "intended to ignore problems", "intended to forget problems"], correct: 0 },
-                { q: "Which sentence uses 'preventive' correctly?", options: ["Preventive health care matters.", "Preventive means harmful.", "Preventive is a noun.", "Preventive is a plant."], correct: 0 }
-            ],
-            "matter": [
-                { q: "What does 'matter' mean?", options: ["be important", "be unimportant", "be large", "be small"], correct: 0 },
-                { q: "Which sentence uses 'matter' correctly?", options: ["Health and education matter for everyone.", "Matter means size.", "Matter is a verb.", "Matter is a color."], correct: 0 }
-            ],
-            "innate": [
-                { q: "What does 'innate' mean?", options: ["something you are born with", "something you learn", "something you buy", "something you borrow"], correct: 0 },
-                { q: "Which sentence uses 'innate' correctly?", options: ["Creativity is an innate capacity in humans.", "Innate means learned.", "Innate is a verb.", "Innate is a fruit."], correct: 0 }
-            ],
-            "capacity to do sth": [
-                { q: "What does 'capacity to do sth' mean?", options: ["ability to do something", "inability to do something", "willingness to do something", "refusal to do something"], correct: 0 },
-                { q: "Which sentence uses 'capacity' correctly?", options: ["Education unlocks our capacity to learn.", "Capacity means weight.", "Capacity is a noun.", "Capacity is a plant."], correct: 0 }
-            ],
-            "human being": [
-                { q: "What does 'human being' mean?", options: ["a living person", "a robot", "a machine", "a plant"], correct: 0 },
-                { q: "Which sentence uses 'human being' correctly?", options: ["We should treat every human being with respect.", "Human being means animal.", "Human being is a verb.", "Human being is a color."], correct: 0 }
-            ],
-            "morality": [
-                { q: "What does 'morality' mean?", options: ["principles of right or wrong behaviour", "rules of games", "types of food", "names of colors"], correct: 0 },
-                { q: "Which sentence uses 'morality' correctly?", options: ["Education helps develop a sense of morality.", "Morality means fashion.", "Morality is a verb.", "Morality is a fruit."], correct: 0 }
-            ],
-            "debate": [
-                { q: "What does 'debate' mean?", options: ["an argument or discussion", "a song", "a painting", "a dance"], correct: 0 },
-                { q: "Which sentence uses 'debate' correctly?", options: ["There is a continuing debate about education.", "Debate means fight.", "Debate is a noun.", "Debate is a fruit."], correct: 0 }
-            ],
-            "issue": [
-                { q: "What does 'issue' mean?", options: ["an important topic", "a type of food", "a color", "a shape"], correct: 0 },
-                { q: "Which sentence uses 'issue' correctly?", options: ["School issues include bullying and discipline.", "Issue means problem.", "Issue is a verb.", "Issue is a plant."], correct: 0 }
-            ],
-            "regarding": [
-                { q: "What does 'regarding' mean?", options: ["about", "under", "over", "through"], correct: 0 },
-                { q: "Which sentence uses 'regarding' correctly?", options: ["Regarding education, we need more funding.", "Regarding means under.", "Regarding is a verb.", "Regarding is a fruit."], correct: 0 }
-            ],
-            "be better off": [
-                { q: "What does 'be better off' mean?", options: ["be happier or more satisfied", "be worse", "be tired", "be angry"], correct: 0 },
-                { q: "Which sentence uses 'be better off' correctly?", options: ["Children may be better off in nursery schools.", "Be better off means be sad.", "Be better off is a verb.", "Be better off is a fruit."], correct: 0 }
-            ],
-            "nursery school": [
-                { q: "What is a nursery school?", options: ["a school for children aged 2-5", "a school for adults", "a school for teachers", "a school for robots"], correct: 0 },
-                { q: "Which sentence uses 'nursery school' correctly?", options: ["Many parents send their children to nursery school.", "Nursery school means kindergarten.", "Nursery school is a verb.", "Nursery school is a fruit."], correct: 0 }
-            ],
-            "childminder": [
-                { q: "What is a childminder?", options: ["a person who cares for children", "a teacher", "a doctor", "a nurse"], correct: 0 },
-                { q: "Which sentence uses 'childminder' correctly?", options: ["She works as a childminder for three kids.", "Childminder means parent.", "Childminder is a verb.", "Childminder is a fruit."], correct: 0 }
-            ],
-            "divisive": [
-                { q: "What does 'divisive' mean?", options: ["likely to cause arguments", "likely to be peaceful", "likely to be quiet", "likely to be fun"], correct: 0 },
-                { q: "Which sentence uses 'divisive' correctly?", options: ["Independent schools can be divisive.", "Divisive means calm.", "Divisive is a verb.", "Divisive is a fruit."], correct: 0 }
-            ],
-            "elitist": [
-                { q: "What does 'elitist' mean?", options: ["based on a system where a small group has advantages", "based on equality", "based on fairness", "based on luck"], correct: 0 },
-                { q: "Which sentence uses 'elitist' correctly?", options: ["Some believe private schools are elitist.", "Elitist means equal.", "Elitist is a verb.", "Elitist is a fruit."], correct: 0 }
-            ],
-            "statistically": [
-                { q: "What does 'statistically' mean?", options: ["based on numbers", "based on feelings", "based on dreams", "based on guesses"], correct: 0 },
-                { q: "Which sentence uses 'statistically' correctly?", options: ["Statistically, girls do well in single-sex schools.", "Statistically means randomly.", "Statistically is a verb.", "Statistically is a fruit."], correct: 0 }
-            ],
-            "be distracted by sth": [
-                { q: "What does 'be distracted by sth' mean?", options: ["have your concentration interrupted", "be happy", "be excited", "be bored"], correct: 0 },
-                { q: "Which sentence uses 'be distracted by sth' correctly?", options: ["Boys can distract girls in co-ed schools.", "Be distracted means be focused.", "Be distracted is a verb.", "Be distracted is a fruit."], correct: 0 }
-            ],
-            "co-educational": [
-                { q: "What does 'co-educational' mean?", options: ["educating boys and girls in the same school", "educating only boys", "educating only girls", "educating teachers"], correct: 0 },
-                { q: "Which sentence uses 'co-educational' correctly?", options: ["Co-educational schools are common in many countries.", "Co-educational means separate.", "Co-educational is a verb.", "Co-educational is a fruit."], correct: 0 }
-            ],
-            "compulsory": [
-                { q: "What does 'compulsory' mean?", options: ["you have to do it", "you don't have to do it", "you prefer to do it", "you avoid it"], correct: 0 },
-                { q: "Which sentence uses 'compulsory' correctly?", options: ["Religion is not compulsory in all schools.", "Compulsory means optional.", "Compulsory is a verb.", "Compulsory is a fruit."], correct: 0 }
-            ],
-            "curriculum": [
-                { q: "What does 'curriculum' mean?", options: ["subjects studied at school", "teachers", "students", "books"], correct: 0 },
-                { q: "Which sentence uses 'curriculum' correctly?", options: ["The curriculum includes math, science, and literature.", "Curriculum means teachers.", "Curriculum is a verb.", "Curriculum is a fruit."], correct: 0 }
-            ],
-            "tackle sth": [
-                { q: "What does 'tackle sth' mean?", options: ["deal with a difficult situation", "avoid a problem", "ignore a problem", "forget a problem"], correct: 0 },
-                { q: "Which sentence uses 'tackle' correctly?", options: ["We must tackle bullying in schools.", "Tackle means run away.", "Tackle is a verb.", "Tackle is a fruit."], correct: 0 }
-            ],
-            "bullying": [
-                { q: "What does 'bullying' mean?", options: ["behaviour that frightens or hurts someone", "friendly behaviour", "helpful behaviour", "quiet behaviour"], correct: 0 },
-                { q: "Which sentence uses 'bullying' correctly?", options: ["Bullying is a serious issue in schools.", "Bullying means kindness.", "Bullying is a verb.", "Bullying is a fruit."], correct: 0 }
-            ],
-            "cite": [
-                { q: "What does 'cite' mean?", options: ["give a reason or example", "ignore", "forget", "deny"], correct: 0 },
-                { q: "Which sentence uses 'cite' correctly?", options: ["They cited poor teaching as a reason for low results.", "Cite means ignore.", "Cite is a verb.", "Cite is a fruit."], correct: 0 }
-            ],
-            "abolition": [
-                { q: "What does 'abolition' mean?", options: ["ending of a law or system", "creation of a law", "renewal of a system", "support of a law"], correct: 0 },
-                { q: "Which sentence uses 'abolition' correctly?", options: ["The abolition of corporal punishment has changed school discipline.", "Abolition means creation.", "Abolition is a verb.", "Abolition is a fruit."], correct: 0 }
-            ],
-            "corporal punishment": [
-                { q: "What does 'corporal punishment' mean?", options: ["physical punishment by hitting", "verbal punishment", "mental punishment", "emotional punishment"], correct: 0 },
-                { q: "Which sentence uses 'corporal punishment' correctly?", options: ["Corporal punishment is no longer allowed in schools.", "Corporal punishment means talking.", "Corporal punishment is a verb.", "Corporal punishment is a fruit."], correct: 0 }
-            ],
-            "deterrent": [
-                { q: "What does 'deterrent' mean?", options: ["something that stops someone from doing something", "something that encourages", "something that ignores", "something that forgets"], correct: 0 },
-                { q: "Which sentence uses 'deterrent' correctly?", options: ["Fines act as a deterrent to crime.", "Deterrent means encouragement.", "Deterrent is a verb.", "Deterrent is a fruit."], correct: 0 }
-            ],
-            "enforce": [
-                { q: "What does 'enforce' mean?", options: ["make people follow a rule", "ignore a rule", "forget a rule", "change a rule"], correct: 0 },
-                { q: "Which sentence uses 'enforce' correctly?", options: ["Teachers enforce rules in classrooms.", "Enforce means ignore.", "Enforce is a verb.", "Enforce is a fruit."], correct: 0 }
-            ],
-            "ignore": [
-                { q: "What does 'ignore' mean?", options: ["pay no attention to", "pay attention to", "listen to", "follow"], correct: 0 },
-                { q: "Which sentence uses 'ignore' correctly?", options: ["Some teachers ignore misconduct.", "Ignore means listen.", "Ignore is a verb.", "Ignore is a fruit."], correct: 0 }
-            ],
-            "misconduct": [
-                { q: "What does 'misconduct' mean?", options: ["bad or unacceptable behaviour", "good behaviour", "normal behaviour", "quiet behaviour"], correct: 0 },
-                { q: "Which sentence uses 'misconduct' correctly?", options: ["Student misconduct can disrupt learning.", "Misconduct means kindness.", "Misconduct is a verb.", "Misconduct is a fruit."], correct: 0 }
-            ],
-            "suspend": [
-                { q: "What does 'suspend' mean?", options: ["stop someone from going to school", "send someone to school", "invite someone to school", "welcome someone to school"], correct: 0 },
-                { q: "Which sentence uses 'suspend' correctly?", options: ["The school suspended him for fighting.", "Suspend means welcome.", "Suspend is a verb.", "Suspend is a fruit."], correct: 0 }
-            ],
-            "expel": [
-                { q: "What does 'expel' mean?", options: ["make someone leave a school", "invite someone to school", "welcome someone to school", "invite someone to a party"], correct: 0 },
-                { q: "Which sentence uses 'expel' correctly?", options: ["He was expelled for repeated violations.", "Expel means invite.", "Expel is a verb.", "Expel is a fruit."], correct: 0 }
-            ],
-            "disruptive": [
-                { q: "What does 'disruptive' mean?", options: ["causing problems", "calm", "quiet", "peaceful"], correct: 0 },
-                { q: "Which sentence uses 'disruptive' correctly?", options: ["Disruptive students affect the whole class.", "Disruptive means calm.", "Disruptive is a verb.", "Disruptive is a fruit."], correct: 0 }
-            ],
-            "be to blame for sth": [
-                { q: "What does 'be to blame for sth' mean?", options: ["be responsible for something bad", "be innocent", "be lucky", "be happy"], correct: 0 },
-                { q: "Which sentence uses 'be to blame' correctly?", options: ["Parents are to blame for not disciplining their children.", "Be to blame means be innocent.", "Be to blame is a verb.", "Be to blame is a fruit."], correct: 0 }
-            ],
-            "gang": [
-                { q: "What does 'gang' mean?", options: ["a group of young people who cause trouble", "a group of old people", "a group of teachers", "a group of animals"], correct: 0 },
-                { q: "Which sentence uses 'gang' correctly?", options: ["Gang culture is spreading into schools.", "Gang means team.", "Gang is a verb.", "Gang is a fruit."], correct: 0 }
-            ],
-            "result in sth": [
-                { q: "What does 'result in sth' mean?", options: ["cause something to happen", "avoid something", "ignore something", "forget something"], correct: 0 },
-                { q: "Which sentence uses 'result in' correctly?", options: ["Poor teaching results in bad behavior.", "Result in means avoid.", "Result in is a verb.", "Result in is a fruit."], correct: 0 }
-            ],
-            "deterioration": [
-                { q: "What does 'deterioration' mean?", options: ["a situation becoming worse", "a situation improving", "a situation staying the same", "a situation disappearing"], correct: 0 },
-                { q: "Which sentence uses 'deterioration' correctly?", options: ["There is a deterioration in classroom behavior.", "Deterioration means improvement.", "Deterioration is a verb.", "Deterioration is a fruit."], correct: 0 }
-            ],
-            "respect": [
-                { q: "What does 'respect' mean?", options: ["admiration for someone", "hatred for someone", "indifference", "anger"], correct: 0 },
-                { q: "Which sentence uses 'respect' correctly?", options: ["Children have lost respect for authority.", "Respect means hate.", "Respect is a verb.", "Respect is a fruit."], correct: 0 }
-            ],
-            "in authority": [
-                { q: "What does 'in authority' mean?", options: ["having a position of power", "being a student", "being a teacher", "being a parent"], correct: 0 },
-                { q: "Which sentence uses 'in authority' correctly?", options: ["Teachers are in authority in schools.", "In authority means student.", "In authority is a verb.", "In authority is a fruit."], correct: 0 }
-            ],
-            "tip": [
-                { q: "What does 'tip' mean?", options: ["a small piece of advice", "a large piece of advice", "a warning", "a command"], correct: 0 },
-                { q: "Which sentence uses 'tip' correctly?", options: ["Here's a tip for exam revision.", "Tip means warning.", "Tip is a verb.", "Tip is a fruit."], correct: 0 }
-            ],
-            "revision": [
-                { q: "What does 'revision' mean?", options: ["preparing for an exam", "writing a book", "reading a novel", "watching a movie"], correct: 0 },
-                { q: "Which sentence uses 'revision' correctly?", options: ["Revision is essential before exams.", "Revision means writing.", "Revision is a verb.", "Revision is a fruit."], correct: 0 }
-            ],
-            "step": [
-                { q: "What does 'step' mean?", options: ["one of a series of things to achieve something", "a jump", "a run", "a walk"], correct: 0 },
-                { q: "Which sentence uses 'step' correctly?", options: ["The first step is to draw up a schedule.", "Step means jump.", "Step is a verb.", "Step is a fruit."], correct: 0 }
-            ],
-            "draw sth up": [
-                { q: "What does 'draw sth up' mean?", options: ["make or write something carefully", "destroy something", "ignore something", "forget something"], correct: 0 },
-                { q: "Which sentence uses 'draw up' correctly?", options: ["Draw up a plan for your revision.", "Draw up means destroy.", "Draw up is a verb.", "Draw up is a fruit."], correct: 0 }
-            ],
-            "schedule": [
-                { q: "What does 'schedule' mean?", options: ["a plan of activities", "a list of names", "a list of prices", "a list of colors"], correct: 0 },
-                { q: "Which sentence uses 'schedule' correctly?", options: ["Create a revision schedule.", "Schedule means list.", "Schedule is a verb.", "Schedule is a fruit."], correct: 0 }
-            ],
-            "realistic": [
-                { q: "What does 'realistic' mean?", options: ["sensible and accepting things as they are", "fantasy", "impossible", "dreamy"], correct: 0 },
-                { q: "Which sentence uses 'realistic' correctly?", options: ["Be realistic about how much you can revise.", "Realistic means impossible.", "Realistic is a verb.", "Realistic is a fruit."], correct: 0 }
-            ],
-            "absorb": [
-                { q: "What does 'absorb' mean?", options: ["take information into your mind", "ignore information", "forget information", "avoid information"], correct: 0 },
-                { q: "Which sentence uses 'absorb' correctly?", options: ["You can't absorb anything if you're not focused.", "Absorb means ignore.", "Absorb is a verb.", "Absorb is a fruit."], correct: 0 }
-            ],
-            "in short bursts": [
-                { q: "What does 'in short bursts' mean?", options: ["in short periods of high energy", "in long periods", "in slow periods", "in quiet periods"], correct: 0 },
-                { q: "Which sentence uses 'in short bursts' correctly?", options: ["Revise in short bursts for better focus.", "In short bursts means slowly.", "In short bursts is a verb.", "In short bursts is a fruit."], correct: 0 }
-            ],
-            "beneficial": [
-                { q: "What does 'beneficial' mean?", options: ["improving a situation", "worsening a situation", "ignoring a situation", "forgetting a situation"], correct: 0 },
-                { q: "Which sentence uses 'beneficial' correctly?", options: ["Taking breaks can be beneficial.", "Beneficial means harmful.", "Beneficial is a verb.", "Beneficial is a fruit."], correct: 0 }
-            ],
-            "sink in": [
-                { q: "What does 'sink in' mean?", options: ["be fully understood", "be forgotten", "be ignored", "be avoided"], correct: 0 },
-                { q: "Which sentence uses 'sink in' correctly?", options: ["Give yourself time to let the information sink in.", "Sink in means forget.", "Sink in is a verb.", "Sink in is a fruit."], correct: 0 }
-            ],
-            "prioritize": [
-                { q: "What does 'prioritize' mean?", options: ["put tasks in order of importance", "ignore tasks", "forget tasks", "avoid tasks"], correct: 0 },
-                { q: "Which sentence uses 'prioritize' correctly?", options: ["Prioritize your revision topics.", "Prioritize means ignore.", "Prioritize is a verb.", "Prioritize is a fruit."], correct: 0 }
-            ],
-            "bound to do sth": [
-                { q: "What does 'bound to do sth' mean?", options: ["be certain to do something", "be uncertain to do something", "be unable to do something", "be unwilling to do something"], correct: 0 },
-                { q: "Which sentence uses 'bound to do sth' correctly?", options: ["Important topics are bound to come up in exams.", "Bound to do means avoid.", "Bound to do is a verb.", "Bound to do is a fruit."], correct: 0 }
-            ],
-            "come up": [
-                { q: "What does 'come up' mean?", options: ["happen or appear", "disappear", "ignore", "forget"], correct: 0 },
-                { q: "Which sentence uses 'come up' correctly?", options: ["What’s the point of revising everything?", "Come up means disappear.", "Come up is a verb.", "Come up is a fruit."], correct: 0 }
-            ],
-            "come up with sth": [
-                { q: "What does 'come up with sth' mean?", options: ["find or produce an answer", "ignore an answer", "forget an answer", "avoid an answer"], correct: 0 },
-                { q: "Which sentence uses 'come up with' correctly?", options: ["Come up with a timetable for your revision.", "Come up with means ignore.", "Come up with is a verb.", "Come up with is a fruit."], correct: 0 }
-            ],
-            "go according to plan": [
-                { q: "What does 'go according to plan' mean?", options: ["happen in the way you expect", "happen unexpectedly", "fail", "change"], correct: 0 },
-                { q: "Which sentence uses 'go according to plan' correctly?", options: ["Things won’t always go according to plan.", "Go according to plan means fail.", "Go according to plan is a verb.", "Go according to plan is a fruit."], correct: 0 }
-            ],
-            "stay on track": [
-                { q: "What does 'stay on track' mean?", options: ["keep going in the right direction", "lose direction", "stop", "turn around"], correct: 0 },
-                { q: "Which sentence uses 'stay on track' correctly?", options: ["Reorganize your schedule to stay on track.", "Stay on track means lose direction.", "Stay on track is a verb.", "Stay on track is a fruit."], correct: 0 }
-            ],
-            "qualification": [
-                { q: "What does 'qualification' mean?", options: ["a degree or diploma", "a job", "a book", "a movie"], correct: 0 },
-                { q: "Which sentence uses 'qualification' correctly?", options: ["An MA is a higher qualification.", "Qualification means job.", "Qualification is a verb.", "Qualification is a fruit."], correct: 0 }
-            ],
-            "duration": [
-                { q: "What does 'duration' mean?", options: ["length of time", "size", "weight", "color"], correct: 0 },
-                { q: "Which sentence uses 'duration' correctly?", options: ["The duration of the course is one year.", "Duration means size.", "Duration is a verb.", "Duration is a fruit."], correct: 0 }
-            ],
-            "MA": [
-                { q: "What does 'MA' stand for?", options: ["Master of Arts", "Master of Science", "Master of Business", "Master of Engineering"], correct: 0 },
-                { q: "Which sentence uses 'MA' correctly?", options: ["She earned her MA in Education.", "MA means Master of Science.", "MA is a verb.", "MA is a fruit."], correct: 0 }
-            ],
-            "postgraduate": [
-                { q: "What does 'postgraduate' mean?", options: ["a person with a first degree doing advanced study", "a person without a degree", "a person with a PhD", "a person with a certificate"], correct: 0 },
-                { q: "Which sentence uses 'postgraduate' correctly?", options: ["Postgraduate courses are for those with a degree.", "Postgraduate means undergraduate.", "Postgraduate is a verb.", "Postgraduate is a fruit."], correct: 0 }
-            ],
-            "diploma": [
-                { q: "What does 'diploma' mean?", options: ["a qualification at the end of a course", "a book", "a job", "a certificate"], correct: 0 },
-                { q: "Which sentence uses 'diploma' correctly?", options: ["He completed his Postgraduate Diploma in Education.", "Diploma means book.", "Diploma is a verb.", "Diploma is a fruit."], correct: 0 }
-            ],
-            "overview": [
-                { q: "What does 'overview' mean?", options: ["a general description", "a detailed analysis", "a long report", "a short note"], correct: 0 },
-                { q: "Which sentence uses 'overview' correctly?", options: ["This is an overview of postgraduate courses.", "Overview means detail.", "Overview is a verb.", "Overview is a fruit."], correct: 0 }
-            ],
-            "credit": [
-                { q: "What does 'credit' mean?", options: ["a part of a course you complete", "a type of money", "a type of food", "a type of drink"], correct: 0 },
-                { q: "Which sentence uses 'credit' correctly?", options: ["90 credits are required for the MA.", "Credit means money.", "Credit is a verb.", "Credit is a fruit."], correct: 0 }
-            ],
-            "module": [
-                { q: "What does 'module' mean?", options: ["a unit of study", "a book", "a job", "a certificate"], correct: 0 },
-                { q: "Which sentence uses 'module' correctly?", options: ["Students take taught modules and a dissertation.", "Module means book.", "Module is a verb.", "Module is a fruit."], correct: 0 }
-            ],
-            "opt for sth": [
-                { q: "What does 'opt for sth' mean?", options: ["choose something", "ignore something", "avoid something", "forget something"], correct: 0 },
-                { q: "Which sentence uses 'opt for' correctly?", options: ["Some students opt for the PDE course.", "Opt for means ignore.", "Opt for is a verb.", "Opt for is a fruit."], correct: 0 }
-            ],
-            "specialize in sth": [
-                { q: "What does 'specialize in sth' mean?", options: ["spend more time on one area", "ignore areas", "avoid areas", "forget areas"], correct: 0 },
-                { q: "Which sentence uses 'specialize' correctly?", options: ["She specializes in educational psychology.", "Specialize means ignore.", "Specialize is a verb.", "Specialize is a fruit."], correct: 0 }
-            ],
-            "mode": [
-                { q: "What does 'mode' mean?", options: ["a particular way of doing something", "a type of food", "a type of drink", "a type of music"], correct: 0 },
-                { q: "Which sentence uses 'mode' correctly?", options: ["Distance learning is a mode of study.", "Mode means food.", "Mode is a verb.", "Mode is a fruit."], correct: 0 }
-            ],
-            "distance learning": [
-                { q: "What does 'distance learning' mean?", options: ["studying at home with online help", "studying in a classroom", "studying abroad", "studying in a library"], correct: 0 },
-                { q: "Which sentence uses 'distance learning' correctly?", options: ["Many students use distance learning programs.", "Distance learning means classroom.", "Distance learning is a verb.", "Distance learning is a fruit."], correct: 0 }
-            ],
-            "entry requirement": [
-                { q: "What does 'entry requirement' mean?", options: ["a qualification needed to enter a university", "a job", "a book", "a certificate"], correct: 0 },
-                { q: "Which sentence uses 'entry requirement' correctly?", options: ["A first degree is an entry requirement.", "Entry requirement means job.", "Entry requirement is a verb.", "Entry requirement is a fruit."], correct: 0 }
-            ],
-            "equivalent": [
-                { q: "What does 'equivalent' mean?", options: ["equal in value", "different in value", "larger in value", "smaller in value"], correct: 0 },
-                { q: "Which sentence uses 'equivalent' correctly?", options: ["A diploma is equivalent to a degree.", "Equivalent means different.", "Equivalent is a verb.", "Equivalent is a fruit."], correct: 0 }
-            ],
-            "recognize": [
-                { q: "What does 'recognize' mean?", options: ["officially approved of and accepted", "ignored", "rejected", "forgotten"], correct: 0 },
-                { q: "Which sentence uses 'recognize' correctly?", options: ["The university is recognized by the government.", "Recognize means reject.", "Recognize is a verb.", "Recognize is a fruit."], correct: 0 }
-            ]
-        };
+        const questionEl = document.getElementById('question');
+        const optionsEl = document.getElementById('options');
+        const nextBtn = document.getElementById('next-btn');
+        const explanationEl = document.getElementById('explanation');
+        const explanationEn = document.getElementById('explanation-en');
+        const explanationAr = document.getElementById('explanation-ar');
 
-        // ✅ عرض الكلمات
-        function loadWords() {
-            const wordList = document.getElementById('word-list');
-            wordList.innerHTML = '';
-            vocabulary.forEach(word => {
-                const card = document.createElement('div');
-                card.classList.add('word-card');
-                card.textContent = word.word;
-                card.onclick = () => showQuiz(word.word);
-                wordList.appendChild(card);
-            });
-        }
-
-        // ✅ عرض الأسئلة
-        function showQuiz(word) {
-            const quizSection = document.getElementById('quiz-section');
-            const questionEl = document.getElementById('question');
-            const optionsEl = document.getElementById('options');
-            const feedbackEl = document.getElementById('feedback');
-
-            const questions = quizQuestions[word];
-            if (!questions) return;
-
-            const randomIndex = Math.floor(Math.random() * questions.length);
-            const currentQuestion = questions[randomIndex];
-
-            questionEl.textContent = currentQuestion.q;
+        function loadQuestion() {
             optionsEl.innerHTML = '';
-            currentQuestion.options.forEach((option, index) => {
-                const btn = document.createElement('button');
-                btn.classList.add('option-btn');
-                btn.textContent = option;
-                btn.onclick = () => checkAnswer(btn, index, currentQuestion.correct);
-                optionsEl.appendChild(btn);
-            });
+            explanationEl.style.display = 'none';
+            const randomIndex = Math.floor(Math.random() * quizData.length);
+            const currentQuestion = quizData[randomIndex];
 
-            feedbackEl.textContent = '';
-            quizSection.style.display = 'block';
+            questionEl.textContent = currentQuestion.question;
+
+            currentQuestion.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.classList.add('option-btn');
+                button.textContent = option;
+                button.onclick = () => selectOption(button, index, currentQuestion);
+                optionsEl.appendChild(button);
+            });
         }
 
-        // ✅ التحقق من الإجابة
-        function checkAnswer(selectedBtn, selectedIndex, correctIndex) {
-            const allButtons = document.querySelectorAll('.option-btn');
-            allButtons.forEach(btn => {
+        function selectOption(selectedBtn, selectedIndex, currentQuestion) {
+            document.querySelectorAll('.option-btn').forEach(btn => {
                 btn.disabled = true;
             });
 
-            if (selectedIndex === correctIndex) {
-                selectedBtn.classList.add('correct');
-                document.getElementById('feedback').textContent = 'Correct! 👍';
-            } else {
-                selectedBtn.classList.add('incorrect');
-                document.getElementById('feedback').textContent = 'Wrong! ❌ The correct answer is: ' + quizQuestions[selectedBtn.textContent.split(':')[0]][0].options[correctIndex];
-            }
+            const allButtons = document.querySelectorAll('.option-btn');
+            allButtons.forEach((btn, idx) => {
+                if (idx === currentQuestion.correct) {
+                    btn.classList.add('correct');
+                } else if (idx === selectedIndex) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            explanationEn.textContent = currentQuestion.explanation.en;
+            explanationAr.textContent = currentQuestion.explanation.ar;
+            explanationEl.style.display = 'block';
         }
 
-        // ✅ العودة إلى قائمة الكلمات
-        function showWordList() {
-            document.getElementById('quiz-section').style.display = 'none';
-            loadWords();
-        }
-
-        // ✅ بدء التطبيق
-        window.onload = loadWords;
+        nextBtn.addEventListener('click', loadQuestion);
+        loadQuestion();
     </script>
 </body>
 </html>
