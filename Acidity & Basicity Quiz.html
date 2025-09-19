@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acidity & Basicity Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4338ca; /* Deep indigo */
+            --secondary: #f59e0b; /* Amber */
+            --accent: #10b981; /* Emerald */
+            --danger: #ef4444; /* Red */
+            --light-bg: #f9fafb;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe, #fbeafe);
+            color: #222;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 100px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 12px 30px var(--shadow);
+            overflow: hidden;
+            margin-bottom: 40px;
+            border: 3px solid #f0f9ff;
+            /* ✅ تمت إزالة التحريك — البطاقة الآن ثابتة ورصينة */
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: rotate 10s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-weight: 700;
+            font-size: 36px;
+            letter-spacing: -0.5px;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            margin-top: 10px;
+            opacity: 0.95;
+            font-size: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .question-box {
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 30px;
+            line-height: 1.5;
+            background: linear-gradient(to right, #4338ca, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .options {
+            display: grid;
+            gap: 16px;
+        }
+
+        .option-btn {
+            padding: 20px 24px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 18px;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 600;
+            text-align: left;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .option-btn:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .option-btn:active {
+            transform: translateY(0) scale(1);
+        }
+
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: #bbf7d0;
+            color: #166534;
+            font-weight: 700;
+            animation: popIn 0.4s ease;
+        }
+
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: #fecaca;
+            color: #991b1b;
+            font-weight: 700;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.95); opacity: 0; }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        .explanation {
+            margin-top: 35px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-radius: 20px;
+            border: 2px dashed #a7f3d0;
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .explanation h4 {
+            margin: 0 0 15px 0;
+            color: #065f46;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .explanation h4::before {
+            content: "💡";
+            font-size: 22px;
+        }
+
+        .explanation .en {
+            margin-bottom: 20px;
+            line-height: 1.7;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .explanation .ar {
+            font-family: 'Tajawal', 'Segoe UI', sans-serif;
+            font-weight: 700;
+            color: #1e40af;
+            direction: rtl;
+            text-align: right;
+            line-height: 1.8;
+            font-size: 17px;
+            background: #dbeafe;
+            padding: 16px;
+            border-radius: 12px;
+            border-right: 4px solid #3b82f6;
+        }
+
+        .next-btn {
+            display: block;
+            width: 90%;
+            max-width: 760px;
+            padding: 18px 0;
+            background: linear-gradient(135deg, var(--secondary), #ea580c);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            letter-spacing: 0.5px;
+        }
+
+        .next-btn:hover {
+            transform: translateX(-50%) scale(1.03);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.6);
+            background: linear-gradient(135deg, #ea580c, var(--secondary));
+        }
+
+        .next-btn:active {
+            transform: translateX(-50%) scale(0.98);
+        }
+
+        /* Arabic font */
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&display=swap');
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 28px;
+            }
+            .content {
+                padding: 25px;
+            }
+            .question-text {
+                font-size: 20px;
+            }
+            .option-btn {
+                padding: 18px 20px;
+                font-size: 16px;
+            }
+            .next-btn {
+                width: 92%;
+                padding: 16px 0;
+                font-size: 19px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Acidity & Basicity Quiz</h1>
+            <p>Master Organic Chemistry with Fun & Colors! 🧪</p>
+        </div>
+        <div class="content">
+            <div class="question-box">
+                <div class="question-text" id="question">Loading question...</div>
+                <div class="options" id="options"></div>
+                <div class="explanation" id="explanation">
+                    <h4>Explanation</h4>
+                    <div class="en" id="explanation-en">English explanation will appear here.</div>
+                    <div class="ar" id="explanation-ar">سيظهر التفسير بالعربية هنا.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="next-btn" id="next-btn">Next Question</button>
+
+    <script>
+        const quizData = [
+            {
+                question: "Which factor increases acidity by stabilizing the conjugate base?",
+                options: ["Positive charge", "Electron-donating groups", "Resonance delocalization", "sp³ hybridization"],
+                correct: 2,
+                explanation: {
+                    en: "Resonance delocalization spreads the negative charge over multiple atoms, stabilizing the conjugate base and increasing acidity.",
+                    ar: "يؤدي الرنين إلى توزيع الشحنة السالبة على عدة ذرات، مما يُثبّت القاعدة المرافقة ويزيد الحامضية."
+                }
+            },
+            {
+                question: "An electron-withdrawing group (like NO₂) attached to a carboxylic acid will:",
+                options: ["Decrease acidity", "Increase acidity", "Have no effect", "Make it basic"],
+                correct: 1,
+                explanation: {
+                    en: "Electron-withdrawing groups stabilize the conjugate base by pulling electron density away, increasing acidity.",
+                    ar: "المجاميع الساحبة للإلكترونات تُثبّت القاعدة المرافقة بسحب كثافة الإلكترونات، مما يزيد الحامضية."
+                }
+            },
+            {
+                question: "Which hybridization state leads to higher acidity in C-H bonds?",
+                options: ["sp³", "sp²", "sp", "All are equal"],
+                correct: 2,
+                explanation: {
+                    en: "sp-hybridized carbons have 50% s-character, holding electrons closer to the nucleus, making the proton more acidic.",
+                    ar: "ذرات الكربون ذات التهجين sp تحتوي على 50% من الطابع-s، مما يجذب الإلكترونات أقرب للنواة، فيصبح البروتون أكثر حامضية."
+                }
+            },
+            {
+                question: "Resonance stabilization of the conjugate base makes an acid:",
+                options: ["Weaker", "Stronger", "Unchanged", "Basic"],
+                correct: 1,
+                explanation: {
+                    en: "The more stable the conjugate base, the stronger the acid — resonance greatly stabilizes negative charge.",
+                    ar: "كلما كانت القاعدة المرافقة أكثر استقراراً، كان الحمض أقوى — والرنين يُثبّت الشحنة السالبة بشكل كبير."
+                }
+            },
+            {
+                question: "A positively charged species is generally:",
+                options: ["More acidic", "Less acidic", "More basic", "Neutral"],
+                correct: 0,
+                explanation: {
+                    en: "Positive charge increases acidity because losing a proton reduces charge repulsion and stabilizes the molecule.",
+                    ar: "الشحنة الموجبة تزيد الحامضية لأن فقدان البروتون يقلل من تنافر الشحنات ويُثبّت الجزيء."
+                }
+            },
+            {
+                question: "Which compound is more acidic: phenol or ethanol?",
+                options: ["Ethanol", "Phenol", "They are equal", "Neither is acidic"],
+                correct: 1,
+                explanation: {
+                    en: "Phenol’s conjugate base (phenoxide) is stabilized by resonance with the aromatic ring, making phenol more acidic.",
+                    ar: "القاعدة المرافقة للفينول (فينوكسيد) تُثبّت بالرنين مع الحلقة العطرية، مما يجعل الفينول أكثر حامضية."
+                }
+            },
+            {
+                question: "The presence of an electron-donating group (like CH₃) on benzoic acid:",
+                options: ["Increases acidity", "Decreases acidity", "No effect", "Makes it basic"],
+                correct: 1,
+                explanation: {
+                    en: "Electron-donating groups destabilize the carboxylate anion, making proton removal harder → decreases acidity.",
+                    ar: "المجاميع الدافعة للإلكترونات تزعزع استقرار الأنيون الكربوكسيلي، مما يصعّب إزالة البروتون → يقلل الحامضية."
+                }
+            },
+            {
+                question: "In comparing CH₃COOH and CH₃CH₂OH, which is more acidic?",
+                options: ["CH₃CH₂OH", "CH₃COOH", "Equal", "Neither"],
+                correct: 1,
+                explanation: {
+                    en: "Carboxylic acids are more acidic than alcohols due to resonance stabilization of the carboxylate ion.",
+                    ar: "الأحماض الكربوكسيلية أكثر حامضية من الكحولات بسبب استقرار أيون الكربوكسيل بالرنين."
+                }
+            },
+            {
+                question: "Which atom hybridization leads to the least acidic proton?",
+                options: ["sp", "sp²", "sp³", "All same"],
+                correct: 2,
+                explanation: {
+                    en: "sp³ hybridization has the lowest s-character (25%), so electrons are held less tightly → proton is less acidic.",
+                    ar: "التهجين sp³ يحتوي على أقل طابع-s (25%)، لذا تُمسك الإلكترونات بقوة أقل → البروتون أقل حامضية."
+                }
+            },
+            {
+                question: "Why is HCl more acidic than H₂O?",
+                options: ["Larger atom size", "Higher electronegativity", "Better resonance", "More hydrogen bonds"],
+                correct: 0,
+                explanation: {
+                    en: "Cl is larger than O, so the conjugate base (Cl⁻) stabilizes charge better over a larger volume → stronger acid.",
+                    ar: "الكلور أكبر من الأكسجين، لذا القاعدة المرافقة (Cl⁻) تُثبّت الشحنة بشكل أفضل على حجم أكبر → حمض أقوى."
+                }
+            },
+            {
+                question: "A molecule with resonance in its conjugate base is:",
+                options: ["Less acidic", "More acidic", "Neutral", "Basic"],
+                correct: 1,
+                explanation: {
+                    en: "Resonance delocalizes charge in the conjugate base, lowering energy and increasing acidity.",
+                    ar: "يؤدي الرنين إلى توزيع الشحنة في القاعدة المرافقة، مما يقلل الطاقة ويزيد الحامضية."
+                }
+            },
+            {
+                question: "Which effect dominates in determining acidity: resonance or induction?",
+                options: ["Induction always", "Resonance usually", "They are equal", "Depends on solvent"],
+                correct: 1,
+                explanation: {
+                    en: "Resonance usually has a stronger effect than induction because it delocalizes charge over multiple atoms.",
+                    ar: "عادةً ما يكون تأثير الرنين أقوى من التأثير الحثي لأنه يوزع الشحنة على عدة ذرات."
+                }
+            },
+            {
+                question: "An sp-hybridized carbon in terminal alkyne makes the H more acidic because:",
+                options: ["Higher s-character holds electrons closer", "Lower s-character", "More resonance", "Larger size"],
+                correct: 0,
+                explanation: {
+                    en: "Higher s-character (50% in sp) means electrons are closer to the nucleus, stabilizing the conjugate base after deprotonation.",
+                    ar: "الطابع-s الأعلى (50% في sp) يعني أن الإلكترونات أقرب للنواة، مما يُثبّت القاعدة المرافقة بعد نزع البروتون."
+                }
+            },
+            {
+                question: "Adding a Cl group ortho to benzoic acid will:",
+                options: ["Decrease acidity", "Increase acidity", "No change", "Make it basic"],
+                correct: 1,
+                explanation: {
+                    en: "Chlorine is electron-withdrawing inductively, stabilizing the carboxylate anion → increases acidity.",
+                    ar: "الكلور مجموعة ساحبة للإلكترونات حثياً، فتُثبّت الأنيون الكربوكسيلي → تزيد الحامضية."
+                }
+            },
+            {
+                question: "Which is more acidic: CH₄ or NH₃?",
+                options: ["CH₄", "NH₃", "Equal", "Neither"],
+                correct: 1,
+                explanation: {
+                    en: "NH₃ is more acidic than CH₄ because nitrogen is more electronegative and better stabilizes negative charge.",
+                    ar: "NH₃ أكثر حامضية من CH₄ لأن النيتروجين أكثر كهروسالبية ويُثبّت الشحنة السالبة بشكل أفضل."
+                }
+            },
+            {
+                question: "Why is acetic acid more acidic than ethanol?",
+                options: ["Resonance in conjugate base", "More carbons", "Higher boiling point", "More hydrogen bonding"],
+                correct: 0,
+                explanation: {
+                    en: "The acetate ion is stabilized by resonance between two oxygen atoms, while ethoxide has no resonance.",
+                    ar: "يُثبّت أيون الخليت بالرنين بين ذرتي أكسجين، بينما لا يوجد رنين في أيون الإيثوكسيد."
+                }
+            },
+            {
+                question: "The conjugate base of a strong acid is:",
+                options: ["Strong base", "Weak base", "Neutral", "Acidic"],
+                correct: 1,
+                explanation: {
+                    en: "Strong acids dissociate completely; their conjugate bases have negligible tendency to accept protons → weak bases.",
+                    ar: "الأحماض القوية تتأين كلياً؛ قواعدها المرافقة ليس لديها ميل يُذكر لاكتساب البروتونات → قواعد ضعيفة."
+                }
+            },
+            {
+                question: "pKa decreases as acidity:",
+                options: ["Decreases", "Increases", "Stays same", "Becomes basic"],
+                correct: 1,
+                explanation: {
+                    en: "Lower pKa = stronger acid. pKa is inversely related to acidity strength.",
+                    ar: "انخفاض pKa = حمض أقوى. pKa مرتبط عكسياً بقوة الحامضية."
+                }
+            },
+            {
+                question: "Which factor does NOT increase acidity?",
+                options: ["Electron-withdrawing group", "Resonance", "Positive charge", "Electron-donating group"],
+                correct: 3,
+                explanation: {
+                    en: "Electron-donating groups destabilize the conjugate base by increasing electron density → decrease acidity.",
+                    ar: "المجاميع الدافعة للإلكترونات تزعزع استقرار القاعدة المرافقة بزيادة كثافة الإلكترونات → تقلل الحامضية."
+                }
+            },
+            {
+                question: "Which proton is most acidic?",
+                options: ["Alkane C-H", "Alkyne C-H", "Alkene C-H", "Alcohol O-H"],
+                correct: 3,
+                explanation: {
+                    en: "O-H in alcohols (pKa ~15-18) is more acidic than any C-H bond (pKa >25) due to higher electronegativity of oxygen.",
+                    ar: "بروتون O-H في الكحولات (pKa ~15-18) أكثر حامضية من أي رابطة C-H (pKa >25) بسبب كهروسالبية الأكسجين الأعلى."
+                }
+            }
+            // ✅ أضف باقي الأسئلة بنفس الهيكل
+        ];
+
+        const questionEl = document.getElementById('question');
+        const optionsEl = document.getElementById('options');
+        const nextBtn = document.getElementById('next-btn');
+        const explanationEl = document.getElementById('explanation');
+        const explanationEn = document.getElementById('explanation-en');
+        const explanationAr = document.getElementById('explanation-ar');
+
+        function loadQuestion() {
+            optionsEl.innerHTML = '';
+            explanationEl.style.display = 'none';
+            const randomIndex = Math.floor(Math.random() * quizData.length);
+            const currentQuestion = quizData[randomIndex];
+
+            questionEl.textContent = currentQuestion.question;
+
+            currentQuestion.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.classList.add('option-btn');
+                button.textContent = option;
+                button.onclick = () => selectOption(button, index, currentQuestion);
+                optionsEl.appendChild(button);
+            });
+        }
+
+        function selectOption(selectedBtn, selectedIndex, currentQuestion) {
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.disabled = true;
+            });
+
+            const allButtons = document.querySelectorAll('.option-btn');
+            allButtons.forEach((btn, idx) => {
+                if (idx === currentQuestion.correct) {
+                    btn.classList.add('correct');
+                } else if (idx === selectedIndex) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            explanationEn.textContent = currentQuestion.explanation.en;
+            explanationAr.textContent = currentQuestion.explanation.ar;
+            explanationEl.style.display = 'block';
+        }
+
+        nextBtn.addEventListener('click', loadQuestion);
+        loadQuestion();
+    </script>
+</body>
+</html>
